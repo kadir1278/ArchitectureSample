@@ -11,46 +11,44 @@ namespace CoreLayer.DataAccess.Concrete
                                                        where TContext : DbContext, new()
     {
         private readonly DbContext _dbContext;
-        private readonly CancellationToken _cancellationToken;
-        public EfEntityRepository(TContext context, CancellationToken cancellationToken)
+        private readonly DbSet<TEntity> _entities;
+        public EfEntityRepository(TContext context)
         {
             _dbContext = context;
-            _cancellationToken = cancellationToken;
+            _entities = _dbContext.Set<TEntity>();
         }
 
-        public IDataResult<TEntity> Add(TDto dto)
+        public IDataResult<TEntity> Add(TDto dto,CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             throw new NotImplementedException();
         }
 
-        public IDataResult<ICollection<TDto>> AddRange(ICollection<TDto> addedDtos)
+        public IDataResult<ICollection<TDto>> AddRange(ICollection<TDto> addedDtos, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             throw new NotImplementedException();
         }
 
-        public IDataResult<TEntity> Delete(int Id)
+        public IDataResult<TEntity> Delete(int Id, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             throw new NotImplementedException();
         }
 
-        public IDataResult<ICollection<TEntity>> DeleteRange(ICollection<TDto> deletedDtos)
+        public IDataResult<ICollection<TEntity>> DeleteRange(ICollection<TDto> deletedDtos, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             throw new NotImplementedException();
         }
 
-        public IDataResult<IQueryable<TEntity>> GetAllQueryable()
+        public IDataResult<IQueryable<TEntity>> GetAllQueryable( CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             try
             {
-                IQueryable<TEntity> result = _dbContext.Set<TEntity>()
-                                                                       .AsNoTracking()
-                                                                       .Where(x => x.IsActive
-                                                                                && !x.IsDeleted);
+                IQueryable<TEntity> result = _entities.AsNoTracking()
+                                                      .Where(x => !x.IsDeleted);
                 return new SuccessDataResult<IQueryable<TEntity>>(result);
 
             }
@@ -60,15 +58,13 @@ namespace CoreLayer.DataAccess.Concrete
             }
         }
 
-        public IDataResult<IQueryable<TEntity>> GetByIdQueryable(int Id)
+        public IDataResult<IQueryable<TEntity>> GetByIdQueryable(int Id, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             try
             {
-                IQueryable<TEntity> result = _dbContext.Set<TEntity>()
-                                                       .AsNoTracking()
-                                                       .Where(x => x.Id == Id
-                                                                && x.IsActive
+                IQueryable<TEntity> result = _entities.AsNoTracking()
+                                                      .Where(x => x.Id == Id
                                                                 && !x.IsDeleted);
 
                 return new SuccessDataResult<IQueryable<TEntity>>(result);
@@ -80,13 +76,13 @@ namespace CoreLayer.DataAccess.Concrete
             }
         }
 
-        public IDataResult<TEntity> Update(TDto dto)
+        public IDataResult<TEntity> Update(TDto dto, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             throw new NotImplementedException();
         }
 
-        public IDataResult<ICollection<TEntity>> UpdateRange(ICollection<TDto> updatedDtos)
+        public IDataResult<ICollection<TEntity>> UpdateRange(ICollection<TDto> updatedDtos, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             throw new NotImplementedException();

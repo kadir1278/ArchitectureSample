@@ -1,4 +1,5 @@
 ﻿using CoreLayer.DataAccess.Abstract;
+using DataAccessLayer.Context;
 
 namespace DataAccessLayer.Absctract
 {
