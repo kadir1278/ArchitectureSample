@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using MiddlewareLayer.Middleware;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiddlewareLayer.Extensions
 {
@@ -40,6 +35,13 @@ namespace MiddlewareLayer.Extensions
             if (middlewareSettings.LoggerStatus) applicationBuilder.UseMiddleware<LoggerForMiddleware>();
 
             return applicationBuilder;
+        }
+        public static IServiceCollection AddScopedForMiddleware(this IServiceCollection services)
+        {
+            services.AddScoped<GlobalExceptionMiddleware>();
+            services.AddScoped<HostFilterMiddleware>();
+            services.AddScoped<LoggerForMiddleware>();
+            return services;
         }
     }
 }
