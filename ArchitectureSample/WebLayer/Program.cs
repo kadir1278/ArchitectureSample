@@ -1,9 +1,13 @@
 using MiddlewareLayer.Extensions;
+using MiddlewareLayer.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<GlobalExceptionMiddleware>();
+builder.Services.AddScoped<HostFilterMiddleware>();
+builder.Services.AddScoped<LoggerForMiddleware>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

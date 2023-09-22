@@ -7,14 +7,28 @@ namespace WebLayer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly Guid _requestId;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _requestId = Guid.NewGuid();
+            _logger.LogInformation("Home Controller Called Request : {0}", _requestId);
         }
 
         public IActionResult Index()
         {
+            try
+            {
+                _logger.LogInformation("Home Controller Get Index Started Request : {0}", _requestId);
+                return Unauthorized();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message + " Request : {0}", _requestId);
+                return BadRequest();
+            }
+            _logger.LogInformation("Home Controller Get Index Finished Request : {0}", _requestId);
             return View();
         }
 

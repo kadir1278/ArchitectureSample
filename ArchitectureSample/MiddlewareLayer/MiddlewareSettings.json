@@ -1,6 +1,10 @@
 {
   "HostFilterStatus": false,
-  "LoggerStatus": false,
-  "PermittedHosts": "localhost",
+  "LoggerStatus": true,
+  "GlobalExceptionModel": {
+    "Status": false,
+    "UnauthorizedPath": "/yetkisiz-erisim"
+  },
+  "PermittedHosts": [ "localhost" ],
   "UnauthorizedAccessPath": "/yetkisiz-erisim"
 }
