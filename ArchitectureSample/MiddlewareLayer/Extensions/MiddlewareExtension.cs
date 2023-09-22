@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using MiddlewareLayer.Middleware;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,34 @@ namespace MiddlewareLayer.Extensions
 {
     public static class MiddlewareExtension
     {
-        public static IApplicationBuilder HostFilter(this IApplicationBuilder applicationBuilder)
+        #region Constructor
+        private static IConfigurationRoot _configurationRoot;
+        private static IConfigurationRoot configurationRoot
         {
-            return applicationBuilder.UseMiddleware<HostFilterMiddleware>();
+            get
+            {
+                string jsonFile = "MiddlewareSettings.json";
+
+                if (_configurationRoot == null)
+                    _configurationRoot = new ConfigurationBuilder()
+                        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                        .AddJsonFile(jsonFile)
+                        .Build();
+
+                return _configurationRoot;
+            }
+        }
+        #endregion
+
+        public static IApplicationBuilder GlobalFilter(this IApplicationBuilder applicationBuilder)
+        {
+            MiddlewareSettings middlewareSettings = configurationRoot.Get<MiddlewareSettings>();
+
+            if (middlewareSettings.HostFilterStatus)
+                applicationBuilder.UseMiddleware<HostFilterMiddleware>();
+
+
+            return applicationBuilder;
         }
     }
 }
