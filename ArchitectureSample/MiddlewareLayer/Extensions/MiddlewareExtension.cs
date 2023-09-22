@@ -35,9 +35,8 @@ namespace MiddlewareLayer.Extensions
         {
             MiddlewareSettings middlewareSettings = configurationRoot.Get<MiddlewareSettings>();
 
-            if (middlewareSettings.HostFilterStatus)
-                applicationBuilder.UseMiddleware<HostFilterMiddleware>();
-
+            if (middlewareSettings.HostFilterStatus) applicationBuilder.UseMiddleware<HostFilterMiddleware>();
+            if (middlewareSettings.LoggerStatus) applicationBuilder.UseMiddleware<LoggerForMiddleware>();
 
             return applicationBuilder;
         }

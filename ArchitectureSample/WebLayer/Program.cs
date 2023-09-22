@@ -19,10 +19,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.GlobalFilter();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.GlobalFilter();
 
 app.MapControllerRoute(
     name: "default",

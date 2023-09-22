@@ -1,3 +1,6 @@
 {
-  "HostFilterStatus": false
+  "HostFilterStatus": false,
+  "LoggerStatus": false,
+  "PermittedHosts": "localhost",
+  "UnauthorizedAccessPath": "/yetkisiz-erisim"
 }
