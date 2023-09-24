@@ -21,7 +21,17 @@ namespace CoreLayer.DataAccess.Concrete
         public IDataResult<TEntity> Add(TDto dto, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
-            throw new NotImplementedException();
+
+            try
+            {
+                //_dbContext.Add();
+                throw new NotImplementedException();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public IDataResult<ICollection<TDto>> AddRange(ICollection<TDto> addedDtos, CancellationToken _cancellationToken)
@@ -42,41 +52,6 @@ namespace CoreLayer.DataAccess.Concrete
             throw new NotImplementedException();
         }
 
-        public IDataResult<IQueryable<TEntity>> GetAllQueryable(CancellationToken _cancellationToken)
-        {
-            _cancellationToken.ThrowIfCancellationRequested();
-            try
-            {
-                IQueryable<TEntity> result = _entities.AsNoTracking()
-                                                      .Where(x => !x.IsDeleted);
-                return new SuccessDataResult<IQueryable<TEntity>>(result);
-
-            }
-            catch (Exception exception)
-            {
-                return new ErrorDataResult<IQueryable<TEntity>>(exception);
-            }
-        }
-
-        public IDataResult<IQueryable<TEntity>> GetByIdQueryable(int Id, CancellationToken _cancellationToken)
-        {
-            _cancellationToken.ThrowIfCancellationRequested();
-            try
-            {
-                IQueryable<TEntity> result = _entities.AsNoTracking()
-                                                      .Where(x => x.Id == Id
-                                                                && !x.IsDeleted);
-
-                return new SuccessDataResult<IQueryable<TEntity>>(result);
-
-            }
-            catch (Exception exception)
-            {
-                return new ErrorDataResult<IQueryable<TEntity>>(exception);
-            }
-        }
-
-        public IQueryable<TEntity> Queryable() => _dbContext.Set<TEntity>().AsNoTracking();
 
         public IDataResult<TEntity> Update(TDto dto, CancellationToken _cancellationToken)
         {
@@ -89,5 +64,6 @@ namespace CoreLayer.DataAccess.Concrete
             _cancellationToken.ThrowIfCancellationRequested();
             throw new NotImplementedException();
         }
+        public IQueryable<TEntity> Queryable() => _dbContext.Set<TEntity>().AsNoTracking();
     }
 }

@@ -12,19 +12,21 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.DependecyResolver
 {
-    public static class SingletonInjection
+    public static class BusinessModule
     {
-        public static IServiceCollection Injection(this IServiceCollection serviceCollection)
+        public static IServiceCollection LoadModule(this IServiceCollection serviceCollection)
         {
             /*
              AddTransient -> her servis isteiğinde oluştur
              AddScoped -> her web request için oluştur
              AddSingleton -> proje başlangıcında bir tane oluştur
              */
-            serviceCollection.AddSingleton<SystemContext>();
-            serviceCollection.AddSingleton<IUserDal, EfUserDal>();
-            serviceCollection.AddSingleton<IAuthenticationService, AuthenticationService>();
-            serviceCollection.AddSingleton<IWorker, Worker>();
+
+            // transaction ve loglama işlemleri sebebi ile scoped ile kullanılmalıdır.
+            serviceCollection.AddScoped<SystemContext>();
+            serviceCollection.AddScoped<IUserDal, EfUserDal>();
+            serviceCollection.AddScoped<IAuthenticationService, AuthenticationService>();
+            serviceCollection.AddScoped<IWorker, Worker>();
 
             return serviceCollection;
         }

@@ -28,10 +28,7 @@ namespace BusinessLayer.Concrete
                 _systemContextWorker.RollbackTransaction();
                 return new ErrorDataResult<bool>(exception);
             }
-            finally
-            {
-                _systemContextWorker.Dispose();
-            }
+            
         }
 
         public IDataResult<bool> Logout(string username, string password)

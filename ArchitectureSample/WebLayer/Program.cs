@@ -12,9 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScopedForMiddleware();
 
-builder.Services.Injection();
+builder.Services.AddScopedForMiddleware();
+builder.Services.LoadModule();
 
 var app = builder.Build();
 

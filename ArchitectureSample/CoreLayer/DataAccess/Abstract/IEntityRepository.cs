@@ -4,8 +4,6 @@ namespace CoreLayer.DataAccess.Abstract
 {
     public interface IEntityRepository<TEntity, TDto> 
     {
-        IDataResult<IQueryable<TEntity>> GetAllQueryable(CancellationToken _cancellationToken);
-        IDataResult<IQueryable<TEntity>> GetByIdQueryable(int Id, CancellationToken _cancellationToken);
         IQueryable<TEntity> Queryable();
 
         IDataResult<TEntity> Add(TDto dto, CancellationToken _cancellationToken);
