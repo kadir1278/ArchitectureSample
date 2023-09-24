@@ -3,6 +3,7 @@ using BusinessLayer.Concrete;
 using DataAccessLayer.Absctract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.Context;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -23,10 +24,10 @@ namespace BusinessLayer.DependecyResolver
              */
 
             // transaction ve loglama işlemleri sebebi ile scoped ile kullanılmalıdır.
-            serviceCollection.AddScoped<SystemContext>();
-            serviceCollection.AddScoped<IUserDal, EfUserDal>();
-            serviceCollection.AddScoped<IAuthenticationService, AuthenticationService>();
-            serviceCollection.AddScoped<IWorker, Worker>();
+
+            serviceCollection.AddDbContext<SystemContext>();
+            serviceCollection.AddSingleton<IAuthenticationService, AuthenticationService>();
+            serviceCollection.AddSingleton<IWorker, Worker>();
 
             return serviceCollection;
         }

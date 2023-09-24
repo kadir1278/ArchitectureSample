@@ -25,15 +25,17 @@ namespace WebLayer.Controllers
             {
                 _logger.LogInformation("Home Controller Get Index Started Request : {0}", _requestId);
                 _authenticationService.Login("kadir", "ari");
-                return Unauthorized();
+                return Ok();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message + " Request : {0}", _requestId);
                 return BadRequest();
             }
-            _logger.LogInformation("Home Controller Get Index Finished Request : {0}", _requestId);
-            return View();
+            finally
+            {
+                _logger.LogInformation("Home Controller Get Index Finished Request : {0}", _requestId);
+            }
         }
 
         public IActionResult Privacy()

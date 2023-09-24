@@ -8,24 +8,23 @@ namespace BusinessLayer.Concrete
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly IWorker _systemContextWorker;
-        public AuthenticationService(IWorker systemContextWorker)
+        private readonly IWorker _worker;
+        public AuthenticationService(IWorker worker)
         {
-            _systemContextWorker = systemContextWorker;
+            _worker = worker;
         }
 
         public IDataResult<bool> Login(string username, string password)
         {
             try
             {
-                _systemContextWorker.StartTransaction();
-                var model = _systemContextWorker.UserDal.Queryable().ToList();
-                _systemContextWorker.Dispose();
+                _worker.StartTransaction();
+                var model = _worker.UserDal.Queryable().ToList();
                 return new SuccessDataResult<bool>(true);
             }
             catch (Exception exception)
             {
-                _systemContextWorker.RollbackTransaction();
+                _worker.RollbackTransaction();
                 return new ErrorDataResult<bool>(exception);
             }
             
