@@ -2,13 +2,14 @@
 using CoreLayer.Results.Abstract;
 using CoreLayer.Results.Concrete;
 using DataAccessLayer.Absctract;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLayer.Concrete
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly ISystemContextWorker _systemContextWorker;
-        public AuthenticationService(ISystemContextWorker systemContextWorker)
+        private readonly IWorker _systemContextWorker;
+        public AuthenticationService(IWorker systemContextWorker)
         {
             _systemContextWorker = systemContextWorker;
         }
@@ -18,11 +19,13 @@ namespace BusinessLayer.Concrete
             try
             {
                 _systemContextWorker.StartTransaction();
-
+                var model = _systemContextWorker.UserDal.Queryable().ToList();
+                _systemContextWorker.Dispose();
                 return new SuccessDataResult<bool>(true);
             }
             catch (Exception exception)
             {
+                _systemContextWorker.RollbackTransaction();
                 return new ErrorDataResult<bool>(exception);
             }
             finally

@@ -6,6 +6,7 @@ namespace CoreLayer.DataAccess.Abstract
     {
         IDataResult<IQueryable<TEntity>> GetAllQueryable(CancellationToken _cancellationToken);
         IDataResult<IQueryable<TEntity>> GetByIdQueryable(int Id, CancellationToken _cancellationToken);
+        IQueryable<TEntity> Queryable();
 
         IDataResult<TEntity> Add(TDto dto, CancellationToken _cancellationToken);
         IDataResult<ICollection<TDto>> AddRange(ICollection<TDto> addedDtos, CancellationToken _cancellationToken);

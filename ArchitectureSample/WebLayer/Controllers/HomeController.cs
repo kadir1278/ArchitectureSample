@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessLayer.Abstract;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebLayer.Models;
 
@@ -8,12 +9,14 @@ namespace WebLayer.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly Guid _requestId;
+        private readonly IAuthenticationService _authenticationService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IAuthenticationService authenticationService)
         {
             _logger = logger;
             _requestId = Guid.NewGuid();
             _logger.LogInformation("Home Controller Called Request : {0}", _requestId);
+            _authenticationService = authenticationService;
         }
 
         public IActionResult Index()
@@ -21,6 +24,7 @@ namespace WebLayer.Controllers
             try
             {
                 _logger.LogInformation("Home Controller Get Index Started Request : {0}", _requestId);
+                _authenticationService.Login("kadir", "ari");
                 return Unauthorized();
             }
             catch (Exception ex)

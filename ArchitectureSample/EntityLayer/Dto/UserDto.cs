@@ -8,12 +8,5 @@ namespace EntityLayer.Dto
         public string Password { get; set; }
         public bool IsActive { get; set; }
 
-        public UserDto(string username, string password, bool isactive = false)
-        {
-            this.Username = username;
-            this.Password = password;
-            this.IsActive = isactive;
-        }
-
     }
 }

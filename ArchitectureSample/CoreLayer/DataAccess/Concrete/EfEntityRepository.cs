@@ -8,7 +8,7 @@ namespace CoreLayer.DataAccess.Concrete
     public class EfEntityRepository<TEntity, TDto, TContext> : IEntityRepository<TEntity, TDto>
                                                        where TEntity : class, IEntity, new()
                                                        where TDto : class, IDto, new()
-                                                       where TContext : DbContext, new()
+                                                       where TContext : DbContext,new()
     {
         private readonly DbContext _dbContext;
         private readonly DbSet<TEntity> _entities;
@@ -18,7 +18,7 @@ namespace CoreLayer.DataAccess.Concrete
             _entities = _dbContext.Set<TEntity>();
         }
 
-        public IDataResult<TEntity> Add(TDto dto,CancellationToken _cancellationToken)
+        public IDataResult<TEntity> Add(TDto dto, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             throw new NotImplementedException();
@@ -42,7 +42,7 @@ namespace CoreLayer.DataAccess.Concrete
             throw new NotImplementedException();
         }
 
-        public IDataResult<IQueryable<TEntity>> GetAllQueryable( CancellationToken _cancellationToken)
+        public IDataResult<IQueryable<TEntity>> GetAllQueryable(CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             try
@@ -75,6 +75,8 @@ namespace CoreLayer.DataAccess.Concrete
                 return new ErrorDataResult<IQueryable<TEntity>>(exception);
             }
         }
+
+        public IQueryable<TEntity> Queryable() => _dbContext.Set<TEntity>().AsNoTracking();
 
         public IDataResult<TEntity> Update(TDto dto, CancellationToken _cancellationToken)
         {

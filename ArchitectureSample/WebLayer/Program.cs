@@ -1,3 +1,11 @@
+using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
+using BusinessLayer.DependecyResolver;
+using CoreLayer.DataAccess.Abstract;
+using CoreLayer.DataAccess.Concrete;
+using DataAccessLayer.Absctract;
+using DataAccessLayer.Concrete;
+using DataAccessLayer.Context;
 using MiddlewareLayer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScopedForMiddleware();
+
+builder.Services.Injection();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
