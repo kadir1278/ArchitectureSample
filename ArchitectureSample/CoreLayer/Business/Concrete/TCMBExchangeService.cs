@@ -37,10 +37,10 @@ namespace CoreLayer.Business.Concrete
                         CurrencyCode = node.Attributes["Kod"].Value.Trim(),
                         Currency = node["Isim"].InnerText.Trim(),
                         Unit = int.Parse(node["Unit"].InnerText),
-                        ForexBuying = Convert.ToDecimal(node["ForexBuying"].InnerText.Replace(".", ",") != string.Empty ? node["ForexBuying"].InnerText.Replace(".", ",") : "0"),
-                        ForexSelling = Convert.ToDecimal(node["ForexSelling"].InnerText.Replace(".", ",") != string.Empty ? node["ForexSelling"].InnerText.Replace(".", ",") : "0"),
-                        BanknoteBuying = Convert.ToDecimal(node["BanknoteBuying"].InnerText.Replace(".", ",") != string.Empty ? node["BanknoteBuying"].InnerText.Replace(".", ",") : "0"),
-                        BanknoteSelling = Convert.ToDecimal(node["BanknoteSelling"].InnerText.Replace(".", ",") != string.Empty ? node["BanknoteSelling"].InnerText.Replace(".", ",") : "0")
+                        ForexBuying = Convert.ToDecimal(node["ForexBuying"].InnerText.Replace(".", ",").PadLeft(2, '0')),
+                        ForexSelling = Convert.ToDecimal(node["ForexSelling"].InnerText.Replace(".", ",").PadLeft(2, '0')),
+                        BanknoteBuying = Convert.ToDecimal(node["BanknoteBuying"].InnerText.Replace(".", ",").PadLeft(2, '0')),
+                        BanknoteSelling = Convert.ToDecimal(node["BanknoteSelling"].InnerText.Replace(".", ",").PadLeft(2, '0'))
                     });
                 }
 

@@ -26,13 +26,13 @@ namespace CoreLayer.Business.Concrete
                     returnJsonObject = result.Content.ReadAsStringAsync().Result;
                     returnModel = JsonConvert.DeserializeObject<List<GetInfoByPlateViewModel>>(returnJsonObject).FirstOrDefault();
                 }
-                throw new Exception();
-               // if (returnModel == null)
-               //     return new ErrorDataResult<GetInfoByPlateViewModel>("Plate Info Not Found");
+
+                if (returnModel == null)
+                    return new ErrorDataResult<GetInfoByPlateViewModel>("Plate Info Not Found");
 
                 return new SuccessDataResult<GetInfoByPlateViewModel>(returnModel);
             }
-            catch (Exception ex)
+           catch (Exception ex)
             {
                 return new ErrorDataResult<GetInfoByPlateViewModel>(ex);
             }
