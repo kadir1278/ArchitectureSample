@@ -1,5 +1,5 @@
 ﻿using CoreLayer.Business.Abstract;
-using CoreLayer.Entity.Dto.ExhangeServiceDto;
+using CoreLayer.Entity.Dto.ExhangeServiceViewModel;
 using CoreLayer.Helper;
 using CoreLayer.Results.Abstract;
 using CoreLayer.Results.Concrete;

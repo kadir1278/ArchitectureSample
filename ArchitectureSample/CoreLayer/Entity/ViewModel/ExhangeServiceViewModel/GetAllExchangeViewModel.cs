@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoreLayer.Entity.Dto.ExhangeServiceDto
+namespace CoreLayer.Entity.Dto.ExhangeServiceViewModel
 {
     public class GetAllExchangeViewModel
     {

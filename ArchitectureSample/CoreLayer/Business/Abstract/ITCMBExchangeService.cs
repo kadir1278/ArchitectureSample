@@ -1,4 +1,4 @@
-﻿using CoreLayer.Entity.Dto.ExhangeServiceDto;
+﻿using CoreLayer.Entity.Dto.ExhangeServiceViewModel;
 using CoreLayer.Results.Abstract;
 using System;
 using System.Collections.Generic;
