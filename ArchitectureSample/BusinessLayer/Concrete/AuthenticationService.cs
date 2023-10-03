@@ -19,9 +19,9 @@ namespace BusinessLayer.Concrete
             try
             {
                 _worker.StartTransaction();
-                var tcmb=_worker.TcmbExchangeService.GetAllTcmbExchanges();
+              //  var tcmb=_worker.TcmbExchangeService.GetAllTcmbExchanges();
                 var nlrdw = _worker.NetherlandRdwService.GetInfoByPlate("PV130F");
-                var model = _worker.UserDal.Queryable().ToList();
+              //  var model = _worker.UserDal.Queryable().ToList();
                 _worker.SaveChanges();
                 return new SuccessDataResult<bool>(true);
             }

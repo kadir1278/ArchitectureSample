@@ -5,12 +5,12 @@
         public ErrorDataResult(Exception exception)
         {
             this.IsSuccess = false;
-            this.Messages.Append(exception.Message);
+            this.Messages.Add(exception.Message);
         }
         public ErrorDataResult(string errorMessage)
         {
             this.IsSuccess = false;
-            this.Messages.Append(errorMessage);
+            this.Messages.Add(errorMessage);
         }
     }
 }

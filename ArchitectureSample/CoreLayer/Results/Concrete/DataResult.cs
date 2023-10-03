@@ -6,6 +6,6 @@ namespace CoreLayer.Results.Concrete
     {
         public T Data { get; set; }
         public bool IsSuccess { get; set; }
-        public string[] Messages { get; set; }
+        public List<string> Messages { get; set; }=new List<string>();
     }
 }

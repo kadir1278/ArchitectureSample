@@ -1,4 +1,5 @@
-﻿using CoreLayer.Results.Abstract;
+﻿using CoreLayer.Entity.ViewModel.NetherlandRdwServiceViewModel;
+using CoreLayer.Results.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace CoreLayer.Business.Abstract
 {
     public interface INetherlandRdwService
     {
-        public IDataResult<object> GetInfoByPlate(string plate);
+        public IDataResult<GetInfoByPlateViewModel> GetInfoByPlate(string plate);
     }
 }
