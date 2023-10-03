@@ -1,4 +1,6 @@
-﻿using CoreLayer.DataAccess.Abstract;
+﻿using CoreLayer.Business.Abstract;
+using CoreLayer.Business.Concrete;
+using CoreLayer.DataAccess.Abstract;
 using CoreLayer.DataAccess.Concrete;
 using DataAccessLayer.Absctract;
 using DataAccessLayer.Context;
@@ -21,7 +23,7 @@ namespace DataAccessLayer.Concrete
 
         public Worker()
         {
-            _context=new SystemContext();
+            _context = new SystemContext();
         }
 
         public void StartTransaction() => _transaction = _context.Database.BeginTransaction();
@@ -47,6 +49,7 @@ namespace DataAccessLayer.Concrete
         public void Dispose() => _context.Dispose();
 
         private IUserDal _userDal;
+        private ITCMBExchangeService _exchangeService;
 
         public IUserDal UserDal
         {
@@ -60,6 +63,17 @@ namespace DataAccessLayer.Concrete
             }
         }
 
+        public ITCMBExchangeService TcmbExchangeService
+        {
+            get
+            {
+                if (_exchangeService != null)
+                    return _exchangeService;
+
+                _exchangeService = new TCMBExchangeService();
+                return _exchangeService;
+            }
+        }
 
     }
 }

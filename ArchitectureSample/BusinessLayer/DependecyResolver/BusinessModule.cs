@@ -1,5 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
+using CoreLayer.Business.Abstract;
+using CoreLayer.Business.Concrete;
 using DataAccessLayer.Absctract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.Context;
@@ -28,6 +30,7 @@ namespace BusinessLayer.DependecyResolver
             serviceCollection.AddDbContext<SystemContext>();
             serviceCollection.AddSingleton<IAuthenticationService, AuthenticationService>();
             serviceCollection.AddSingleton<IWorker, Worker>();
+            serviceCollection.AddSingleton<ITCMBExchangeService, TCMBExchangeService>();
 
             return serviceCollection;
         }

@@ -19,6 +19,7 @@ namespace BusinessLayer.Concrete
             try
             {
                 _worker.StartTransaction();
+                var tcmb=_worker.TcmbExchangeService.GetAllTcmbExchanges();
                 var model = _worker.UserDal.Queryable().ToList();
                 return new SuccessDataResult<bool>(true);
             }
