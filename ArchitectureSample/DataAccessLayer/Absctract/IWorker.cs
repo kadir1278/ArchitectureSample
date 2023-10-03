@@ -8,8 +8,10 @@ namespace DataAccessLayer.Absctract
     {
         IUserDal UserDal { get; }
         ITCMBExchangeService TcmbExchangeService { get; }
+        INetherlandRdwService NetherlandRdwService { get; }
 
         public void StartTransaction();
+        public void SaveChanges();
         public void RollbackTransaction();
         public void DisposeTransaction();
     }

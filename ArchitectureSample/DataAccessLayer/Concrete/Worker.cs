@@ -35,8 +35,6 @@ namespace DataAccessLayer.Concrete
             _transaction.Rollback();
             _transaction.DisposeAsync();
             _transaction.Dispose();
-
-
         }
 
         public void DisposeTransaction()
@@ -48,8 +46,16 @@ namespace DataAccessLayer.Concrete
 
         public void Dispose() => _context.Dispose();
 
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+            if (_transaction != null) _transaction.Dispose();
+            _transaction = null;
+        }
+
         private IUserDal _userDal;
         private ITCMBExchangeService _exchangeService;
+        private INetherlandRdwService _netherlandRdwService;
 
         public IUserDal UserDal
         {
@@ -72,6 +78,17 @@ namespace DataAccessLayer.Concrete
 
                 _exchangeService = new TCMBExchangeService();
                 return _exchangeService;
+            }
+        }
+        public INetherlandRdwService NetherlandRdwService
+        {
+            get
+            {
+                if (_netherlandRdwService != null)
+                    return _netherlandRdwService;
+
+                _netherlandRdwService = new NetherlandRdwService();
+                return _netherlandRdwService;
             }
         }
 

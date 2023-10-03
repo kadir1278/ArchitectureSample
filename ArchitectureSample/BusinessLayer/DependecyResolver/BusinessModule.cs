@@ -30,7 +30,6 @@ namespace BusinessLayer.DependecyResolver
             serviceCollection.AddDbContext<SystemContext>();
             serviceCollection.AddSingleton<IAuthenticationService, AuthenticationService>();
             serviceCollection.AddSingleton<IWorker, Worker>();
-            serviceCollection.AddSingleton<ITCMBExchangeService, TCMBExchangeService>();
 
             return serviceCollection;
         }
