@@ -1,16 +1,16 @@
-﻿namespace CoreLayer.Results.Concrete
+﻿namespace CoreLayer.Utilities.Results.Concrete
 {
     public class ErrorDataResult<T> : DataResult<T>
     {
         public ErrorDataResult(Exception exception)
         {
-            this.IsSuccess = false;
-            this.Messages.Add(exception.Message);
+            IsSuccess = false;
+            Messages.Add(exception.Message);
         }
         public ErrorDataResult(string errorMessage)
         {
-            this.IsSuccess = false;
-            this.Messages.Add(errorMessage);
+            IsSuccess = false;
+            Messages.Add(errorMessage);
         }
     }
 }

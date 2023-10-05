@@ -1,7 +1,7 @@
 ﻿using CoreLayer.Business.Abstract;
 using CoreLayer.Entity.ViewModel.FileViewModel;
-using CoreLayer.Results.Abstract;
-using CoreLayer.Results.Concrete;
+using CoreLayer.Utilities.Results.Abstract;
+using CoreLayer.Utilities.Results.Concrete;
 using Microsoft.AspNetCore.Http;
 using System.IO.Compression;
 

@@ -1,7 +1,7 @@
 ﻿using CoreLayer.Business.Abstract;
 using CoreLayer.Entity.ViewModel.MailSendViewModel;
-using CoreLayer.Results.Abstract;
-using CoreLayer.Results.Concrete;
+using CoreLayer.Utilities.Results.Abstract;
+using CoreLayer.Utilities.Results.Concrete;
 using System.Net;
 using System.Net.Mail;
 

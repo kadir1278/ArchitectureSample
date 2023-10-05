@@ -1,18 +1,18 @@
-﻿using CoreLayer.Results.Abstract;
+﻿using CoreLayer.Utilities.Results.Abstract;
 
 namespace CoreLayer.DataAccess.Abstract
 {
-    public interface IEntityRepository<TEntity, TDto> 
+    public interface IEntityRepository<TEntity, TAddDto, TUpdateDto, TGetDto> 
     {
         IQueryable<TEntity> Queryable();
 
-        IDataResult<TEntity> Add(TDto dto, CancellationToken _cancellationToken);
-        IDataResult<ICollection<TDto>> AddRange(ICollection<TDto> addedDtos, CancellationToken _cancellationToken);
+        IDataResult<TEntity> Add(TAddDto dto, CancellationToken _cancellationToken);
+        IDataResult<ICollection<TEntity>> AddRange(ICollection<TAddDto> addedDtos, CancellationToken _cancellationToken);
 
-        IDataResult<TEntity> Update(TDto dto, CancellationToken _cancellationToken);
-        IDataResult<ICollection<TEntity>> UpdateRange(ICollection<TDto> updatedDtos, CancellationToken _cancellationToken);
+        IDataResult<TEntity> Update(TUpdateDto dto, CancellationToken _cancellationToken);
+        IDataResult<ICollection<TEntity>> UpdateRange(ICollection<TUpdateDto> updatedDtos, CancellationToken _cancellationToken);
 
-        IDataResult<TEntity> Delete(int Id, CancellationToken _cancellationToken);
-        IDataResult<ICollection<TEntity>> DeleteRange(ICollection<TDto> deletedDtos, CancellationToken _cancellationToken);
+        IDataResult<TEntity> SoftDelete(int Id, CancellationToken _cancellationToken);
+        IDataResult<ICollection<TEntity>> DeleteRange(ICollection<TGetDto> deletedDtos, CancellationToken _cancellationToken);
     }
 }

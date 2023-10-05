@@ -1,5 +1,5 @@
 ﻿using CoreLayer.Entity.ViewModel.NetherlandRdwServiceViewModel;
-using CoreLayer.Results.Abstract;
+using CoreLayer.Utilities.Results.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;

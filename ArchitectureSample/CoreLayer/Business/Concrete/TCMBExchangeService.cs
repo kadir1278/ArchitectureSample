@@ -1,8 +1,8 @@
 ﻿using CoreLayer.Business.Abstract;
 using CoreLayer.Entity.Dto.ExhangeServiceViewModel;
 using CoreLayer.Helper;
-using CoreLayer.Results.Abstract;
-using CoreLayer.Results.Concrete;
+using CoreLayer.Utilities.Results.Abstract;
+using CoreLayer.Utilities.Results.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;

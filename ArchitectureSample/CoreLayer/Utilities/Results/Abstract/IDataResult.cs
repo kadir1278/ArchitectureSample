@@ -1,4 +1,4 @@
-﻿namespace CoreLayer.Results.Abstract
+﻿namespace CoreLayer.Utilities.Results.Abstract
 {
     public interface IDataResult<out T>
     {

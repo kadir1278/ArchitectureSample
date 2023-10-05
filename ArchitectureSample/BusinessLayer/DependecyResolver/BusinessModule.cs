@@ -5,6 +5,7 @@ using CoreLayer.Business.Concrete;
 using DataAccessLayer.Absctract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.Context;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -27,6 +28,7 @@ namespace BusinessLayer.DependecyResolver
 
             // transaction ve loglama işlemleri sebebi ile scoped ile kullanılmalıdır.
 
+        
             serviceCollection.AddDbContext<SystemContext>();
             serviceCollection.AddSingleton<IAuthenticationService, AuthenticationService>();
             serviceCollection.AddSingleton<IWorker, Worker>();

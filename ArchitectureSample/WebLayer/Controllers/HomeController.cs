@@ -1,6 +1,8 @@
 ﻿using BusinessLayer.Abstract;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 using WebLayer.Models;
 
 namespace WebLayer.Controllers
@@ -9,9 +11,9 @@ namespace WebLayer.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly Guid _requestId;
-        private readonly IAuthenticationService _authenticationService;
+        private readonly BusinessLayer.Abstract.IAuthenticationService _authenticationService;
 
-        public HomeController(ILogger<HomeController> logger, IAuthenticationService authenticationService)
+        public HomeController(ILogger<HomeController> logger, BusinessLayer.Abstract.IAuthenticationService authenticationService)
         {
             _logger = logger;
             _requestId = Guid.NewGuid();
@@ -19,7 +21,7 @@ namespace WebLayer.Controllers
             _authenticationService = authenticationService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {

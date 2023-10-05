@@ -1,14 +1,25 @@
 ﻿using BusinessLayer.Abstract;
-using CoreLayer.Results.Abstract;
-using CoreLayer.Results.Concrete;
+using CoreLayer.Helper;
+using CoreLayer.IoC;
+using CoreLayer.Utilities.Results.Abstract;
+using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
+using DataAccessLayer.Context;
+using EntityLayer.Dto.User;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http;
+using System.Security.Claims;
 
 namespace BusinessLayer.Concrete
 {
-    public class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : Abstract.IAuthenticationService
     {
         private readonly IWorker _worker;
+        private readonly CancellationToken _ct;
+
         public AuthenticationService(IWorker worker)
         {
             _worker = worker;
@@ -18,11 +29,22 @@ namespace BusinessLayer.Concrete
         {
             try
             {
+                _ct.ThrowIfCancellationRequested();
+
                 _worker.StartTransaction();
-                var tcmb = _worker.TcmbExchangeService.GetAllTcmbExchanges();
-                var nlrdw = _worker.NetherlandRdwService.GetInfoByPlate("PV130F");
+               // var tcmb = _worker.TcmbExchangeService.GetAllTcmbExchanges();
+               // var nlrdw = _worker.NetherlandRdwService.GetInfoByPlate("PV130F");
                 var model = _worker.UserDal.Queryable().ToList();
-                _worker.SaveChanges();
+
+                var addedModel = _worker.UserDal.Add(new UserAddDto
+                {
+                    Name = "Kadir",
+                    Surname = "Ari",
+                    Password = password,
+                    Username = username,
+                }, _ct);
+
+                _worker.CommitAndSaveChanges(); 
                 return new SuccessDataResult<bool>(true);
             }
             catch (Exception exception)

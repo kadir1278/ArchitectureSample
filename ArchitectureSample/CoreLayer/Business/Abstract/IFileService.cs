@@ -1,5 +1,5 @@
 ﻿using CoreLayer.Entity.ViewModel.FileViewModel;
-using CoreLayer.Results.Abstract;
+using CoreLayer.Utilities.Results.Abstract;
 using Microsoft.AspNetCore.Http;
 
 namespace CoreLayer.Business.Abstract

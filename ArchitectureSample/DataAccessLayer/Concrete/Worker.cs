@@ -2,12 +2,15 @@
 using CoreLayer.Business.Concrete;
 using CoreLayer.DataAccess.Abstract;
 using CoreLayer.DataAccess.Concrete;
+using CoreLayer.IoC;
 using DataAccessLayer.Absctract;
 using DataAccessLayer.Context;
 using EntityLayer.Dto;
 using EntityLayer.Entity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +26,7 @@ namespace DataAccessLayer.Concrete
 
         public Worker()
         {
-            _context = new SystemContext();
+            _context = ServiceTool.ServiceProvider.GetRequiredService<SystemContext>();
         }
 
         public void StartTransaction() => _transaction = _context.Database.BeginTransaction();
@@ -46,13 +49,19 @@ namespace DataAccessLayer.Concrete
 
         public void Dispose() => _context.Dispose();
 
+        public void CommitAndSaveChanges()
+        {
+            _transaction.Commit();
+            _context.SaveChanges();
+            if (_transaction != null) _transaction.Dispose();
+            _transaction = null;
+        }
         public void SaveChanges()
         {
             _context.SaveChanges();
             if (_transaction != null) _transaction.Dispose();
             _transaction = null;
         }
-
         private IUserDal _userDal;
         private ITCMBExchangeService _exchangeService;
         private INetherlandRdwService _netherlandRdwService;

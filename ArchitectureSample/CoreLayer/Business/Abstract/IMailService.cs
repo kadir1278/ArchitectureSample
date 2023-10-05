@@ -1,5 +1,5 @@
 ﻿using CoreLayer.Entity.ViewModel.MailSendViewModel;
-using CoreLayer.Results.Abstract;
+using CoreLayer.Utilities.Results.Abstract;
 
 namespace CoreLayer.Business.Abstract
 {
