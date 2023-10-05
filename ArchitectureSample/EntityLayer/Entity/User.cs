@@ -8,7 +8,6 @@ namespace EntityLayer.Entity
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public bool IsActive { get; set; } = false;
         public string Name { get; set; }
         public string Surname { get; set; }
     }
