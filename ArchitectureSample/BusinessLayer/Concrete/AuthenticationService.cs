@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Security.Claims;
 
@@ -32,8 +33,8 @@ namespace BusinessLayer.Concrete
                 _ct.ThrowIfCancellationRequested();
 
                 _worker.StartTransaction();
-               // var tcmb = _worker.TcmbExchangeService.GetAllTcmbExchanges();
-               // var nlrdw = _worker.NetherlandRdwService.GetInfoByPlate("PV130F");
+                var tcmb = _worker.TcmbExchangeService.GetAllTcmbExchanges();
+                var nlrdw = _worker.NetherlandRdwService.GetInfoByPlate("PV130F");
                 var model = _worker.UserDal.Queryable().ToList();
 
                 var addedModel = _worker.UserDal.Add(new UserAddDto
@@ -44,7 +45,7 @@ namespace BusinessLayer.Concrete
                     Username = username,
                 }, _ct);
 
-                _worker.CommitAndSaveChanges(); 
+                _worker.CommitAndSaveChanges();
                 return new SuccessDataResult<bool>(true);
             }
             catch (Exception exception)

@@ -19,13 +19,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScopedForMiddleware();
 builder.Services.LoadModule();
 builder.Services.AddDependencyResolvers();
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x =>
-{
-    x.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-    x.Cookie.Name = "AcenteCRM";
-    x.LoginPath = "/Authentication/Login";
-    x.AccessDeniedPath = "/Authentication/LogOut";
-});
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -39,7 +33,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.GlobalFilter();
 
 app.UseAuthentication();

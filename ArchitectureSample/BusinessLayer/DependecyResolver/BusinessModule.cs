@@ -2,10 +2,12 @@
 using BusinessLayer.Concrete;
 using CoreLayer.Business.Abstract;
 using CoreLayer.Business.Concrete;
+using CoreLayer.Helper;
 using DataAccessLayer.Absctract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.Context;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -28,8 +30,11 @@ namespace BusinessLayer.DependecyResolver
 
             // transaction ve loglama işlemleri sebebi ile scoped ile kullanılmalıdır.
 
-        
-            serviceCollection.AddDbContext<SystemContext>();
+
+            //serviceCollection.AddDbContext<SystemContext>();=>
+            //dboptions işlemi burada yapılmayacağı için adddbcontext yerine addscoped seçildi aralarında bir fark görülmedi
+
+            serviceCollection.AddScoped<SystemContext>();
             serviceCollection.AddSingleton<IAuthenticationService, AuthenticationService>();
             serviceCollection.AddSingleton<IWorker, Worker>();
 

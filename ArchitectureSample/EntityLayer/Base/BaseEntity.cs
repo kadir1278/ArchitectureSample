@@ -14,7 +14,6 @@ namespace EntityLayer.Base
         public Guid CreatedBy { get; set; }
         public DateTime UpdatedDate { get; set; }
         public Guid UpdatedBy { get; set; }
-        public DateTime CreatedTime { get; set; }
         public bool IsDeleted { get; set; } = false;
         public bool IsActive { get; set; }
 

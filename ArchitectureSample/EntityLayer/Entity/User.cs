@@ -1,4 +1,6 @@
-﻿using EntityLayer.Base;
+﻿using CoreLayer.Helper;
+using EntityLayer.Base;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityLayer.Entity

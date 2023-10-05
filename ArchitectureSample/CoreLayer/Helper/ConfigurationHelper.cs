@@ -60,12 +60,19 @@ namespace CoreLayer.Helper
         }
         #endregion
 
-
         #region GetTcmbExchangeUrl
         public static string GetTcmbExchangeUrl()
         {
             return configurationRoot.GetSection("TcmbExchangeUrl").Get<string>();
         }
         #endregion
+
+        #region GetSecurityKey
+        public static string GetSecurityKey()
+        {
+            return configurationRoot.GetSection("EncryptKey").Get<string>();
+        }
+        #endregion
+
     }
 }
