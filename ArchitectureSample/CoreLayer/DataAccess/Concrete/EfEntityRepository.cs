@@ -17,7 +17,7 @@ namespace CoreLayer.DataAccess.Concrete
                                                        where TAddDto : class, IDto, new()
                                                        where TUpdateDto : class, IDto, new()
                                                        where TGetDto : class, IDto, new()
-                                                       where TContext : DbContext, new()
+                                                       where TContext : DbContext
     {
         private readonly DbContext _dbContext;
         private readonly DbSet<TEntity> _entities;

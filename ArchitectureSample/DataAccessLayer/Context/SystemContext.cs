@@ -7,9 +7,9 @@ namespace DataAccessLayer.Context
 {
     public class SystemContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public SystemContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
-            optionsBuilder.UseSqlServer(ConfigurationHelper.GetSqlConnectionString());
+
         }
         public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

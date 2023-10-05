@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Concrete
 {
-    public class EfUserDal : EfEntityRepository<User, UserAddDto,UserUpdateDto, UserGetDto, SystemContext>, IUserDal
+    public class EfUserDal : EfEntityRepository<User, UserAddDto, UserUpdateDto, UserGetDto, SystemContext>, IUserDal
     {
         public EfUserDal(SystemContext context) : base(context)
         {
