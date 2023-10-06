@@ -31,7 +31,7 @@ namespace BusinessLayer.Concrete
             try
             {
                 _ct.ThrowIfCancellationRequested();
-
+                string name = EncryptionHelper.DecryptPassword("wLvAweZ/SsiXRncEcKmk4A==");
                 _worker.StartTransaction();
                 var tcmb = _worker.TcmbExchangeService.GetAllTcmbExchanges();
                 var nlrdw = _worker.NetherlandRdwService.GetInfoByPlate("PV130F");
