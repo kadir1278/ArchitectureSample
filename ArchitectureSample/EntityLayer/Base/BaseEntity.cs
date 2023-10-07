@@ -1,7 +1,5 @@
 ﻿using CoreLayer.DataAccess.Abstract;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityLayer.Base
 {

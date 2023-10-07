@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-
-namespace CoreLayer.DataAccess.Abstract
+﻿namespace CoreLayer.DataAccess.Abstract
 {
     public interface IEntity
     {

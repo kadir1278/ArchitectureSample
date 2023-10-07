@@ -1,8 +1,5 @@
-﻿using BusinessLayer.Abstract;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Security.Claims;
 using WebLayer.Models;
 
 namespace WebLayer.Controllers

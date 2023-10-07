@@ -1,21 +1,10 @@
 ﻿using CoreLayer.Business.Abstract;
 using CoreLayer.Business.Concrete;
-using CoreLayer.DataAccess.Abstract;
-using CoreLayer.DataAccess.Concrete;
 using CoreLayer.IoC;
 using DataAccessLayer.Absctract;
 using DataAccessLayer.Context;
-using EntityLayer.Dto;
-using EntityLayer.Entity;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.Concrete
 {

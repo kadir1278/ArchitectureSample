@@ -3,11 +3,6 @@ using CoreLayer.Entity.Dto.ExhangeServiceViewModel;
 using CoreLayer.Helper;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace CoreLayer.Business.Concrete

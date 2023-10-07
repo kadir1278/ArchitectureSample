@@ -2,13 +2,7 @@
 using CoreLayer.Utilities.Results.Abstract;
 using Microsoft.EntityFrameworkCore;
 using Mapster;
-using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 using CoreLayer.Utilities.Results.Concrete;
-using System.Collections.Generic;
-using CoreLayer.Helper;
-using CoreLayer.IoC;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace CoreLayer.DataAccess.Concrete
 {

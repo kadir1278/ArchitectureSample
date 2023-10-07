@@ -1,21 +1,11 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
-using CoreLayer.Business.Abstract;
-using CoreLayer.Business.Concrete;
 using CoreLayer.Helper;
 using DataAccessLayer.Absctract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.Context;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLayer.DependecyResolver
 {

@@ -1,18 +1,6 @@
-﻿using BusinessLayer.Abstract;
-using CoreLayer.Helper;
-using CoreLayer.IoC;
-using CoreLayer.Utilities.Results.Abstract;
+﻿using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
-using DataAccessLayer.Context;
-using EntityLayer.Dto.User;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System.Net.Http;
-using System.Security.Claims;
 
 namespace BusinessLayer.Concrete
 {
@@ -31,19 +19,21 @@ namespace BusinessLayer.Concrete
             try
             {
                 _ct.ThrowIfCancellationRequested();
-                string name = EncryptionHelper.DecryptPassword("wLvAweZ/SsiXRncEcKmk4A==");
                 _worker.StartTransaction();
-                var tcmb = _worker.TcmbExchangeService.GetAllTcmbExchanges();
-                var nlrdw = _worker.NetherlandRdwService.GetInfoByPlate("PV130F");
-                var model = _worker.UserDal.Queryable().ToList();
 
-                var addedModel = _worker.UserDal.Add(new UserAddDto
-                {
-                    Name = "Kadir",
-                    Surname = "Ari",
-                    Password = password,
-                    Username = username,
-                }, _ct);
+                //var tcmb = _worker.TcmbExchangeService.GetAllTcmbExchanges();
+                //var nlrdw = _worker.NetherlandRdwService.GetInfoByPlate("PV130F");
+                //var model = _worker.UserDal.Queryable().ToList();
+                //
+                //var addedModel = _worker.UserDal.Add(new UserAddDto
+                //{
+                //    Name = "Kadir",
+                //    Surname = "Ari",
+                //    Password = password,
+                //    Username = username,
+                //}, _ct);
+                //
+                //TileMethots.SquareMeters(0.1m, 0m, 0m, 0m, 5);
 
                 _worker.CommitAndSaveChanges();
                 return new SuccessDataResult<bool>(true);

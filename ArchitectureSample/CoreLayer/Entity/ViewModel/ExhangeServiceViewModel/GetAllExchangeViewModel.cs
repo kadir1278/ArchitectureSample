@@ -1,11 +1,4 @@
-﻿using CoreLayer.DataAccess.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CoreLayer.Entity.Dto.ExhangeServiceViewModel
+﻿namespace CoreLayer.Entity.Dto.ExhangeServiceViewModel
 {
     public class GetAllExchangeViewModel
     {

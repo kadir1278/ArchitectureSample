@@ -1,14 +1,5 @@
-using BusinessLayer.Abstract;
-using BusinessLayer.Concrete;
 using BusinessLayer.DependecyResolver;
-using CoreLayer.DataAccess.Abstract;
-using CoreLayer.DataAccess.Concrete;
 using CoreLayer.Extensions;
-using CoreLayer.Helper;
-using DataAccessLayer.Absctract;
-using DataAccessLayer.Concrete;
-using DataAccessLayer.Context;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using MiddlewareLayer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
