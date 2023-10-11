@@ -69,7 +69,7 @@ namespace CoreLayer.DataAccess.Concrete
             }
         }
 
-        public IDataResult<TEntity> SoftDelete(int Id, CancellationToken _cancellationToken)
+        public IDataResult<TEntity> SoftDelete(Guid Id, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             try
@@ -94,7 +94,7 @@ namespace CoreLayer.DataAccess.Concrete
             }
         }
 
-        public IDataResult<ICollection<TEntity>> DeleteRange(ICollection<TGetDto> deletedDtos, CancellationToken _cancellationToken)
+        public IDataResult<ICollection<TEntity>> SoftDeleteRange(ICollection<TGetDto> deletedDtos, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             throw new NotImplementedException();

@@ -11,14 +11,14 @@ namespace DataAccessLayer.Context
 
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<ProjectOwner> ProjectOwners { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region UserBuilder
-            modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted);
-
             modelBuilder.ScriptEncryptAndDecrypt();
-            #endregion
+
+            modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<ProjectOwner>().HasQueryFilter(x => !x.IsDeleted);
         }
 
     }

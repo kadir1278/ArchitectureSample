@@ -12,7 +12,7 @@ namespace CoreLayer.DataAccess.Abstract
         IDataResult<TEntity> Update(TUpdateDto dto, CancellationToken _cancellationToken);
         IDataResult<ICollection<TEntity>> UpdateRange(ICollection<TUpdateDto> updatedDtos, CancellationToken _cancellationToken);
 
-        IDataResult<TEntity> SoftDelete(int Id, CancellationToken _cancellationToken);
-        IDataResult<ICollection<TEntity>> DeleteRange(ICollection<TGetDto> deletedDtos, CancellationToken _cancellationToken);
+        IDataResult<TEntity> SoftDelete(Guid Id, CancellationToken _cancellationToken);
+        IDataResult<ICollection<TEntity>> SoftDeleteRange(ICollection<TGetDto> deletedDtos, CancellationToken _cancellationToken);
     }
 }

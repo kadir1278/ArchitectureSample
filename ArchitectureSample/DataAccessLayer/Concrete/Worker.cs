@@ -54,6 +54,7 @@ namespace DataAccessLayer.Concrete
         private IUserDal _userDal;
         private ITCMBExchangeService _exchangeService;
         private INetherlandRdwService _netherlandRdwService;
+        private IProjectOwnerDal _projectOwnerDal;
 
         public IUserDal UserDal
         {
@@ -89,6 +90,16 @@ namespace DataAccessLayer.Concrete
                 return _netherlandRdwService;
             }
         }
+        public IProjectOwnerDal ProjectOwnerDal
+        {
+            get
+            {
+                if (_projectOwnerDal != null)
+                    return _projectOwnerDal;
 
+                _projectOwnerDal = new EfProjectOwnerDal(_context);
+                return _projectOwnerDal;
+            }
+        }
     }
 }
