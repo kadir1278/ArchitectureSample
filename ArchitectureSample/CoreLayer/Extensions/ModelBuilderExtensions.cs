@@ -13,12 +13,15 @@ namespace CoreLayer.Extensions
                 var properties = entityType.ClrType.GetProperties();
                 foreach (var property in properties)
                 {
+                    
                     if (property.PropertyType == typeof(string))
                     {
                         modelBuilder.Entity(entityType.Name)
                                     .Property(property.Name)
                                     .HasConversion(new ValueConverter<string, string>(v => EncryptionHelper.EncryptPassword(v),
                                                                                       v => EncryptionHelper.DecryptPassword(v)));
+
+
                     }
                 }
 

@@ -15,10 +15,12 @@ namespace BusinessLayer.DependecyResolver
     {
         public static IServiceCollection LoadModule(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            serviceCollection.AddHttpContextAccessor();
+           // serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             serviceCollection.AddDbContext<SystemContext>(options => options.UseSqlServer(ConfigurationHelper.GetSqlConnectionString()));
             serviceCollection.AddSingleton<IProjectOwnerService, ProjectOwnerService>();
             serviceCollection.AddSingleton<IAuthenticationService, AuthenticationService>();
+            serviceCollection.AddSingleton<IUserService, UserService>();
             serviceCollection.AddSingleton<IWorker, Worker>();
 
 

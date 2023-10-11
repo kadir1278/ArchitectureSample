@@ -13,36 +13,47 @@ namespace BusinessLayer.Concrete
     public class ProjectOwnerService : IProjectOwnerService
     {
         private readonly IWorker _worker;
+        private readonly IHttpContextAccessor _contextAccessor;
         private readonly CancellationToken _ct;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ProjectOwnerService(IWorker worker, IHttpContextAccessor httpContextAccessor)
+        public ProjectOwnerService(IWorker worker, IHttpContextAccessor contextAccessor)
         {
             _worker = worker;
-            _httpContextAccessor = httpContextAccessor;
+            _contextAccessor = contextAccessor;
         }
 
-        public IDataResult<bool> ActiveStatusToProjectOwnerId(Guid projectOwnerId)
+        public IDataResult<bool> ActiveStatusToProjectOwner(Guid projectOwnerId)
         {
             try
             {
+                _ct.ThrowIfCancellationRequested();
+                _worker.StartTransaction();
+
                 ProjectOwner? getProjectOwnerByGuid = _worker.ProjectOwnerDal.Queryable()
                                                                    .Where(x => x.Id == projectOwnerId)
                                                                    .First();
 
-                if (getProjectOwnerByGuid == null) return new ErrorDataResult<bool>("Proje bulunamadı");
+                if (getProjectOwnerByGuid == null)
+                {
+                    _worker.RollbackTransaction();
+                    return new ErrorDataResult<bool>("Proje bulunamadı");
+                }
 
                 var projectOwnerUpdateDto = getProjectOwnerByGuid.Adapt<ProjectOwnerUpdateDto>();
                 projectOwnerUpdateDto.IsActive = true;
                 var updatedProjectOwner = _worker.ProjectOwnerDal.Update(projectOwnerUpdateDto, _ct);
 
                 if (!updatedProjectOwner.IsSuccess)
+                {
+                    _worker.RollbackTransaction();
                     return new ErrorDataResult<bool>(String.Join("-", updatedProjectOwner.Messages));
-
+                }
+                _worker.CommitAndSaveChanges();
                 return new SuccessDataResult<bool>(true);
             }
             catch (Exception ex)
             {
+                _worker.RollbackTransaction();
                 return new ErrorDataResult<bool>(ex);
             }
         }
@@ -51,43 +62,63 @@ namespace BusinessLayer.Concrete
         {
             try
             {
+                _ct.ThrowIfCancellationRequested();
+                _worker.StartTransaction();
+
                 bool checkDomain = _worker.ProjectOwnerDal.Queryable().Where(x => x.Domain == projectOwnerAddDto.Domain).Count() != 1;
-                if (!checkDomain) return new ErrorDataResult<ProjectOwner>("Domain registered");
+                if (!checkDomain)
+                {
+                    _worker.RollbackTransaction();
+                    return new ErrorDataResult<ProjectOwner>("Domain registered");
+                }
 
                 IDataResult<ProjectOwner> addedProjectOwner = _worker.ProjectOwnerDal.Add(projectOwnerAddDto, _ct);
 
                 if (!addedProjectOwner.IsSuccess)
+                {
+                    _worker.RollbackTransaction();
                     return new ErrorDataResult<ProjectOwner>(String.Join("-", addedProjectOwner.Messages));
-
+                }
+                _worker.CommitAndSaveChanges();
                 return addedProjectOwner;
             }
             catch (Exception ex)
             {
+                _worker.RollbackTransaction();
                 return new ErrorDataResult<ProjectOwner>(ex);
             }
         }
 
-        public IDataResult<bool> DeactiveStatusToProjectOwnerId(Guid projectOwnerId)
+        public IDataResult<bool> DeactiveStatusToProjectOwner(Guid projectOwnerId)
         {
             try
             {
+                _ct.ThrowIfCancellationRequested();
                 ProjectOwner? getProjectOwnerByGuid = _worker.ProjectOwnerDal.Queryable()
                                                                    .Where(x => x.Id == projectOwnerId)
                                                                    .First();
 
-                if (getProjectOwnerByGuid == null) return new ErrorDataResult<bool>("Proje bulunamadı");
+                if (getProjectOwnerByGuid == null)
+                {
+                    _worker.RollbackTransaction();
+                    return new ErrorDataResult<bool>("Proje bulunamadı");
+                }
 
                 var projectOwnerUpdateDto = getProjectOwnerByGuid.Adapt<ProjectOwnerUpdateDto>();
                 projectOwnerUpdateDto.IsActive = false;
                 var updatedProjectOwner = _worker.ProjectOwnerDal.Update(projectOwnerUpdateDto, _ct);
 
                 if (!updatedProjectOwner.IsSuccess)
+                {
+                    _worker.RollbackTransaction();
                     return new ErrorDataResult<bool>(String.Join("-", updatedProjectOwner.Messages));
-
+                }
+                _worker.CommitAndSaveChanges();
                 return new SuccessDataResult<bool>(true);
             }
             catch (Exception ex)
             {
+                _worker.RollbackTransaction();
                 return new ErrorDataResult<bool>(ex);
             }
         }
@@ -96,15 +127,21 @@ namespace BusinessLayer.Concrete
         {
             try
             {
+                _ct.ThrowIfCancellationRequested();
+                _worker.StartTransaction();
                 var deletedProjectOwner = _worker.ProjectOwnerDal.SoftDelete(projectOwnerId, _ct);
 
                 if (!deletedProjectOwner.IsSuccess)
+                {
+                    _worker.RollbackTransaction();
                     return new ErrorDataResult<bool>(String.Join("-", deletedProjectOwner.Messages));
-
+                }
+                _worker.CommitAndSaveChanges();
                 return new SuccessDataResult<bool>(true);
             }
             catch (Exception ex)
             {
+                _worker.RollbackTransaction();
                 return new ErrorDataResult<bool>(ex);
             }
         }
@@ -113,8 +150,28 @@ namespace BusinessLayer.Concrete
         {
             try
             {
+                _ct.ThrowIfCancellationRequested();
                 var getProjectOwner = _worker.ProjectOwnerDal.Queryable()
                                                              .Where(x => x.Id == projectOwnerId)
+                                                             .First();
+
+                if (getProjectOwner == null)
+                    return new ErrorDataResult<ProjectOwner>(String.Join("-", "Proje bulunamadı"));
+
+                return new SuccessDataResult<ProjectOwner>(getProjectOwner);
+            }
+            catch (Exception ex)
+            {
+                return new ErrorDataResult<ProjectOwner>(ex);
+            }
+        }
+        public IDataResult<ProjectOwner> GetProjectOwnerByRequestDomain()
+        {
+            try
+            {
+                _ct.ThrowIfCancellationRequested();
+                var getProjectOwner = _worker.ProjectOwnerDal.Queryable()
+                                                             .Where(x => x.Domain == _contextAccessor.HttpContext.Request.Host.ToString())
                                                              .First();
 
                 if (getProjectOwner == null)
@@ -132,6 +189,7 @@ namespace BusinessLayer.Concrete
         {
             try
             {
+                _ct.ThrowIfCancellationRequested();
                 var getProjectOwner = _worker.ProjectOwnerDal.Queryable().ToList();
 
                 if (getProjectOwner == null)

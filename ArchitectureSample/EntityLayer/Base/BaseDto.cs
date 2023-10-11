@@ -5,6 +5,7 @@ namespace EntityLayer.Base
     public class BaseDto : IDto
     {
         public Guid Id { get; set; }
+        public Guid ProjectOwnerId { get; set; }
         public bool IsActive { get; set; }
     }
 }

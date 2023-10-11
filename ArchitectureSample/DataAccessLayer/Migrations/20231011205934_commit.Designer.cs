@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(SystemContext))]
-    [Migration("20231011165011_projectOwnerTableAdded")]
-    partial class projectOwnerTableAdded
+    [Migration("20231011205934_commit")]
+    partial class commit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,7 +66,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProjectOwners");
+                    b.ToTable("ProjectOwner", "dbo");
                 });
 
             modelBuilder.Entity("EntityLayer.Entity.User", b =>
@@ -95,8 +95,8 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProjectOwnerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Surname")
                         .IsRequired()
@@ -114,7 +114,25 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProjectOwnerId");
+
                     b.ToTable("User", "dbo");
+                });
+
+            modelBuilder.Entity("EntityLayer.Entity.User", b =>
+                {
+                    b.HasOne("EntityLayer.Entity.ProjectOwner", "ProjectOwner")
+                        .WithMany("Users")
+                        .HasForeignKey("ProjectOwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProjectOwner");
+                });
+
+            modelBuilder.Entity("EntityLayer.Entity.ProjectOwner", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }
