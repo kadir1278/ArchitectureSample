@@ -2,6 +2,7 @@
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
+using EntityLayer.ViewModel.Authentication;
 
 namespace BusinessLayer.Concrete
 {
@@ -15,34 +16,29 @@ namespace BusinessLayer.Concrete
             _worker = worker;
         }
 
-        public IDataResult<bool> Login(string username, string password)
+        public IDataResult<LoginResponseViewModel> Login(string username, string password)
         {
             try
             {
                 _ct.ThrowIfCancellationRequested();
-                _worker.StartTransaction();
 
-                //var tcmb = _worker.TcmbExchangeService.GetAllTcmbExchanges();
-                //var nlrdw = _worker.NetherlandRdwService.GetInfoByPlate("PV130F");
-                //var model = _worker.UserDal.Queryable().ToList();
-                //
-                //var addedModel = _worker.UserDal.Add(new UserAddDto
-                //{
-                //    Name = "Kadir",
-                //    Surname = "Ari",
-                //    Password = password,
-                //    Username = username,
-                //}, _ct);
-                //
-                //TileMethots.SquareMeters(0.1m, 0m, 0m, 0m, 5);
+                var user = _worker.UserDal.Queryable().Where(x => x.Username == username && x.Password == password).FirstOrDefault();
+                if (user == null)
+                    return new ErrorDataResult<LoginResponseViewModel>("Kullanıcı giriş işlemi başarısız");
 
-                _worker.CommitAndSaveChanges();
-                return new SuccessDataResult<bool>(true);
+                if (!user.IsActive)
+                    return new ErrorDataResult<LoginResponseViewModel>("Kullanıcı aktif değil yöneticinizle görüşünüz");
+
+                return new SuccessDataResult<LoginResponseViewModel>(new LoginResponseViewModel()
+                {
+                    Token = "token buraya gelecek",
+                    TokenEndTime = DateTime.UtcNow, // token bitiş süresi buraya gelecek
+                });
             }
             catch (Exception exception)
             {
                 _worker.RollbackTransaction();
-                return new ErrorDataResult<bool>(exception);
+                return new ErrorDataResult<LoginResponseViewModel>(exception);
             }
 
         }

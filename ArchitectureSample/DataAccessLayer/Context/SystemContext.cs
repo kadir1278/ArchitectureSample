@@ -32,6 +32,7 @@ namespace DataAccessLayer.Context
             });
 
             modelBuilder.Entity<ProjectOwner>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<ProjectOwner>().HasIndex(x => x.Domain);
         }
 
     }
