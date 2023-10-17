@@ -1,6 +1,6 @@
 using BusinessLayer.DependecyResolver;
-using CoreLayer.Extensions;
 using MiddlewareLayer.Extensions;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,5 +1,4 @@
 ﻿using BusinessLayer.Abstract;
-using CoreLayer.Helper;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
@@ -123,7 +122,7 @@ namespace BusinessLayer.Concrete
             }
         }
 
-        public IDataResult<bool> DeleteProjectOwner(Guid projectOwnerId)
+        public IDataResult<ProjectOwner> DeleteProjectOwner(Guid projectOwnerId)
         {
             try
             {
@@ -134,15 +133,15 @@ namespace BusinessLayer.Concrete
                 if (!deletedProjectOwner.IsSuccess)
                 {
                     _worker.RollbackTransaction();
-                    return new ErrorDataResult<bool>(String.Join("-", deletedProjectOwner.Messages));
+                    return new ErrorDataResult<ProjectOwner>(String.Join("-", deletedProjectOwner.Messages));
                 }
                 _worker.CommitAndSaveChanges();
-                return new SuccessDataResult<bool>(true);
+                return new SuccessDataResult<ProjectOwner>(deletedProjectOwner.Data);
             }
             catch (Exception ex)
             {
                 _worker.RollbackTransaction();
-                return new ErrorDataResult<bool>(ex);
+                return new ErrorDataResult<ProjectOwner>(ex);
             }
         }
 
@@ -200,6 +199,28 @@ namespace BusinessLayer.Concrete
             catch (Exception ex)
             {
                 return new ErrorDataResult<ICollection<ProjectOwner>>(ex);
+            }
+        }
+
+        public IDataResult<bool> GetProjectOwnerStatus(string domain, string projectName)
+        {
+            try
+            {
+                _ct.ThrowIfCancellationRequested();
+                var getProjectOwner = _worker.ProjectOwnerDal.Queryable()
+                                                             .Where(x => x.Domain == domain
+                                                                      && x.ProjectName == projectName 
+                                                                      && x.IsActive)
+                                                             .First();
+
+                if (getProjectOwner == null)
+                    return new ErrorDataResult<bool>(String.Join("-", "Proje bulunamadı"));
+
+                return new SuccessDataResult<bool>(true);
+            }
+            catch (Exception ex)
+            {
+                return new ErrorDataResult<bool>(ex);
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿using CoreLayer.Utilities.Results.Abstract;
-using EntityLayer.Dto.ProjectOwner;
 using EntityLayer.Dto.User;
 using EntityLayer.Entity;
 

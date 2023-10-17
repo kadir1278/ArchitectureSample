@@ -34,10 +34,13 @@ namespace MiddlewareLayer.Extensions
             if (middlewareSettings.HostFilterStatus) applicationBuilder.UseMiddleware<HostFilterMiddleware>();
             if (middlewareSettings.LoggerStatus) applicationBuilder.UseMiddleware<LoggerForMiddleware>();
 
+            applicationBuilder.UseMiddleware<CheckProjectStatusMiddleware>();
+
             return applicationBuilder;
         }
         public static IServiceCollection AddScopedForMiddleware(this IServiceCollection services)
         {
+            services.AddScoped<CheckProjectStatusMiddleware>();
             services.AddScoped<GlobalExceptionMiddleware>();
             services.AddScoped<HostFilterMiddleware>();
             services.AddScoped<LoggerForMiddleware>();

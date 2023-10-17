@@ -1,5 +1,4 @@
-﻿using CoreLayer.Helper;
-using CoreLayer.Utilities.Results.Abstract;
+﻿using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
 using EntityLayer.ViewModel.Authentication;

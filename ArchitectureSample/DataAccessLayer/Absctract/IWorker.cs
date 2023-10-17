@@ -8,6 +8,7 @@ namespace DataAccessLayer.Absctract
         IProjectOwnerDal ProjectOwnerDal { get; }
         ITCMBExchangeService TcmbExchangeService { get; }
         INetherlandRdwService NetherlandRdwService { get; }
+        ICompanyDal CompanyDal { get; }
 
         /// <summary>
         /// Bir transcation session başlatılır 

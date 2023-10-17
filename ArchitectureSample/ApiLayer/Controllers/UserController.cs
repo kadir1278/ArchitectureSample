@@ -1,8 +1,5 @@
 ﻿using BusinessLayer.Abstract;
-using BusinessLayer.Concrete;
-using EntityLayer.Dto.ProjectOwner;
 using EntityLayer.Dto.User;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiLayer.Controllers

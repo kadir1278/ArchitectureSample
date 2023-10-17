@@ -4,14 +4,6 @@ using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
 using EntityLayer.Dto.User;
 using EntityLayer.Entity;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
@@ -73,7 +65,20 @@ namespace BusinessLayer.Concrete
 
         public IDataResult<User> GetUser(Guid userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _ct.ThrowIfCancellationRequested();
+                var getUser = _worker.UserDal.Queryable().Where(x => x.Id == userId).FirstOrDefault();
+
+                if (getUser == null)
+                    return new ErrorDataResult<User>(String.Join("-", "Kullanıcı bulunamadı"));
+
+                return new SuccessDataResult<User>(getUser);
+            }
+            catch (Exception ex)
+            {
+                return new ErrorDataResult<User>(ex);
+            }
         }
 
         public IDataResult<ICollection<User>> GetUserCollection()
