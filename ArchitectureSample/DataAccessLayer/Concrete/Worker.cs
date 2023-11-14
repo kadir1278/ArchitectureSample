@@ -1,8 +1,8 @@
-﻿using CoreLayer.Business.Abstract;
-using CoreLayer.Business.Concrete;
-using CoreLayer.IoC;
+﻿using CoreLayer.IoC;
 using DataAccessLayer.Absctract;
 using DataAccessLayer.Context;
+using IntegrationLayer.Business.Abstract;
+using IntegrationLayer.Business.Concrete;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 

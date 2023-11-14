@@ -1,11 +1,11 @@
-﻿using CoreLayer.Business.Abstract;
-using CoreLayer.Entity.Dto.ExhangeServiceViewModel;
+﻿using CoreLayer.Entity.Dto.ExhangeServiceViewModel;
 using CoreLayer.Helper;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
+using IntegrationLayer.Business.Abstract;
 using System.Xml;
 
-namespace CoreLayer.Business.Concrete
+namespace IntegrationLayer.Business.Concrete
 {
     public class TCMBExchangeService : ITCMBExchangeService
     {

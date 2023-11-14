@@ -1,4 +1,5 @@
-﻿using CoreLayer.Extensions;
+﻿using CoreLayer.DataAccess.Constants;
+using CoreLayer.Extensions;
 using EntityLayer.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -7,15 +8,13 @@ namespace DataAccessLayer.Context
 {
     public class SystemContext : DbContext
     {
-        protected IHttpContextAccessor HttpContextAccessor { get; }
         private string _domain { get; set; }
         private string _cultureInfo { get; set; }
         public SystemContext(DbContextOptions dbContextOptions, IHttpContextAccessor httpContextAccessor) : base(dbContextOptions)
         {
-            this.HttpContextAccessor = httpContextAccessor;
-            _domain = HttpContextAccessor.HttpContext.Request.Host.ToString().ToLower();
-            _cultureInfo = String.IsNullOrEmpty(httpContextAccessor.HttpContext.Request.Cookies["CultureInfo"]) ? 
-                                                                                                        "tr-TR" : 
+            _domain = httpContextAccessor.HttpContext.Request.Host.ToString().ToLower();
+            _cultureInfo = String.IsNullOrEmpty(httpContextAccessor.HttpContext.Request.Cookies["CultureInfo"]) ?
+                                                                                                        CultureInfoHelper.Turkish :
                                                                                                         httpContextAccessor.HttpContext.Request.Cookies["CultureInfo"];
         }
         public DbSet<User> Users { get; set; }

@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityLayer", "EntityLayer\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddlewareLayer", "MiddlewareLayer\MiddlewareLayer.csproj", "{5A00017D-DE46-4232-9B84-28D2B34E235C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiLayer", "ApiLayer\ApiLayer.csproj", "{4A0127F8-104A-4466-BE67-C9B2D2CF35B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiLayer", "ApiLayer\ApiLayer.csproj", "{4A0127F8-104A-4466-BE67-C9B2D2CF35B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationLayer", "IntegrationLayer\IntegrationLayer.csproj", "{B203896A-781A-473E-80AD-C4BC0C1268D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{4A0127F8-104A-4466-BE67-C9B2D2CF35B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A0127F8-104A-4466-BE67-C9B2D2CF35B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A0127F8-104A-4466-BE67-C9B2D2CF35B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B203896A-781A-473E-80AD-C4BC0C1268D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B203896A-781A-473E-80AD-C4BC0C1268D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B203896A-781A-473E-80AD-C4BC0C1268D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B203896A-781A-473E-80AD-C4BC0C1268D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

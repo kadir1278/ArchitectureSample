@@ -22,7 +22,6 @@ namespace BusinessLayer.DependecyResolver
             serviceCollection.AddSingleton<IUserService, UserService>();
             serviceCollection.AddSingleton<IWorker, Worker>();
 
-
             return ServiceTool.Create(serviceCollection);
         }
     }

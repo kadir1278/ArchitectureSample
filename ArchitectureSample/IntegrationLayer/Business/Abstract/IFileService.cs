@@ -2,7 +2,7 @@
 using CoreLayer.Utilities.Results.Abstract;
 using Microsoft.AspNetCore.Http;
 
-namespace CoreLayer.Business.Abstract
+namespace IntegrationLayer.Business.Abstract
 {
     public interface IFileService
     {

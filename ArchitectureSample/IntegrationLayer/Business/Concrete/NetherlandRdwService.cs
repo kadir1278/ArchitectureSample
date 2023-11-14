@@ -1,10 +1,10 @@
-﻿using CoreLayer.Business.Abstract;
-using CoreLayer.Entity.ViewModel.NetherlandRdwServiceViewModel;
+﻿using CoreLayer.Entity.ViewModel.NetherlandRdwServiceViewModel;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
+using IntegrationLayer.Business.Abstract;
 using Newtonsoft.Json;
 
-namespace CoreLayer.Business.Concrete
+namespace IntegrationLayer.Business.Concrete
 {
     public class NetherlandRdwService : INetherlandRdwService
     {

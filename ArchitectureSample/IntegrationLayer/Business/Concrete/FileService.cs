@@ -1,11 +1,11 @@
-﻿using CoreLayer.Business.Abstract;
-using CoreLayer.Entity.ViewModel.FileViewModel;
+﻿using CoreLayer.Entity.ViewModel.FileViewModel;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
+using IntegrationLayer.Business.Abstract;
 using Microsoft.AspNetCore.Http;
 using System.IO.Compression;
 
-namespace CoreLayer.Business.Concrete
+namespace IntegrationLayer.Business.Concrete
 {
     public class FileService : IFileService
     {
@@ -28,7 +28,6 @@ namespace CoreLayer.Business.Concrete
 
         public string CreateToIFormFile(IFormFile formFile, string uploadPath)
         {
-            string returnPath;
             try
             {
                 string fileName = formFile.FileName;
@@ -42,14 +41,13 @@ namespace CoreLayer.Business.Concrete
                 {
                     formFile.CopyTo(stream);
                 }
-                returnPath = path;
+                return path;
             }
             catch (Exception)
             {
-                returnPath = null;
+                throw;
             }
 
-            return returnPath;
         }
 
         public IDataResult<DownloadFileViewModel> DownloadToZipFilePath(string filePath)

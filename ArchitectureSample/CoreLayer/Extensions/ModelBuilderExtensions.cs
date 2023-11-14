@@ -20,8 +20,6 @@ namespace CoreLayer.Extensions
                                     .Property(property.Name)
                                     .HasConversion(new ValueConverter<string, string>(v => EncryptionHelper.EncryptPassword(v),
                                                                                       v => EncryptionHelper.DecryptPassword(v)));
-
-
                     }
                 }
 

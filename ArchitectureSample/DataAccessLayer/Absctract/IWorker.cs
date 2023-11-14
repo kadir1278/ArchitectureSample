@@ -1,4 +1,4 @@
-﻿using CoreLayer.Business.Abstract;
+﻿using IntegrationLayer.Business.Abstract;
 
 namespace DataAccessLayer.Absctract
 {
