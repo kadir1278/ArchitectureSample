@@ -7,29 +7,28 @@ namespace MiddlewareLayer.Middleware
     public class LoggerForMiddleware : IMiddleware
     {
         private readonly ILogger<LoggerForMiddleware> _logger;
-        private readonly EventId _eventId;
+        private readonly Guid _requestId;
         public LoggerForMiddleware(ILogger<LoggerForMiddleware> logger)
         {
             _logger = logger;
-            _eventId = new EventId();
+            _requestId = Guid.NewGuid();
         }
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            Guid requestId = Guid.NewGuid();
-            // başlangıç log işlemi
-            _logger.LogInformation(context.Request.Path + "Started Request Numarası : {0}", requestId);
+            context.Items["RequestId"] = _requestId;
+            _logger.LogInformation(context.Request.Path + "Started Request Numarası : {0}", _requestId);
             await next.Invoke(context); // yetkilendirme ve diğer işlemlerin tamamlanması
 
             switch (context.Response.StatusCode)
             {
                 case (int)HttpStatusCode.OK:
-                    _logger.LogInformation(context.Request.Path + "Success RequestId : {0}", requestId);
+                    _logger.LogInformation(context.Request.Path + "Success RequestId : {0}", _requestId);
                     break;
                 case (int)HttpStatusCode.Unauthorized:
-                    _logger.LogWarning(context.Request.Path + "UnAuthorized RequestId : {0}", requestId);
+                    _logger.LogWarning(context.Request.Path + "UnAuthorized RequestId : {0}", _requestId);
                     break;
                 default:
-                    _logger.LogInformation(context.Request.Path + "Finished Request Numarası : {0}", requestId);
+                    _logger.LogInformation(context.Request.Path + "Finished Request Numarası : {0}", _requestId);
                     break;
             }
 

@@ -33,8 +33,7 @@ namespace MiddlewareLayer.Extensions
             if (middlewareSettings.GlobalExceptionModel.Status) applicationBuilder.UseMiddleware<GlobalExceptionMiddleware>();
             if (middlewareSettings.HostFilterStatus) applicationBuilder.UseMiddleware<HostFilterMiddleware>();
             if (middlewareSettings.LoggerStatus) applicationBuilder.UseMiddleware<LoggerForMiddleware>();
-
-            applicationBuilder.UseMiddleware<CheckProjectStatusMiddleware>();
+            if (middlewareSettings.CheckProjectStatus) applicationBuilder.UseMiddleware<CheckProjectStatusMiddleware>();
 
             return applicationBuilder;
         }

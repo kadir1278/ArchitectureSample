@@ -23,7 +23,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.GlobalFilter();
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllers();
 

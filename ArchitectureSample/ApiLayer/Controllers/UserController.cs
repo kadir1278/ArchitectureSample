@@ -9,9 +9,12 @@ namespace ApiLayer.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly ILogger<UserController> _logger;
+        public UserController(IUserService userService, ILogger<UserController> logger, IHttpContextAccessor httpContextAccessor)
         {
             _userService = userService;
+            _logger = logger;
+            _logger.LogInformation($"Request UserController constructor has ready {httpContextAccessor.HttpContext.Items["RequestId"].ToString()}");
         }
 
         [HttpGet("list-user")]
