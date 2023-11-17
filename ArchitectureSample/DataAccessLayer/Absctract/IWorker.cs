@@ -9,6 +9,7 @@ namespace DataAccessLayer.Absctract
         ITCMBExchangeService TcmbExchangeService { get; }
         INetherlandRdwService NetherlandRdwService { get; }
         ICompanyDal CompanyDal { get; }
+        ICookieService CookieService { get; }
 
         /// <summary>
         /// Bir transcation session başlatılır 

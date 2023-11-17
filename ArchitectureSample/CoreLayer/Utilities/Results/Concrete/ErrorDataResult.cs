@@ -1,8 +1,4 @@
-﻿using CoreLayer.Extensions;
-using CoreLayer.Helper;
-using Microsoft.AspNetCore.Http;
-
-namespace CoreLayer.Utilities.Results.Concrete
+﻿namespace CoreLayer.Utilities.Results.Concrete
 {
     public class ErrorDataResult<T> : DataResult<T>
     {

@@ -1,7 +1,4 @@
 using BusinessLayer.DependecyResolver;
-using CoreLayer.Helper;
-using DataAccessLayer.Context;
-using Microsoft.EntityFrameworkCore;
 using MiddlewareLayer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

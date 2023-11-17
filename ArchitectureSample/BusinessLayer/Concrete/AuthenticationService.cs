@@ -27,7 +27,7 @@ namespace BusinessLayer.Concrete
 
                 if (!user.IsActive)
                     return new ErrorDataResult<LoginResponseViewModel>("Kullanıcı aktif değil yöneticinizle görüşünüz");
-
+               
                 return new SuccessDataResult<LoginResponseViewModel>(new LoginResponseViewModel()
                 {
                     Token = "token buraya gelecek",

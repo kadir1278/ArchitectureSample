@@ -56,6 +56,7 @@ namespace DataAccessLayer.Concrete
         private INetherlandRdwService _netherlandRdwService;
         private IProjectOwnerDal _projectOwnerDal;
         private ICompanyDal _companyDal;
+        private ICookieService _cookieService;
 
         public IUserDal UserDal
         {
@@ -113,5 +114,17 @@ namespace DataAccessLayer.Concrete
                 return _companyDal;
             }
         }
+        public ICookieService CookieService
+        {
+            get
+            {
+                if (_cookieService is not null)
+                    return _cookieService;
+
+                _cookieService = new CookieService();
+                return _cookieService;
+            }
+        }
+
     }
 }
