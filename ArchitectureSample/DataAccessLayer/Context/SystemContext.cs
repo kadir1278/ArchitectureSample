@@ -1,5 +1,6 @@
 ﻿using CoreLayer.DataAccess.Constants;
 using CoreLayer.Extensions;
+using CoreLayer.Helper;
 using EntityLayer.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +11,21 @@ namespace DataAccessLayer.Context
     {
         private string _domain { get; set; }
         private string _cultureInfo { get; set; }
-        public SystemContext(DbContextOptions dbContextOptions, IHttpContextAccessor httpContextAccessor) : base(dbContextOptions)
+        private readonly HttpContext _context;
+        public SystemContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
-            _domain = httpContextAccessor.HttpContext.Request.Host.ToString().ToLower();
-            _cultureInfo = String.IsNullOrEmpty(httpContextAccessor.HttpContext.Request.Cookies["CultureInfo"]) ?
-                                                                                                        CultureInfoHelper.Turkish :
-                                                                                                        httpContextAccessor.HttpContext.Request.Cookies["CultureInfo"];
+            _context = HttpContextHelper.GetHttpContext();
+            if (_context is not null)
+            {
+                _domain = _context.Request.Host.ToString().ToLower();
+                _cultureInfo = String.IsNullOrEmpty(_context.Request.Cookies["CultureInfo"]) ? CultureInfoHelper.Turkish : _context.Request.Cookies["CultureInfo"];
+            }
+            else
+            {
+                _cultureInfo = CultureInfoHelper.Turkish;
+            }
         }
+       
         public DbSet<User> Users { get; set; }
         public DbSet<ProjectOwner> ProjectOwners { get; set; }
 

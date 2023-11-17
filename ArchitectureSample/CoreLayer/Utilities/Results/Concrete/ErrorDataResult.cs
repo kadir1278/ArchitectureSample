@@ -1,7 +1,12 @@
-﻿namespace CoreLayer.Utilities.Results.Concrete
+﻿using CoreLayer.Extensions;
+using CoreLayer.Helper;
+using Microsoft.AspNetCore.Http;
+
+namespace CoreLayer.Utilities.Results.Concrete
 {
     public class ErrorDataResult<T> : DataResult<T>
     {
+
         public ErrorDataResult(Exception exception)
         {
             IsSuccess = false;
@@ -11,6 +16,7 @@
         {
             IsSuccess = false;
             Messages.Add(errorMessage);
+
         }
     }
 }

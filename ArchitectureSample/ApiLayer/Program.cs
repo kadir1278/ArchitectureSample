@@ -1,4 +1,7 @@
 using BusinessLayer.DependecyResolver;
+using CoreLayer.Helper;
+using DataAccessLayer.Context;
+using Microsoft.EntityFrameworkCore;
 using MiddlewareLayer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,7 +26,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.GlobalFilter();
-//app.UseAuthorization();
+app.UseAuthorization();
 
 app.MapControllers();
 

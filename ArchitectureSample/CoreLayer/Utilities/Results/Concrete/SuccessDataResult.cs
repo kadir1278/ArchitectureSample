@@ -1,4 +1,7 @@
-﻿namespace CoreLayer.Utilities.Results.Concrete
+﻿using CoreLayer.Extensions;
+using Microsoft.AspNetCore.Http;
+
+namespace CoreLayer.Utilities.Results.Concrete
 {
     public class SuccessDataResult<T> : DataResult<T>
     {
