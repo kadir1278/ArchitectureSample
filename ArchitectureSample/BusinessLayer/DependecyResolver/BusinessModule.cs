@@ -15,7 +15,7 @@ namespace BusinessLayer.DependecyResolver
     {
         public static IServiceCollection LoadModule(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddDbContext<SystemContext>();
+            serviceCollection.AddDbContext<SystemContext>(options => options.UseSqlServer(ConfigurationHelper.GetSqlConnectionString()));
             serviceCollection.AddSingleton<ICompanyService, CompanyService>();
             serviceCollection.AddSingleton<IProjectOwnerService, ProjectOwnerService>();
             serviceCollection.AddSingleton<IAuthenticationService, AuthenticationService>();

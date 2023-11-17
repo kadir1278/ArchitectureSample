@@ -32,7 +32,7 @@ namespace BusinessLayer.Concrete
                                                                    .Where(x => x.Id == projectOwnerId)
                                                                    .First();
 
-                if (getProjectOwnerByGuid == null)
+                if (getProjectOwnerByGuid is null)
                 {
                     _worker.RollbackTransaction();
                     return new ErrorDataResult<bool>("Proje bulunamadı");
@@ -97,7 +97,7 @@ namespace BusinessLayer.Concrete
                                                                    .Where(x => x.Id == projectOwnerId)
                                                                    .First();
 
-                if (getProjectOwnerByGuid == null)
+                if (getProjectOwnerByGuid is null)
                 {
                     _worker.RollbackTransaction();
                     return new ErrorDataResult<bool>("Proje bulunamadı");
@@ -154,7 +154,7 @@ namespace BusinessLayer.Concrete
                                                              .Where(x => x.Id == projectOwnerId)
                                                              .First();
 
-                if (getProjectOwner == null)
+                if (getProjectOwner is null)
                     return new ErrorDataResult<ProjectOwner>(String.Join("-", "Proje bulunamadı"));
 
                 return new SuccessDataResult<ProjectOwner>(getProjectOwner);
@@ -173,7 +173,7 @@ namespace BusinessLayer.Concrete
                                                              .Where(x => x.Domain == _contextAccessor.HttpContext.Request.Host.ToString())
                                                              .First();
 
-                if (getProjectOwner == null)
+                if (getProjectOwner is null)
                     return new ErrorDataResult<ProjectOwner>(String.Join("-", "Proje bulunamadı"));
 
                 return new SuccessDataResult<ProjectOwner>(getProjectOwner);
@@ -191,7 +191,7 @@ namespace BusinessLayer.Concrete
                 _ct.ThrowIfCancellationRequested();
                 var getProjectOwner = _worker.ProjectOwnerDal.Queryable().ToList();
 
-                if (getProjectOwner == null)
+                if (getProjectOwner is null)
                     return new ErrorDataResult<ICollection<ProjectOwner>>(String.Join("-", "Proje bulunamadı"));
 
                 return new SuccessDataResult<ICollection<ProjectOwner>>(getProjectOwner);
@@ -209,11 +209,11 @@ namespace BusinessLayer.Concrete
                 _ct.ThrowIfCancellationRequested();
                 var getProjectOwner = _worker.ProjectOwnerDal.Queryable()
                                                              .Where(x => x.Domain == domain
-                                                                      && x.ProjectName == projectName 
+                                                                      && x.ProjectName == projectName
                                                                       && x.IsActive)
                                                              .First();
 
-                if (getProjectOwner == null)
+                if (getProjectOwner is null)
                     return new ErrorDataResult<bool>(String.Join("-", "Proje bulunamadı"));
 
                 return new SuccessDataResult<bool>(true);

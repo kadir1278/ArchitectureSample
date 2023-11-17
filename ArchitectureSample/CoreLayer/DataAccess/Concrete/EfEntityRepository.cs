@@ -76,7 +76,7 @@ namespace CoreLayer.DataAccess.Concrete
             try
             {
                 TEntity entity = _entities.Find(Id);
-                if (entity == null)
+                if (entity is null)
                     return new ErrorDataResult<TEntity>(DatabaseErrorMessage.NotFound);
 
                 entity.IsDeleted = true;
@@ -128,7 +128,7 @@ namespace CoreLayer.DataAccess.Concrete
             try
             {
                 TEntity entity = _entities.Find(dto.Id);
-                if (entity == null)
+                if (entity is null)
                     return new ErrorDataResult<TEntity>(DatabaseErrorMessage.NotFound);
                 entity = dto.Adapt<TEntity>();
                 entity = DatabaseModelHelper<TEntity, TUpdateDto>.ModelUpdaterComplete(dto);
@@ -157,7 +157,7 @@ namespace CoreLayer.DataAccess.Concrete
                 {
 
                     TEntity entity = _entities.Find(dto.Id);
-                    if (entity == null)
+                    if (entity is null)
                         return new ErrorDataResult<ICollection<TEntity>>(DatabaseErrorMessage.NotFound);
 
                     entity = DatabaseModelHelper<TEntity, TUpdateDto>.ModelUpdaterComplete(dto);

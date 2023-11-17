@@ -22,7 +22,7 @@ namespace BusinessLayer.Concrete
                 _ct.ThrowIfCancellationRequested();
 
                 var user = _worker.UserDal.Queryable().Where(x => x.Username == username && x.Password == password).FirstOrDefault();
-                if (user == null)
+                if (user is null)
                     return new ErrorDataResult<LoginResponseViewModel>("Kullanıcı giriş işlemi başarısız");
 
                 if (!user.IsActive)

@@ -13,7 +13,7 @@ namespace MiddlewareLayer.Middleware
             {
                 string jsonFile = "MiddlewareSettings.json";
 
-                if (_configurationRoot == null)
+                if (_configurationRoot is null)
                     _configurationRoot = new ConfigurationBuilder()
                         .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                         .AddJsonFile(jsonFile)

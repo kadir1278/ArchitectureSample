@@ -75,7 +75,7 @@ namespace BusinessLayer.Concrete
                 _ct.ThrowIfCancellationRequested();
                 var getCompany = _worker.CompanyDal.Queryable().ToList();
 
-                if (getCompany == null)
+                if (getCompany is null)
                     return new ErrorDataResult<ICollection<Company>>(String.Join("-", "Kullanıcı bulunamadı"));
 
                 return new SuccessDataResult<ICollection<Company>>(getCompany);

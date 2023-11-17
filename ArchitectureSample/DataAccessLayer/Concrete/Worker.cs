@@ -23,7 +23,7 @@ namespace DataAccessLayer.Concrete
         public void RollbackTransaction()
         {
 
-            if (_transaction == null) { return; }
+            if (_transaction is null) { return; }
             _transaction.Rollback();
             _transaction.DisposeAsync();
             _transaction.Dispose();
@@ -31,7 +31,7 @@ namespace DataAccessLayer.Concrete
 
         public void DisposeTransaction()
         {
-            if (_transaction != null) _transaction.Dispose();
+            if (_transaction is not null) _transaction.Dispose();
             _transaction = null;
             _context.Dispose();
         }
@@ -42,13 +42,13 @@ namespace DataAccessLayer.Concrete
         {
             _transaction.Commit();
             _context.SaveChanges();
-            if (_transaction != null) _transaction.Dispose();
+            if (_transaction is not null) _transaction.Dispose();
             _transaction = null;
         }
         public void SaveChanges()
         {
             _context.SaveChanges();
-            if (_transaction != null) _transaction.Dispose();
+            if (_transaction is not null) _transaction.Dispose();
             _transaction = null;
         }
         private IUserDal _userDal;
@@ -61,7 +61,7 @@ namespace DataAccessLayer.Concrete
         {
             get
             {
-                if (_userDal != null)
+                if (_userDal is not null)
                     return _userDal;
 
                 _userDal = new EfUserDal(_context);
@@ -73,7 +73,7 @@ namespace DataAccessLayer.Concrete
         {
             get
             {
-                if (_exchangeService != null)
+                if (_exchangeService is not null)
                     return _exchangeService;
 
                 _exchangeService = new TCMBExchangeService();
@@ -84,7 +84,7 @@ namespace DataAccessLayer.Concrete
         {
             get
             {
-                if (_netherlandRdwService != null)
+                if (_netherlandRdwService is not null)
                     return _netherlandRdwService;
 
                 _netherlandRdwService = new NetherlandRdwService();
@@ -95,7 +95,7 @@ namespace DataAccessLayer.Concrete
         {
             get
             {
-                if (_projectOwnerDal != null)
+                if (_projectOwnerDal is not null)
                     return _projectOwnerDal;
 
                 _projectOwnerDal = new EfProjectOwnerDal(_context);
@@ -106,7 +106,7 @@ namespace DataAccessLayer.Concrete
         {
             get
             {
-                if (_companyDal != null)
+                if (_companyDal is not null)
                     return _companyDal;
 
                 _companyDal = new EfCompanyDal(_context);

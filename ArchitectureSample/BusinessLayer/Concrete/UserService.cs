@@ -70,7 +70,7 @@ namespace BusinessLayer.Concrete
                 _ct.ThrowIfCancellationRequested();
                 var getUser = _worker.UserDal.Queryable().Where(x => x.Id == userId).FirstOrDefault();
 
-                if (getUser == null)
+                if (getUser is null)
                     return new ErrorDataResult<User>(String.Join("-", "Kullanıcı bulunamadı"));
 
                 return new SuccessDataResult<User>(getUser);
@@ -88,7 +88,7 @@ namespace BusinessLayer.Concrete
                 _ct.ThrowIfCancellationRequested();
                 var getUser = _worker.UserDal.Queryable().ToList();
 
-                if (getUser == null)
+                if (getUser is null)
                     return new ErrorDataResult<ICollection<User>>(String.Join("-", "Kullanıcı bulunamadı"));
 
                 return new SuccessDataResult<ICollection<User>>(getUser);

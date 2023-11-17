@@ -23,7 +23,7 @@ namespace IntegrationLayer.Business.Concrete
                 foreach (var to in mailDto.toArray)
                     message.To.Add(new MailAddress(to));
 
-                if (mailDto.ccArray != null)
+                if (mailDto.ccArray is not null)
                 {
                     foreach (var cc in mailDto.ccArray)
                     {
@@ -37,7 +37,7 @@ namespace IntegrationLayer.Business.Concrete
 
 
 
-                if (mailDto.attachment != null && mailDto.attachment.Count() > 0)
+                if (mailDto.attachment is not null && mailDto.attachment.Count() > 0)
                 {
                     foreach (var item in mailDto.attachment)
                         message.Attachments.Add(item);

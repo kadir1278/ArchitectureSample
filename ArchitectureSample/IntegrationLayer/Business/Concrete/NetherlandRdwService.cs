@@ -27,7 +27,7 @@ namespace IntegrationLayer.Business.Concrete
                     returnModel = JsonConvert.DeserializeObject<List<GetInfoByPlateViewModel>>(returnJsonObject).FirstOrDefault();
                 }
 
-                if (returnModel == null)
+                if (returnModel is null)
                     return new ErrorDataResult<GetInfoByPlateViewModel>("Plate Info Not Found");
 
                 return new SuccessDataResult<GetInfoByPlateViewModel>(returnModel);

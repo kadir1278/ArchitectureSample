@@ -10,7 +10,7 @@ namespace CoreLayer.Helper
         {
             get
             {
-                if (_configurationRoot == null)
+                if (_configurationRoot is null)
                     _configurationRoot = new ConfigurationBuilder()
                         .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                         .AddJsonFile("appsettings.json")
