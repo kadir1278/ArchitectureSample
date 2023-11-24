@@ -1,4 +1,4 @@
-﻿namespace MiddlewareLayer
+﻿namespace CoreLayer.Entity.Dtos
 {
     public class MiddlewareSettings
     {

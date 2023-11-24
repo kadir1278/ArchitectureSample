@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using CoreLayer.Entity.Dtos;
+using CoreLayer.Helper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MiddlewareLayer.Middleware;
@@ -28,7 +30,8 @@ namespace MiddlewareLayer.Extensions
 
         public static IApplicationBuilder GlobalFilter(this IApplicationBuilder applicationBuilder)
         {
-            MiddlewareSettings middlewareSettings = configurationRoot.Get<MiddlewareSettings>();
+
+            MiddlewareSettings middlewareSettings = ConfigurationHelper.GetMiddlewareSettings();
 
             if (middlewareSettings.GlobalExceptionModel.Status) applicationBuilder.UseMiddleware<GlobalExceptionMiddleware>();
             if (middlewareSettings.HostFilterStatus) applicationBuilder.UseMiddleware<HostFilterMiddleware>();

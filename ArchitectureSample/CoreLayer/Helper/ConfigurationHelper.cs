@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CoreLayer.Entity.Dtos;
+using Microsoft.Extensions.Configuration;
 
 namespace CoreLayer.Helper
 {
@@ -66,6 +67,13 @@ namespace CoreLayer.Helper
         public static string GetSecurityKey()
         {
             return configurationRoot.GetSection("EncryptKey").Get<string>();
+        }
+        #endregion
+
+        #region GetSecurityKey
+        public static MiddlewareSettings GetMiddlewareSettings()
+        {
+            return configurationRoot.Get<MiddlewareSettings>();
         }
         #endregion
 
