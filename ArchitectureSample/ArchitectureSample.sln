@@ -1,4 +1,3 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
@@ -16,6 +15,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiLayer", "ApiLayer\ApiLayer.csproj", "{4A0127F8-104A-4466-BE67-C9B2D2CF35B7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationLayer", "IntegrationLayer\IntegrationLayer.csproj", "{B203896A-781A-473E-80AD-C4BC0C1268D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttributeExtensionLayer", "AttributeExtensionLayer\AttributeExtensionLayer.csproj", "{93374E24-BA04-482D-9280-6B84AA21910A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +52,10 @@ Global
 		{B203896A-781A-473E-80AD-C4BC0C1268D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B203896A-781A-473E-80AD-C4BC0C1268D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B203896A-781A-473E-80AD-C4BC0C1268D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93374E24-BA04-482D-9280-6B84AA21910A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93374E24-BA04-482D-9280-6B84AA21910A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93374E24-BA04-482D-9280-6B84AA21910A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93374E24-BA04-482D-9280-6B84AA21910A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

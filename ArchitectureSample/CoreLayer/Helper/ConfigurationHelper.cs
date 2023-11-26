@@ -70,7 +70,7 @@ namespace CoreLayer.Helper
         }
         #endregion
 
-        #region GetSecurityKey
+        #region GetMiddlewareSetting
         public static MiddlewareSettings GetMiddlewareSettings()
         {
             return configurationRoot.Get<MiddlewareSettings>();

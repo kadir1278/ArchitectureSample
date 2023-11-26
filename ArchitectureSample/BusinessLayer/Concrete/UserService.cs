@@ -1,9 +1,11 @@
-﻿using BusinessLayer.Abstract;
+﻿using AttributeExtensionLayer;
+using BusinessLayer.Abstract;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
 using EntityLayer.Dto.User;
 using EntityLayer.Entity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLayer.Concrete
 {
@@ -22,6 +24,7 @@ namespace BusinessLayer.Concrete
         {
             throw new NotImplementedException();
         }
+
 
         public IDataResult<User> AddUser(UserAddDto userAddDto)
         {
@@ -80,7 +83,7 @@ namespace BusinessLayer.Concrete
                 return new ErrorDataResult<User>(ex);
             }
         }
-
+       
         public IDataResult<ICollection<User>> GetUserCollection()
         {
             try

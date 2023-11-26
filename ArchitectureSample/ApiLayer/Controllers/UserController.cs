@@ -1,4 +1,6 @@
-﻿using BusinessLayer.Abstract;
+﻿using AttributeExtensionLayer;
+using AttributeExtensionLayer.ActionFilter;
+using BusinessLayer.Abstract;
 using EntityLayer.Dto.User;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +20,7 @@ namespace ApiLayer.Controllers
         }
 
         [HttpGet("list-user")]
+        [ClientIpCheckActionFilter]
         public IActionResult ListUser()
         {
             try
