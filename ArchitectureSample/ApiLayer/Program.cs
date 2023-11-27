@@ -1,3 +1,5 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using BusinessLayer.DependecyResolver;
 using MiddlewareLayer.Extensions;
 
@@ -11,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScopedForMiddleware();
 builder.Services.LoadModule();
 builder.Services.AddSwaggerGen();
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutoFacBusinessModule()));
 
 var app = builder.Build();
 

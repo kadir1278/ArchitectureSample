@@ -1,8 +1,7 @@
-﻿using AttributeExtensionLayer;
-using AttributeExtensionLayer.ActionFilter;
-using BusinessLayer.Abstract;
+﻿using BusinessLayer.Abstract;
 using EntityLayer.Dto.User;
 using Microsoft.AspNetCore.Mvc;
+using System.Security;
 
 namespace ApiLayer.Controllers
 {
@@ -20,7 +19,7 @@ namespace ApiLayer.Controllers
         }
 
         [HttpGet("list-user")]
-        [ClientIpCheckActionFilter]
+        //[ClientIpCheckActionFilter]
         public IActionResult ListUser()
         {
             try
@@ -30,10 +29,15 @@ namespace ApiLayer.Controllers
 
                 return Ok(result);
             }
+            catch (SecurityException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.Message);
             }
+
         }
         [HttpPost("add-user")]
         public IActionResult AddUser(UserAddDto model)

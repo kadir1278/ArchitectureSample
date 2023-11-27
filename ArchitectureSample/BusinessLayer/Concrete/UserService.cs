@@ -1,11 +1,10 @@
-﻿using AttributeExtensionLayer;
+﻿using AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInteceptors;
 using BusinessLayer.Abstract;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
 using EntityLayer.Dto.User;
 using EntityLayer.Entity;
-using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLayer.Concrete
 {
@@ -83,7 +82,8 @@ namespace BusinessLayer.Concrete
                 return new ErrorDataResult<User>(ex);
             }
         }
-       
+
+        [IpCheckOperation]
         public IDataResult<ICollection<User>> GetUserCollection()
         {
             try
