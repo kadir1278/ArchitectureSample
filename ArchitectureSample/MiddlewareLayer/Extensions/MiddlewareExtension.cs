@@ -9,43 +9,22 @@ namespace MiddlewareLayer.Extensions
 {
     public static class MiddlewareExtension
     {
-        #region Constructor
-        private static IConfigurationRoot _configurationRoot;
-        private static IConfigurationRoot configurationRoot
-        {
-            get
-            {
-                string jsonFile = "MiddlewareSettings.json";
-
-                if (_configurationRoot is null)
-                    _configurationRoot = new ConfigurationBuilder()
-                        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                        .AddJsonFile(jsonFile)
-                        .Build();
-
-                return _configurationRoot;
-            }
-        }
-        #endregion
-
         public static IApplicationBuilder GlobalFilter(this IApplicationBuilder applicationBuilder)
         {
 
             MiddlewareSettings middlewareSettings = ConfigurationHelper.GetMiddlewareSettings();
 
-            if (middlewareSettings.GlobalExceptionModel.Status) applicationBuilder.UseMiddleware<GlobalExceptionMiddleware>();
+           applicationBuilder.UseMiddleware<GlobalExceptionMiddleware>();
             if (middlewareSettings.HostFilterStatus) applicationBuilder.UseMiddleware<HostFilterMiddleware>();
-            if (middlewareSettings.LoggerStatus) applicationBuilder.UseMiddleware<LoggerForMiddleware>();
             if (middlewareSettings.CheckProjectStatus) applicationBuilder.UseMiddleware<CheckProjectStatusMiddleware>();
 
             return applicationBuilder;
         }
         public static IServiceCollection AddScopedForMiddleware(this IServiceCollection services)
         {
-            services.AddScoped<CheckProjectStatusMiddleware>();
             services.AddScoped<GlobalExceptionMiddleware>();
+            services.AddScoped<CheckProjectStatusMiddleware>();
             services.AddScoped<HostFilterMiddleware>();
-            services.AddScoped<LoggerForMiddleware>();
             return services;
         }
     }

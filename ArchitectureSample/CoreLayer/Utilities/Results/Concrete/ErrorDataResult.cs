@@ -6,12 +6,12 @@
         public ErrorDataResult(Exception exception)
         {
             IsSuccess = false;
-            Messages.Add(exception.Message);
+            Messages = exception.Message;
         }
         public ErrorDataResult(string errorMessage)
         {
             IsSuccess = false;
-            Messages.Add(errorMessage);
+            Messages = errorMessage;
 
         }
     }

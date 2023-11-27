@@ -32,13 +32,12 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInt
                     }
                 }
                 if (flag)
-                    throw new SecurityException(JsonSerializer.Serialize(new ErrorDataResult<bool>("Forbidden error")));
+                {
+                    _httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
+                    throw new SecurityException("Forbidden error");
+                }
                 else
                     return;
-            }
-            catch (SecurityException)
-            {
-                throw;
             }
             catch (Exception)
             {

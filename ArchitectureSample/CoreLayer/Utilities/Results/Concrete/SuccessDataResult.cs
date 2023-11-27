@@ -7,5 +7,11 @@
             IsSuccess = true;
             Data = data;
         }
+        public SuccessDataResult(T data, string message)
+        {
+            IsSuccess = true;
+            Data = data;
+            Messages = message;
+        }
     }
 }
