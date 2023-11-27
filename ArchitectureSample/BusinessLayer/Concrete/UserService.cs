@@ -91,8 +91,7 @@ namespace BusinessLayer.Concrete
                 _ct.ThrowIfCancellationRequested();
                 var getUser = _worker.UserDal.Queryable().ToList();
 
-                if (getUser is null)
-                    return new ErrorDataResult<ICollection<User>>(String.Join("-", "Kullanıcı bulunamadı"));
+                if (getUser is null) return new ErrorDataResult<ICollection<User>>(String.Join("-", "Kullanıcı bulunamadı"));
 
                 return new SuccessDataResult<ICollection<User>>(getUser);
             }

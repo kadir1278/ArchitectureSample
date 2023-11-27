@@ -22,18 +22,21 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac
                 invocation.Proceed();
                 isSuccess = true;
             }
+            catch (FormatException)
+            {
+                OnException(invocation);
+                throw;
+            }
             catch (SecurityException)
             {
                 OnException(invocation);
                 throw;
             }
-            catch (FormatException)
-            {
-                OnException(invocation);
-            }
+           
             catch (Exception)
             {
                 OnException(invocation);
+                throw;
             }
             finally
             {

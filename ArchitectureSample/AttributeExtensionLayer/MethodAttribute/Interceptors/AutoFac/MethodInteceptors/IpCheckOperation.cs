@@ -4,6 +4,7 @@ using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using System.Net.Http;
 using System.Security;
 using System.Text.Json;
 
@@ -14,15 +15,15 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInt
 
         protected override void OnBefore(IInvocation ınvocation)
         {
+                HttpContext _httpContext = HttpContextHelper.GetHttpContext();
             try
             {
-                HttpContext _httpContext = HttpContextHelper.GetHttpContext();
-
                 IPAddress ipAddress = _httpContext.Connection.RemoteIpAddress;
                 string[] strArray = new string[1] { "192.168.1.1" };
                 bool flag = true;
                 if (ipAddress.IsIPv4MappedToIPv6)
                     ipAddress = ipAddress.MapToIPv4();
+
                 foreach (string ipString in strArray)
                 {
                     if (IPAddress.Parse(ipString).Equals(ipAddress))
@@ -39,8 +40,19 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInt
                 else
                     return;
             }
+            catch (FormatException)
+            {
+                _httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
+                throw;
+            }
+            catch (SecurityException)
+            {
+                _httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
+                throw;
+            }
             catch (Exception)
             {
+                _httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
                 throw;
             }
 

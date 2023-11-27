@@ -23,7 +23,11 @@ namespace MiddlewareLayer.Middleware
                 context.Items["RequestId"] = _requestId;
                 _logger.LogInformation(context.Request.Path + " Started Request Numarası : {0}", _requestId);
                 await next.Invoke(context);
-                _logger.LogInformation(context.Request.Path + " Success RequestId : {0}", _requestId);
+            }
+            catch (FormatException ex)
+            {
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(new ErrorDataResult<string>(ex)));
+                _logger.LogCritical(context.Request.Path + " Forbidden RequestId : {0}", _requestId);
 
             }
             catch (SecurityException ex)
