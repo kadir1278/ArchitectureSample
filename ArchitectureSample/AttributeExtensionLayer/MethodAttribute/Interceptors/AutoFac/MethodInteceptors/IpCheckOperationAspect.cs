@@ -6,7 +6,7 @@ using System.Security;
 
 namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInteceptors
 {
-    public class IpCheckOperation : MethodInterception
+    public class IpCheckOperationAspect : MethodInterception
     {
 
         protected override void OnBefore(IInvocation ınvocation)

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.Security;
 
 namespace MiddlewareLayer.Middleware
@@ -38,6 +39,14 @@ namespace MiddlewareLayer.Middleware
                                       StatusCodes.Status403Forbidden,
                                       String.Join(context.Request.Path + " Forbidden RequestId : {0}", _requestId),
                                       LogLevel.Warning);
+            }
+            catch (ValidationException ex)
+            {
+                await CustomException(context,
+                                      ex,
+                                      StatusCodes.Status400BadRequest,
+                                      String.Join(context.Request.Path + " Forbidden RequestId : {0}", _requestId),
+                                      LogLevel.Information);
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using Castle.DynamicProxy;
+using System.ComponentModel.DataAnnotations;
 using System.Security;
 
 namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac
@@ -6,10 +7,10 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac
     public class MethodInterception : MethodInterceptionBaseAttribute
     {
 
-        protected virtual void OnBefore(IInvocation ınvocation) { }
-        protected virtual void OnException(IInvocation ınvocation) { }
-        protected virtual void OnSuccess(IInvocation ınvocation) { }
-        protected virtual void OnAfter(IInvocation ınvocation) { }
+        protected virtual void OnBefore(IInvocation invocation) { }
+        protected virtual void OnException(IInvocation invocation) { }
+        protected virtual void OnSuccess(IInvocation invocation) { }
+        protected virtual void OnAfter(IInvocation invocation) { }
 
         public override void Intercept(IInvocation invocation)
         {
@@ -30,7 +31,11 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac
                 OnException(invocation);
                 throw;
             }
-           
+            catch (ValidationException)
+            {
+                OnException(invocation);
+                throw;
+            }
             catch (Exception)
             {
                 OnException(invocation);

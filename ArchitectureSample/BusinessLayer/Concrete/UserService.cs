@@ -1,5 +1,6 @@
 ﻿using AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInteceptors;
 using BusinessLayer.Abstract;
+using BusinessLayer.ValidationRules.User;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
@@ -25,7 +26,7 @@ namespace BusinessLayer.Concrete
             throw new NotImplementedException();
         }
 
-
+        [ValidateOperationAspect(typeof(UserAddDtoValidator))]
         public IDataResult<User> AddUser(UserAddDto userAddDto)
         {
             try
@@ -84,7 +85,7 @@ namespace BusinessLayer.Concrete
             }
         }
 
-        [IpCheckOperation]
+        [IpCheckOperationAspect]
         public IDataResult<ICollection<User>> GetUserCollection()
         {
             try
