@@ -8,7 +8,6 @@ namespace IntegrationLayer.Business.Abstract
     {
         string ConvertBase64ToFile(string fileName, string fileType, string fileBase64, string uploadPath);
         public IDataResult<DownloadFileViewModel> DownloadToZipFilePath(string filePath);
-
         string CreateToIFormFile(IFormFile formFile, string uploadPath);
     }
 }

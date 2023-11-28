@@ -25,7 +25,7 @@ namespace DataAccessLayer.Context
                 _cultureInfo = CultureInfoHelper.Turkish;
             }
         }
-       
+
         public DbSet<User> Users { get; set; }
         public DbSet<ProjectOwner> ProjectOwners { get; set; }
 
@@ -33,15 +33,7 @@ namespace DataAccessLayer.Context
         {
             modelBuilder.ScriptEncryptAndDecrypt();
 
-
-            modelBuilder.Entity<User>(entity =>
-            {
-                if (_domain == "localhost:7081")
-                    entity = entity.HasQueryFilter(e => !e.IsDeleted && e.CultureInfo == _cultureInfo);
-                else
-                    entity = entity.HasQueryFilter(e => !e.IsDeleted && e.ProjectOwner.Domain == _domain && e.CultureInfo == _cultureInfo);
-            });
-
+            modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted && x.CultureInfo == _cultureInfo);
             modelBuilder.Entity<ProjectOwner>().HasQueryFilter(x => !x.IsDeleted && x.CultureInfo == _cultureInfo);
             modelBuilder.Entity<ProjectOwner>().HasIndex(x => x.Domain);
         }

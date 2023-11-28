@@ -11,9 +11,9 @@ namespace CoreLayer.Extensions
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 var properties = entityType.ClrType.GetProperties();
+
                 foreach (var property in properties)
                 {
-                    
                     if (property.PropertyType == typeof(string))
                     {
                         modelBuilder.Entity(entityType.Name)
@@ -27,6 +27,5 @@ namespace CoreLayer.Extensions
 
             return modelBuilder;
         }
-
     }
 }

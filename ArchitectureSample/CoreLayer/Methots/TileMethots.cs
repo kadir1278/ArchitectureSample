@@ -1,6 +1,6 @@
-﻿using EntityLayer.ViewModel.Tile;
+﻿using CoreLayer.Entity.ViewModel.Tile;
 
-namespace BusinessLayer.Methots
+namespace CoreLayer.Methots
 {
     public static class TileMethots
     {

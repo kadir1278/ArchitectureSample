@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System.Net;
 using System.Security;
 
 namespace MiddlewareLayer.Middleware
@@ -26,21 +25,36 @@ namespace MiddlewareLayer.Middleware
             }
             catch (FormatException ex)
             {
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(new ErrorDataResult<string>(ex)));
-                _logger.LogCritical(context.Request.Path + " Forbidden RequestId : {0}", _requestId);
-
+                await CustomException(context,
+                                      ex,
+                                      StatusCodes.Status409Conflict,
+                                      String.Join(context.Request.Path + " Conflict RequestId : {0}", _requestId),
+                                      LogLevel.Information);
             }
             catch (SecurityException ex)
             {
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(new ErrorDataResult<string>(ex)));
-                _logger.LogCritical(context.Request.Path + " Forbidden RequestId : {0}", _requestId);
+                await CustomException(context,
+                                      ex,
+                                      StatusCodes.Status403Forbidden,
+                                      String.Join(context.Request.Path + " Forbidden RequestId : {0}", _requestId),
+                                      LogLevel.Warning);
             }
             catch (Exception ex)
             {
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(new ErrorDataResult<string>(ex)));
-                _logger.LogError(context.Request.Path + " Finished Request Numarası : {0}", _requestId);
+                await CustomException(context,
+                                      ex,
+                                      StatusCodes.Status400BadRequest,
+                                      String.Join(context.Request.Path + " Finished RequestId : {0}", _requestId),
+                                      LogLevel.Error);
             }
 
+        }
+
+        private async Task CustomException(HttpContext context, Exception ex, int statusCodes, string logMessage, LogLevel logLevel)
+        {
+            context.Response.StatusCode = statusCodes;
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(new ErrorDataResult<string>(ex)));
+            _logger.Log(logLevel, logMessage);
         }
     }
 }

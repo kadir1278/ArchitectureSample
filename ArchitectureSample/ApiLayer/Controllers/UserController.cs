@@ -1,7 +1,6 @@
 ﻿using BusinessLayer.Abstract;
 using EntityLayer.Dto.User;
 using Microsoft.AspNetCore.Mvc;
-using System.Security;
 
 namespace ApiLayer.Controllers
 {

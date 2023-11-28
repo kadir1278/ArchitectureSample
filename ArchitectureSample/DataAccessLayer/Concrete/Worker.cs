@@ -1,8 +1,6 @@
 ﻿using CoreLayer.IoC;
 using DataAccessLayer.Absctract;
 using DataAccessLayer.Context;
-using IntegrationLayer.Business.Abstract;
-using IntegrationLayer.Business.Concrete;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -52,11 +50,8 @@ namespace DataAccessLayer.Concrete
             _transaction = null;
         }
         private IUserDal _userDal;
-        private ITCMBExchangeService _exchangeService;
-        private INetherlandRdwService _netherlandRdwService;
         private IProjectOwnerDal _projectOwnerDal;
         private ICompanyDal _companyDal;
-        private ICookieService _cookieService;
 
         public IUserDal UserDal
         {
@@ -70,28 +65,6 @@ namespace DataAccessLayer.Concrete
             }
         }
 
-        public ITCMBExchangeService TcmbExchangeService
-        {
-            get
-            {
-                if (_exchangeService is not null)
-                    return _exchangeService;
-
-                _exchangeService = new TCMBExchangeService();
-                return _exchangeService;
-            }
-        }
-        public INetherlandRdwService NetherlandRdwService
-        {
-            get
-            {
-                if (_netherlandRdwService is not null)
-                    return _netherlandRdwService;
-
-                _netherlandRdwService = new NetherlandRdwService();
-                return _netherlandRdwService;
-            }
-        }
         public IProjectOwnerDal ProjectOwnerDal
         {
             get
@@ -112,17 +85,6 @@ namespace DataAccessLayer.Concrete
 
                 _companyDal = new EfCompanyDal(_context);
                 return _companyDal;
-            }
-        }
-        public ICookieService CookieService
-        {
-            get
-            {
-                if (_cookieService is not null)
-                    return _cookieService;
-
-                _cookieService = new CookieService();
-                return _cookieService;
             }
         }
 

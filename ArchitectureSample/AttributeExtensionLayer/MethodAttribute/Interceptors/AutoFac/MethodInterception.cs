@@ -1,7 +1,5 @@
 ﻿using Castle.DynamicProxy;
-using CoreLayer.Utilities.Results.Concrete;
 using System.Security;
-using System.Text.Json;
 
 namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac
 {
@@ -10,7 +8,7 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac
 
         protected virtual void OnBefore(IInvocation ınvocation) { }
         protected virtual void OnException(IInvocation ınvocation) { }
-        protected virtual void OnFinally(IInvocation ınvocation) { }
+        protected virtual void OnSuccess(IInvocation ınvocation) { }
         protected virtual void OnAfter(IInvocation ınvocation) { }
 
         public override void Intercept(IInvocation invocation)
@@ -40,7 +38,7 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac
             }
             finally
             {
-                if (isSuccess) OnFinally(invocation);
+                if (isSuccess) OnSuccess(invocation);
                 OnAfter(invocation);
             }
         }

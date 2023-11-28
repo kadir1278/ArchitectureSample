@@ -1,12 +1,8 @@
 ﻿using Castle.DynamicProxy;
 using CoreLayer.Helper;
-using CoreLayer.Utilities.Results.Abstract;
-using CoreLayer.Utilities.Results.Concrete;
 using Microsoft.AspNetCore.Http;
 using System.Net;
-using System.Net.Http;
 using System.Security;
-using System.Text.Json;
 
 namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInteceptors
 {
@@ -19,7 +15,7 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInt
             try
             {
                 IPAddress ipAddress = _httpContext.Connection.RemoteIpAddress;
-                string[] strArray = new string[1] { "192.168.1.1" };
+                string[] strArray = new string[1] { "::1" };
                 bool flag = true;
                 if (ipAddress.IsIPv4MappedToIPv6)
                     ipAddress = ipAddress.MapToIPv4();
@@ -34,7 +30,6 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInt
                 }
                 if (flag)
                 {
-                    _httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
                     throw new SecurityException("Forbidden error");
                 }
                 else
@@ -42,17 +37,14 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInt
             }
             catch (FormatException)
             {
-                _httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
                 throw;
             }
             catch (SecurityException)
             {
-                _httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
                 throw;
             }
             catch (Exception)
             {
-                _httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
                 throw;
             }
 

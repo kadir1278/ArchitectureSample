@@ -1,15 +1,10 @@
-﻿using IntegrationLayer.Business.Abstract;
-
-namespace DataAccessLayer.Absctract
+﻿namespace DataAccessLayer.Absctract
 {
     public interface IWorker : IDisposable
     {
         IUserDal UserDal { get; }
         IProjectOwnerDal ProjectOwnerDal { get; }
-        ITCMBExchangeService TcmbExchangeService { get; }
-        INetherlandRdwService NetherlandRdwService { get; }
         ICompanyDal CompanyDal { get; }
-        ICookieService CookieService { get; }
 
         /// <summary>
         /// Bir transcation session başlatılır 

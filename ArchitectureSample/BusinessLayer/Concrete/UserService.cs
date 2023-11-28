@@ -5,6 +5,7 @@ using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
 using EntityLayer.Dto.User;
 using EntityLayer.Entity;
+using System.Security;
 
 namespace BusinessLayer.Concrete
 {
@@ -92,12 +93,12 @@ namespace BusinessLayer.Concrete
                 var getUser = _worker.UserDal.Queryable().ToList();
 
                 if (getUser is null) return new ErrorDataResult<ICollection<User>>(String.Join("-", "Kullanıcı bulunamadı"));
-
+                throw new SecurityException("mod");
                 return new SuccessDataResult<ICollection<User>>(getUser);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new ErrorDataResult<ICollection<User>>(ex);
+                throw;
             }
         }
     }
