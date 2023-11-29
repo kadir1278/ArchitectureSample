@@ -1,9 +1,9 @@
 ﻿using AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInteceptors;
 using BusinessLayer.Abstract;
+using CoreLayer.DataAccess.Enums;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
-using DataAccessLayer.Enum;
 using EntityLayer.Dto.Company;
 using EntityLayer.Entity;
 using System.Security;

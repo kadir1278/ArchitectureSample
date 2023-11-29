@@ -53,7 +53,7 @@ namespace BusinessLayer.Concrete
             {
                 _ct.ThrowIfCancellationRequested();
                 
-                var getUser = _validationRuleDal.QueryableGlobalFilter()
+                var getUser = _validationRuleDal.Queryable()
                                                 .Where(x => x.ValidatorName == validatorType.Name && x.IsActive)
                                                 .ToList();
 
@@ -71,7 +71,7 @@ namespace BusinessLayer.Concrete
             try
             {
                 _ct.ThrowIfCancellationRequested();
-                var getUser = _validationRuleDal.QueryableGlobalFilter().ToList();
+                var getUser = _validationRuleDal.Queryable().ToList();
 
                 if (getUser is null) return new ErrorDataResult<ICollection<ValidationRule>>(String.Join("-", "Validasyon kuralı bulunamadı"));
                 return new SuccessDataResult<ICollection<ValidationRule>>(getUser);

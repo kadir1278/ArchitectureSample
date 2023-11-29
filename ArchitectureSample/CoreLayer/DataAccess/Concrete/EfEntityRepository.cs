@@ -7,6 +7,10 @@ using CoreLayer.Helper;
 using CoreLayer.DataAccess.Constants;
 using Microsoft.AspNetCore.Http;
 using System.Threading;
+using System.Net.Http;
+using CoreLayer.Extensions;
+using Mapster.Utils;
+using CoreLayer.DataAccess.Enums;
 
 namespace CoreLayer.DataAccess.Concrete
 {
@@ -178,20 +182,16 @@ namespace CoreLayer.DataAccess.Concrete
                 return new ErrorDataResult<ICollection<TEntity>>(ex);
             }
         }
+        
         public IQueryable<TEntity> Queryable()
         {
-            return _dbContext.Set<TEntity>().AsNoTracking();
-        }
-        public IQueryable<TEntity> QueryableGlobalFilter()
-        {
-            string cultureInfo;
             HttpContext _context = HttpContextHelper.GetHttpContext();
+            var userRoles = _context.User.ClaimRoles();
 
-            if (_context is not null)
-                cultureInfo = String.IsNullOrEmpty(_context.Request.Cookies["CultureInfo"]) ? CultureInfoHelper.Turkish : _context.Request.Cookies["CultureInfo"];
-            else
-                cultureInfo = CultureInfoHelper.Turkish;
+            if (userRoles.Contains(nameof(PermissionEnum.Admin)))
+                return _dbContext.Set<TEntity>().AsNoTracking();
 
+            string cultureInfo = String.IsNullOrEmpty(_context.Request.Cookies["CultureInfo"]) ? CultureInfoHelper.Turkish : _context.Request.Cookies["CultureInfo"];
 
             return _dbContext.Set<TEntity>().Where(x => x.CultureInfo == cultureInfo).AsNoTracking().IgnoreAutoIncludes();
         }
@@ -200,7 +200,7 @@ namespace CoreLayer.DataAccess.Concrete
         {
             try
             {
-                TEntity entity = QueryableGlobalFilter().Where(x => x.Id == id).FirstOrDefault();
+                TEntity entity = Queryable().Where(x => x.Id == id).FirstOrDefault();
                 if (entity is null) return new ErrorDataResult<TGetDto>("Entity Not Found");
 
                 return new SuccessDataResult<TGetDto>(entity.Adapt<TGetDto>());

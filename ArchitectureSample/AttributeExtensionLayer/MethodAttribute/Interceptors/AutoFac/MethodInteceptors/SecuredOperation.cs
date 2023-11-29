@@ -1,8 +1,8 @@
 ﻿using Castle.DynamicProxy;
+using CoreLayer.DataAccess.Enums;
 using CoreLayer.Extensions;
 using CoreLayer.Helper;
 using CoreLayer.IoC;
-using DataAccessLayer.Enum;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;

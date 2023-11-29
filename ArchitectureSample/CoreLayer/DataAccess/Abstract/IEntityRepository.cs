@@ -5,7 +5,6 @@ namespace CoreLayer.DataAccess.Abstract
     public interface IEntityRepository<TEntity, TAddDto, TUpdateDto, TGetDto> 
     {
         IQueryable<TEntity> Queryable();
-        IQueryable<TEntity> QueryableGlobalFilter();
         IDataResult<TEntity> Add(TAddDto dto, CancellationToken _cancellationToken);
         IDataResult<ICollection<TEntity>> AddRange(ICollection<TAddDto> addedDtos, CancellationToken _cancellationToken);
         IDataResult<TEntity> Update(TUpdateDto dto, CancellationToken _cancellationToken);
