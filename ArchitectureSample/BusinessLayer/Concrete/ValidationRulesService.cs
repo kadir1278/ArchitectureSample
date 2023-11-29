@@ -47,6 +47,25 @@ namespace BusinessLayer.Concrete
             }
         }
 
+        public IDataResult<ICollection<ValidationRule>> GetValidationRuleByValidatorName(Type validatorType)
+        {
+            try
+            {
+                _ct.ThrowIfCancellationRequested();
+                
+                var getUser = _validationRuleDal.QueryableGlobalFilter()
+                                                .Where(x => x.ValidatorName == validatorType.Name && x.IsActive)
+                                                .ToList();
+
+                if (getUser is null) return new ErrorDataResult<ICollection<ValidationRule>>(String.Join("-", "Validasyon kuralı bulunamadı"));
+                return new SuccessDataResult<ICollection<ValidationRule>>(getUser);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public IDataResult<ICollection<ValidationRule>> GetValidationRuleCollection()
         {
             try

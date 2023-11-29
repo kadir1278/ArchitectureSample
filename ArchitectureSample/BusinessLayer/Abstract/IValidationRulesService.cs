@@ -9,5 +9,6 @@ namespace BusinessLayer.Abstract
     {
         public IDataResult<ValidationRule> AddValidationRules(ValidationRuleAddDto validationRuleAddDto);
         public IDataResult<ICollection<ValidationRule>> GetValidationRuleCollection();
+        public IDataResult<ICollection<ValidationRule>> GetValidationRuleByValidatorName(Type validatorType);
     }
 }

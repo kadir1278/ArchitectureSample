@@ -3,6 +3,7 @@ using BusinessLayer.Abstract;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
+using DataAccessLayer.Enum;
 using EntityLayer.Dto.Company;
 using EntityLayer.Entity;
 using System.Security;
@@ -46,6 +47,7 @@ namespace BusinessLayer.Concrete
         }
 
         [IpCheckOperationAspect]
+        [SecuredOperation(PermissionEnum.Ekle)]
         public IDataResult<ICollection<Company>> GetCompanyCollection()
         {
             try
