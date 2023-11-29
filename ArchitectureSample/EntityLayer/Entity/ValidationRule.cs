@@ -15,5 +15,8 @@ namespace EntityLayer.Entity
         public string Key { get; set; }
         public string Value { get; set; }
         public string Message { get; set; }
+        public Guid CompanyId { get; set; }
+        public Company Company { get; set; }
+
     }
 }

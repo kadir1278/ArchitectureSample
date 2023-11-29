@@ -52,7 +52,7 @@ namespace BusinessLayer.Concrete
             try
             {
                 _ct.ThrowIfCancellationRequested();
-                var getUser = _validationRuleDal.Queryable().ToList();
+                var getUser = _validationRuleDal.QueryableGlobalFilter().ToList();
 
                 if (getUser is null) return new ErrorDataResult<ICollection<ValidationRule>>(String.Join("-", "Validasyon kuralı bulunamadı"));
                 return new SuccessDataResult<ICollection<ValidationRule>>(getUser);

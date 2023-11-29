@@ -53,7 +53,7 @@ namespace BusinessLayer.Concrete
             try
             {
                 _ct.ThrowIfCancellationRequested();
-                var getUser = _userDal.Queryable().ToList();
+                var getUser = _userDal.QueryableGlobalFilter().ToList();
 
                 if (getUser is null) return new ErrorDataResult<ICollection<User>>(String.Join("-", "Kullanıcı bulunamadı"));
                 return new SuccessDataResult<ICollection<User>>(getUser);

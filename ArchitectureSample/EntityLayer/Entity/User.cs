@@ -10,6 +10,7 @@ namespace EntityLayer.Entity
         public string Password { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-
+        public Guid CompanyId { get; set; }
+        public Company Company { get; set; }
     }
 }

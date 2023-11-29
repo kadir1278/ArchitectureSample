@@ -6,6 +6,7 @@ using CoreLayer.Utilities.Results.Concrete;
 using CoreLayer.Helper;
 using CoreLayer.DataAccess.Constants;
 using Microsoft.AspNetCore.Http;
+using System.Threading;
 
 namespace CoreLayer.DataAccess.Concrete
 {
@@ -179,6 +180,10 @@ namespace CoreLayer.DataAccess.Concrete
         }
         public IQueryable<TEntity> Queryable()
         {
+            return _dbContext.Set<TEntity>().AsNoTracking();
+        }
+        public IQueryable<TEntity> QueryableGlobalFilter()
+        {
             string cultureInfo;
             HttpContext _context = HttpContextHelper.GetHttpContext();
 
@@ -187,9 +192,23 @@ namespace CoreLayer.DataAccess.Concrete
             else
                 cultureInfo = CultureInfoHelper.Turkish;
 
-            return _dbContext.Set<TEntity>().Where(x => x.CultureInfo == cultureInfo).AsNoTracking();
+
+            return _dbContext.Set<TEntity>().Where(x => x.CultureInfo == cultureInfo).AsNoTracking().IgnoreAutoIncludes();
         }
 
+        public IDataResult<TGetDto> GetById(Guid id)
+        {
+            try
+            {
+                TEntity entity = QueryableGlobalFilter().Where(x => x.Id == id).FirstOrDefault();
+                if (entity is null) return new ErrorDataResult<TGetDto>("Entity Not Found");
 
+                return new SuccessDataResult<TGetDto>(entity.Adapt<TGetDto>());
+            }
+            catch (Exception ex)
+            {
+                return new ErrorDataResult<TGetDto>(ex);
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace DataAccessLayer.Context
         }
 
         public DbSet<User> Users { get; set; }
-
+        public DbSet<Company> Companies { get; set; }
         public DbSet<ValidationRule> ValidationRules { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,6 +25,7 @@ namespace DataAccessLayer.Context
             modelBuilder.ScriptEncryptAndDecrypt();
             modelBuilder.Entity<ValidationRule>().HasQueryFilter(x => !x.IsDeleted).HasIndex(x => x.ValidatorName);
             modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Company>().HasQueryFilter(x => !x.IsDeleted);
 
         }
 

@@ -16,7 +16,9 @@ namespace BusinessLayer.DependecyResolver
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<EfUserDal>().As<IUserDal>();
-            builder.RegisterType<EfValidationRuleDal>().As<IValidationRuleDal>().AsImplementedInterfaces();
+            builder.RegisterType<EfValidationRuleDal>().As<IValidationRuleDal>();
+            builder.RegisterType<EfCompanyDal>().As<ICompanyDal>();
+
 
             builder.RegisterType<ValidationRulesService>().As<IValidationRulesService>();
             builder.RegisterType<UserService>().As<IUserService>();

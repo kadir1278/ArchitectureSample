@@ -19,7 +19,7 @@ namespace BusinessLayer.ValidationRules.User
             IValidationRuleDal? validationRuleDal = ServiceTool.ServiceProvider.GetService<IValidationRuleDal>();
             if (validationRuleDal is not null)
             {
-                var validationRules = validationRuleDal.Queryable().Where(x => x.ValidatorName == this.GetType().Name && x.IsActive);
+                var validationRules = validationRuleDal.QueryableGlobalFilter().Where(x => x.ValidatorName == this.GetType().Name && x.IsActive);
 
                 var userNameNotEmpty = validationRules.FirstOrDefault(y => y.Key.Equals("Username.NotEmpty"));
                 if (userNameNotEmpty is not null)
