@@ -2,10 +2,6 @@
 {
     public interface IWorker : IDisposable
     {
-        IUserDal UserDal { get; }
-        IProjectOwnerDal ProjectOwnerDal { get; }
-        ICompanyDal CompanyDal { get; }
-
         /// <summary>
         /// Bir transcation session başlatılır 
         /// </summary>

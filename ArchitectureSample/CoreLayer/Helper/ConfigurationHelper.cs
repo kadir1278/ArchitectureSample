@@ -1,5 +1,4 @@
-﻿using CoreLayer.Entity.Dtos;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace CoreLayer.Helper
 {
@@ -70,12 +69,7 @@ namespace CoreLayer.Helper
         }
         #endregion
 
-        #region GetMiddlewareSetting
-        public static MiddlewareSettings GetMiddlewareSettings()
-        {
-            return configurationRoot.Get<MiddlewareSettings>();
-        }
-        #endregion
+        
 
     }
 }

@@ -5,6 +5,7 @@ using Mapster;
 using CoreLayer.Utilities.Results.Concrete;
 using CoreLayer.Helper;
 using CoreLayer.DataAccess.Constants;
+using Microsoft.AspNetCore.Http;
 
 namespace CoreLayer.DataAccess.Concrete
 {
@@ -176,8 +177,19 @@ namespace CoreLayer.DataAccess.Concrete
                 return new ErrorDataResult<ICollection<TEntity>>(ex);
             }
         }
-        public IQueryable<TEntity> Queryable() => _dbContext.Set<TEntity>().AsNoTracking();
+        public IQueryable<TEntity> Queryable()
+        {
+            string cultureInfo;
+            HttpContext _context = HttpContextHelper.GetHttpContext();
 
-     
+            if (_context is not null)
+                cultureInfo = String.IsNullOrEmpty(_context.Request.Cookies["CultureInfo"]) ? CultureInfoHelper.Turkish : _context.Request.Cookies["CultureInfo"];
+            else
+                cultureInfo = CultureInfoHelper.Turkish;
+
+            return _dbContext.Set<TEntity>().Where(x => x.CultureInfo == cultureInfo).AsNoTracking();
+        }
+
+
     }
 }

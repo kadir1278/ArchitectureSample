@@ -14,10 +14,10 @@ namespace ApiLayer.Controllers
             _userService = userService;
         }
 
-        [HttpGet("list-user")]
+        [HttpGet("list")]
         public object ListUser() => _userService.GetUserCollection();
 
-        [HttpPost("add-user")]
+        [HttpPost("add")]
         public object AddUser(UserAddDto model) => _userService.AddUser(model);
     }
 }

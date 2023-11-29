@@ -15,8 +15,8 @@ builder.Services.AddScopedForMiddleware();
 builder.Services.LoadModule();
 builder.Services.IntegrationLoadModule();
 builder.Services.AddSwaggerGen();
-builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutoFacBusinessModule()));
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 var app = builder.Build();
 

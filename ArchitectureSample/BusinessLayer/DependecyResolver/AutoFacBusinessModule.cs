@@ -6,6 +6,7 @@ using BusinessLayer.Concrete;
 using Castle.DynamicProxy;
 using DataAccessLayer.Absctract;
 using DataAccessLayer.Concrete;
+using EntityLayer.Entity;
 using System.Reflection;
 
 namespace BusinessLayer.DependecyResolver
@@ -14,11 +15,11 @@ namespace BusinessLayer.DependecyResolver
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CompanyService>().As<ICompanyService>();
-            builder.RegisterType<ProjectOwnerService>().As<IProjectOwnerService>();
-            builder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
+            builder.RegisterType<EfValidationRuleDal>().As<IValidationRuleDal>().AsImplementedInterfaces();
+
+            builder.RegisterType<ValidationRulesService>().As<IValidationRulesService>();
             builder.RegisterType<UserService>().As<IUserService>();
-            builder.RegisterType<Worker>().As<IWorker>();
 
             var assembly = Assembly.GetExecutingAssembly();
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces().EnableInterfaceInterceptors(new ProxyGenerationOptions()

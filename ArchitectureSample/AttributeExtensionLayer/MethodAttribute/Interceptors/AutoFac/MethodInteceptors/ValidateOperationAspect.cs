@@ -13,6 +13,7 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInt
     {
         private readonly Type _validatorType;
         private const string _wrongTypeError = "Hatalı Validation Türü";
+
         public ValidateOperationAspect(Type validatorType)
         {
             if (!typeof(IValidator).IsAssignableFrom(validatorType))

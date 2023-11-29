@@ -1,51 +1,39 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataAccessLayer.Absctract;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using System.Security;
 
 namespace MiddlewareLayer.Middleware
 {
     public class HostFilterMiddleware : IMiddleware
     {
-        #region Constructor
-        private static IConfigurationRoot _configurationRoot;
-        private static IConfigurationRoot configurationRoot
-        {
-            get
-            {
-                string jsonFile = "MiddlewareSettings.json";
-
-                if (_configurationRoot is null)
-                    _configurationRoot = new ConfigurationBuilder()
-                        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                        .AddJsonFile(jsonFile)
-                        .Build();
-
-                return _configurationRoot;
-            }
-        }
-        #endregion
+        //private readonly IWorker _worker;
+        //public HostFilterMiddleware(IWorker worker)
+        //{
+        //    _worker = worker;
+        //}
+        private const string IpErrorMessage = "Access Denied";
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try
             {
-                string unauthorizedAccessPath = configurationRoot.GetSection("UnauthorizedAccessPath").Get<string>();
-                if (context.Request.Path == unauthorizedAccessPath)
+                string requestHost = context.Request.Host.Host.ToLower();
+                string[] permittedHost = { "localhost" };
+
+                if (permittedHost.Where(x => x == requestHost).Count() > 0)
                     await next.Invoke(context);
                 else
-                {
-                    string requestHost = context.Request.Host.Host.ToLower();
-                    string[] permittedHost = configurationRoot.GetSection("PermittedHosts").Get<string[]>();
+                    throw new SecurityException(IpErrorMessage);
 
-                    if (permittedHost.Where(x => x == requestHost).Count() > 0)
-                        await next.Invoke(context);
-                    else
-                        context.Response.Redirect(unauthorizedAccessPath);
-
-                }
             }
-            catch (Exception ex)
+            catch (SecurityException)
             {
-                await context.Response.WriteAsync($"{ex.Message}");
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
         }

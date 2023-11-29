@@ -5,37 +5,37 @@ using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
 using EntityLayer.Dto.User;
+using EntityLayer.Dto.ValidationRule;
 using EntityLayer.Entity;
 using System.Security;
 
 namespace BusinessLayer.Concrete
 {
-    public class UserService : IUserService
+    public class ValidationRulesService : IValidationRulesService
     {
         private readonly IWorker _worker;
-        private readonly IUserDal _userDal;
+        private readonly IValidationRuleDal _validationRuleDal;
         private readonly CancellationToken _ct;
 
-        public UserService(IWorker worker, IUserDal userDal)
+        public ValidationRulesService(IWorker worker, IValidationRuleDal validationRuleDal)
         {
             _worker = worker;
-            _userDal = userDal;
+            _validationRuleDal = validationRuleDal;
         }
 
 
-        [ValidateOperationAspect(typeof(UserAddDtoValidator))]
-        public IDataResult<User> AddUser(UserAddDto userAddDto)
+        public IDataResult<ValidationRule> AddValidationRules(ValidationRuleAddDto validationRuleAddDto)
         {
             try
             {
                 _ct.ThrowIfCancellationRequested();
                 _worker.StartTransaction();
 
-                var addedUser = _userDal.Add(userAddDto, _ct);
+                var addedUser = _validationRuleDal.Add(validationRuleAddDto, _ct);
                 if (!addedUser.IsSuccess)
                 {
                     _worker.RollbackTransaction();
-                    return new ErrorDataResult<User>("Kullanıcı eklenemedi");
+                    return new ErrorDataResult<ValidationRule>("Kullanıcı eklenemedi");
                 }
                 _worker.CommitAndSaveChanges();
                 return addedUser;
@@ -43,20 +43,19 @@ namespace BusinessLayer.Concrete
             catch (Exception ex)
             {
                 _worker.RollbackTransaction();
-                return new ErrorDataResult<User>(ex);
+                return new ErrorDataResult<ValidationRule>(ex);
             }
         }
 
-        [IpCheckOperationAspect]
-        public IDataResult<ICollection<User>> GetUserCollection()
+        public IDataResult<ICollection<ValidationRule>> GetValidationRuleCollection()
         {
             try
             {
                 _ct.ThrowIfCancellationRequested();
-                var getUser = _userDal.Queryable().ToList();
+                var getUser = _validationRuleDal.Queryable().ToList();
 
-                if (getUser is null) return new ErrorDataResult<ICollection<User>>(String.Join("-", "Kullanıcı bulunamadı"));
-                return new SuccessDataResult<ICollection<User>>(getUser);
+                if (getUser is null) return new ErrorDataResult<ICollection<ValidationRule>>(String.Join("-", "Validasyon kuralı bulunamadı"));
+                return new SuccessDataResult<ICollection<ValidationRule>>(getUser);
             }
             catch (Exception)
             {

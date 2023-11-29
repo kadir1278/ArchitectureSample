@@ -1,5 +1,4 @@
-﻿using CoreLayer.Entity.Dtos;
-using CoreLayer.Helper;
+﻿using CoreLayer.Helper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using MiddlewareLayer.Middleware;
@@ -10,12 +9,9 @@ namespace MiddlewareLayer.Extensions
     {
         public static IApplicationBuilder GlobalFilter(this IApplicationBuilder applicationBuilder)
         {
-
-            MiddlewareSettings middlewareSettings = ConfigurationHelper.GetMiddlewareSettings();
-
-           applicationBuilder.UseMiddleware<GlobalExceptionMiddleware>();
-            if (middlewareSettings.HostFilterStatus) applicationBuilder.UseMiddleware<HostFilterMiddleware>();
-            if (middlewareSettings.CheckProjectStatus) applicationBuilder.UseMiddleware<CheckProjectStatusMiddleware>();
+            applicationBuilder.UseMiddleware<GlobalExceptionMiddleware>();
+            applicationBuilder.UseMiddleware<HostFilterMiddleware>();
+            applicationBuilder.UseMiddleware<CheckProjectStatusMiddleware>();
 
             return applicationBuilder;
         }

@@ -36,6 +36,11 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac
                 OnException(invocation);
                 throw;
             }
+            catch (FluentValidation.ValidationException)
+            {
+                OnException(invocation);
+                throw;
+            }
             catch (Exception)
             {
                 OnException(invocation);

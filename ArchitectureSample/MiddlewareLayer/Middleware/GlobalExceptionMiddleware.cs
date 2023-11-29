@@ -18,11 +18,13 @@ namespace MiddlewareLayer.Middleware
         }
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
+            bool IsSuccess = false;
             try
             {
                 context.Items["RequestId"] = _requestId;
-                _logger.LogInformation(context.Request.Path + " Started Request Numarası : {0}", _requestId);
+                _logger.LogInformation(context.Request.Path + " Started RequestId : {0}", _requestId);
                 await next.Invoke(context);
+                IsSuccess = true;
             }
             catch (FormatException ex)
             {
@@ -48,6 +50,14 @@ namespace MiddlewareLayer.Middleware
                                       String.Join(context.Request.Path + " Forbidden RequestId : {0}", _requestId),
                                       LogLevel.Information);
             }
+            catch (FluentValidation.ValidationException ex)
+            {
+                await CustomException(context,
+                                      ex,
+                                      StatusCodes.Status400BadRequest,
+                                      String.Join(context.Request.Path + " Forbidden RequestId : {0}", _requestId),
+                                      LogLevel.Trace);
+            }
             catch (Exception ex)
             {
                 await CustomException(context,
@@ -56,14 +66,37 @@ namespace MiddlewareLayer.Middleware
                                       String.Join(context.Request.Path + " Finished RequestId : {0}", _requestId),
                                       LogLevel.Error);
             }
+            finally
+            {
+                if (IsSuccess) _logger.LogInformation(context.Request.Path + " Success RequestId : {0}", _requestId);
+            }
 
         }
 
         private async Task CustomException(HttpContext context, Exception ex, int statusCodes, string logMessage, LogLevel logLevel)
         {
             context.Response.StatusCode = statusCodes;
+            context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(JsonConvert.SerializeObject(new ErrorDataResult<string>(ex)));
-            _logger.Log(logLevel, logMessage);
+
+            switch (logLevel)
+            {
+                case LogLevel.Error:
+                    _logger.LogError(logMessage);
+                    break;
+                case LogLevel.Information:
+                    _logger.LogInformation(logMessage);
+                    break;
+                case LogLevel.Trace:
+                    _logger.LogTrace(logMessage);
+                    break;
+                case LogLevel.Warning:
+                    _logger.LogWarning(logMessage);
+                    break;
+                default:
+                    _logger.LogInformation(logMessage);
+                    break;
+            }
         }
     }
 }
