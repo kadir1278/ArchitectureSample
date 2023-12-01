@@ -39,7 +39,7 @@ namespace BusinessLayer.Concrete
                 if (!addedUser.IsSuccess)
                 {
                     _worker.RollbackTransaction();
-                    return new ErrorDataResult<ValidationRuleAddResponseDto>("Kullanıcı eklenemedi");
+                    return new ErrorDataResult<ValidationRuleAddResponseDto>("Validasyon kuralı eklenemedi");
                 }
                 _worker.CommitAndSaveChanges();
                 return new SuccessDataResult<ValidationRuleAddResponseDto>(addedUser.Data.Adapt<ValidationRuleAddResponseDto>());

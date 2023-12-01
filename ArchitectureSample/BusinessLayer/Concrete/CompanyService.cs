@@ -37,10 +37,10 @@ namespace BusinessLayer.Concrete
                 if (!addedCompany.IsSuccess)
                 {
                     _worker.RollbackTransaction();
-                    return new ErrorDataResult<CompanyAddResponseDto>("Kullanıcı eklenemedi");
+                    return new ErrorDataResult<CompanyAddResponseDto>("Firma eklenemedi");
                 }
                 _worker.CommitAndSaveChanges();
-                return new SuccessDataResult<CompanyAddResponseDto>(addedCompany.Adapt<CompanyAddResponseDto>());
+                return new SuccessDataResult<CompanyAddResponseDto>(addedCompany.Data.Adapt<CompanyAddResponseDto>(), "Firma Eklendi");
             }
             catch (Exception ex)
             {
@@ -56,9 +56,9 @@ namespace BusinessLayer.Concrete
             try
             {
                 _ct.ThrowIfCancellationRequested();
-                var getCompany = _companyDal.Queryable().ToList();
+                var getCompany = _companyDal.Queryable().OrderByDescending(x => x.CreatedDate);
 
-                if (getCompany is null) return new ErrorDataResult<ICollection<CompanyListResponseDto>>(String.Join("-", "Kullanıcı bulunamadı"));
+                if (getCompany is null) return new ErrorDataResult<ICollection<CompanyListResponseDto>>(String.Join("-", "Firma bulunamadı"));
                 return new SuccessDataResult<ICollection<CompanyListResponseDto>>(getCompany.Adapt<ICollection<CompanyListResponseDto>>());
             }
             catch (Exception)

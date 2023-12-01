@@ -166,14 +166,14 @@ namespace CoreLayer.DataAccess.Concrete
 
             string cultureInfo = String.IsNullOrEmpty(_context.Request.Cookies["CultureInfo"]) ? CultureInfoHelper.Turkish : _context.Request.Cookies["CultureInfo"];
 
-            return _dbContext.Set<TEntity>().Where(x => x.CultureInfo == cultureInfo).AsNoTracking().IgnoreAutoIncludes();
+            return _dbContext.Set<TEntity>().AsNoTracking().Where(x => x.CultureInfo == cultureInfo);
         }
 
         public IDataResult<TEntity> GetById(Guid id)
         {
             try
             {
-                TEntity? entity = _entities.Find(id);
+                TEntity? entity = Queryable().Where(x => x.Id == id).FirstOrDefault();
                 if (entity is null) return new ErrorDataResult<TEntity>("Entity Not Found");
 
                 return new SuccessDataResult<TEntity>(entity);
