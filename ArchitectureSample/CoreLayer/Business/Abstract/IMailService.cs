@@ -1,7 +1,7 @@
 ﻿using CoreLayer.Entity.ViewModel.MailSendViewModel;
 using CoreLayer.Utilities.Results.Abstract;
 
-namespace IntegrationLayer.Business.Abstract
+namespace CoreLayer.Business.Abstract
 {
     public interface IMailService
     {

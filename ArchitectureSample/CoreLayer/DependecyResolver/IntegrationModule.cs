@@ -1,13 +1,13 @@
-﻿using CoreLayer.IoC;
-using IntegrationLayer.Business.Abstract;
-using IntegrationLayer.Business.Concrete;
+﻿using CoreLayer.Business.Abstract;
+using CoreLayer.Business.Concrete;
+using CoreLayer.IoC;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IntegrationLayer.DependecyResolver
+namespace CoreLayer.DependecyResolver
 {
     public static class IntegrationModule
     {
-        public static IServiceCollection IntegrationLoadModule(this IServiceCollection serviceCollection)
+        public static IServiceCollection CoreModule(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<ICookieService, CookieService>();
             serviceCollection.AddSingleton<IFileService, FileService>();

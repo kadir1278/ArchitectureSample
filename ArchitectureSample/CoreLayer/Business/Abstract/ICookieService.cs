@@ -1,7 +1,7 @@
 ﻿using CoreLayer.Utilities.Results.Abstract;
 using Microsoft.AspNetCore.Http;
 
-namespace IntegrationLayer.Business.Abstract
+namespace CoreLayer.Business.Abstract
 {
     public interface ICookieService
     {

@@ -1,11 +1,11 @@
-﻿using CoreLayer.Entity.ViewModel.FileViewModel;
+﻿using CoreLayer.Business.Abstract;
+using CoreLayer.Entity.ViewModel.FileViewModel;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
-using IntegrationLayer.Business.Abstract;
 using Microsoft.AspNetCore.Http;
 using System.IO.Compression;
 
-namespace IntegrationLayer.Business.Concrete
+namespace CoreLayer.Business.Concrete
 {
     public class FileService : IFileService
     {

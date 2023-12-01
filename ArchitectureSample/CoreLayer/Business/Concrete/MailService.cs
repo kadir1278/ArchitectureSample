@@ -1,11 +1,11 @@
-﻿using CoreLayer.Entity.ViewModel.MailSendViewModel;
+﻿using CoreLayer.Business.Abstract;
+using CoreLayer.Entity.ViewModel.MailSendViewModel;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
-using IntegrationLayer.Business.Abstract;
 using System.Net;
 using System.Net.Mail;
 
-namespace IntegrationLayer.Business.Concrete
+namespace CoreLayer.Business.Concrete
 {
     public class MailService : IMailService
     {

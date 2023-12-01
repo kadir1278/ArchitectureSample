@@ -1,10 +1,10 @@
-﻿using CoreLayer.Helper;
+﻿using CoreLayer.Business.Abstract;
+using CoreLayer.Helper;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
-using IntegrationLayer.Business.Abstract;
 using Microsoft.AspNetCore.Http;
 
-namespace IntegrationLayer.Business.Concrete
+namespace CoreLayer.Business.Concrete
 {
     public class CookieService : ICookieService
     {

@@ -1,9 +1,8 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using BusinessLayer.DependecyResolver;
-using IntegrationLayer.DependecyResolver;
 using MiddlewareLayer.Extensions;
-
+using CoreLayer.DependecyResolver;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScopedForMiddleware();
 builder.Services.LoadModule();
-builder.Services.IntegrationLoadModule();
+builder.Services.CoreModule();
 builder.Services.AddSwaggerGen();
 builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutoFacBusinessModule()));
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
