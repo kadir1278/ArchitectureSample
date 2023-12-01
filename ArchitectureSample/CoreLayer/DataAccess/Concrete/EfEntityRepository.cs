@@ -14,11 +14,8 @@ using CoreLayer.DataAccess.Enums;
 
 namespace CoreLayer.DataAccess.Concrete
 {
-    public class EfEntityRepository<TEntity, TAddDto, TUpdateDto, TGetDto, TContext> : IEntityRepository<TEntity, TAddDto, TUpdateDto, TGetDto>
+    public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
                                                        where TEntity : class, IEntity, new()
-                                                       where TAddDto : class, IDto, new()
-                                                       where TUpdateDto : class, IDto, new()
-                                                       where TGetDto : class, IDto, new()
                                                        where TContext : DbContext
     {
         private readonly DbContext _dbContext;
@@ -29,13 +26,13 @@ namespace CoreLayer.DataAccess.Concrete
             _entities = _dbContext.Set<TEntity>();
         }
 
-        public IDataResult<TEntity> Add(TAddDto dto, CancellationToken _cancellationToken)
+        public IDataResult<TEntity> Add(TEntity entity, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
 
             try
             {
-                TEntity entity = DatabaseModelHelper<TEntity, TAddDto>.ModelCreaterComplete(dto);
+                entity = DatabaseModelHelper<TEntity>.ModelCreaterComplete(entity);
                 var addedEntity = _entities.Add(entity);
                 addedEntity.State = EntityState.Added;
                 bool isSaved = _dbContext.SaveChanges() > 0 ? true : false;
@@ -50,21 +47,12 @@ namespace CoreLayer.DataAccess.Concrete
                 return new ErrorDataResult<TEntity>(ex);
             }
         }
-        public IDataResult<ICollection<TEntity>> AddRange(ICollection<TAddDto> addedDtos, CancellationToken _cancellationToken)
+        public IDataResult<ICollection<TEntity>> AddRange(ICollection<TEntity> addedEntities, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             try
             {
-                ICollection<TEntity> addedEntities = new List<TEntity>();
-                foreach (TAddDto dto in addedDtos)
-                {
-
-                    TEntity entity = DatabaseModelHelper<TEntity, TAddDto>.ModelCreaterComplete(dto);
-                    var addedEntity = _entities.Add(entity);
-                    addedEntity.State = EntityState.Added;
-                    addedEntities.Add(entity);
-                }
-
+                _entities.AddRange(addedEntities);
                 bool isSaved = _dbContext.SaveChanges() > 0 ? true : false;
                 if (!isSaved)
                     return new ErrorDataResult<ICollection<TEntity>>(DatabaseErrorMessage.SaveError);
@@ -81,7 +69,7 @@ namespace CoreLayer.DataAccess.Concrete
             _cancellationToken.ThrowIfCancellationRequested();
             try
             {
-                TEntity entity = _entities.Find(Id);
+                TEntity? entity = _entities.Find(Id);
                 if (entity is null)
                     return new ErrorDataResult<TEntity>(DatabaseErrorMessage.NotFound);
 
@@ -101,19 +89,17 @@ namespace CoreLayer.DataAccess.Concrete
             }
         }
 
-        public IDataResult<ICollection<TEntity>> SoftDeleteRange(ICollection<TGetDto> deletedDtos, CancellationToken _cancellationToken)
+        public IDataResult<ICollection<TEntity>> SoftDeleteRange(ICollection<TEntity> deletedEntities, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             try
             {
-                ICollection<TEntity> deletedEntities = new List<TEntity>();
-                foreach (TGetDto dto in deletedDtos)
-                {
 
-                    TEntity entity = DatabaseModelHelper<TEntity, TGetDto>.ModelSoftDeleterComplete(dto);
-                    var deletedEntity = _entities.Update(entity);
-                    deletedEntity.State = EntityState.Modified;
-                    deletedEntities.Add(entity);
+                foreach (TEntity deletedEntity in deletedEntities)
+                {
+                    TEntity entity = DatabaseModelHelper<TEntity>.ModelSoftDeleterComplete(deletedEntity);
+                    var deletedEntitie = _entities.Update(entity);
+                    deletedEntitie.State = EntityState.Modified;
                 }
 
                 bool isSaved = _dbContext.SaveChanges() > 0 ? true : false;
@@ -128,17 +114,17 @@ namespace CoreLayer.DataAccess.Concrete
         }
 
 
-        public IDataResult<TEntity> Update(TUpdateDto dto, CancellationToken _cancellationToken)
+        public IDataResult<TEntity> Update(TEntity dto, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             try
             {
-                TEntity entity = _entities.Find(dto.Id);
+                var entity = _entities.Find(dto.Id);
                 if (entity is null)
                     return new ErrorDataResult<TEntity>(DatabaseErrorMessage.NotFound);
-                entity = dto.Adapt<TEntity>();
-                entity = DatabaseModelHelper<TEntity, TUpdateDto>.ModelUpdaterComplete(dto);
-                var updatedEntity = _entities.Update(entity);
+
+                TEntity updateEntity = DatabaseModelHelper<TEntity>.ModelUpdaterComplete(entity);
+                var updatedEntity = _entities.Update(updateEntity);
                 updatedEntity.State = EntityState.Modified;
 
                 bool isSaved = _dbContext.SaveChanges() > 0 ? true : false;
@@ -153,25 +139,12 @@ namespace CoreLayer.DataAccess.Concrete
             }
         }
 
-        public IDataResult<ICollection<TEntity>> UpdateRange(ICollection<TUpdateDto> updatedDtos, CancellationToken _cancellationToken)
+        public IDataResult<ICollection<TEntity>> UpdateRange(ICollection<TEntity> updatedEntities, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
             try
             {
-                ICollection<TEntity> updatedEntities = new List<TEntity>();
-                foreach (TUpdateDto dto in updatedDtos)
-                {
-
-                    TEntity entity = _entities.Find(dto.Id);
-                    if (entity is null)
-                        return new ErrorDataResult<ICollection<TEntity>>(DatabaseErrorMessage.NotFound);
-
-                    entity = DatabaseModelHelper<TEntity, TUpdateDto>.ModelUpdaterComplete(dto);
-                    var updatedEntity = _entities.Update(entity);
-                    updatedEntity.State = EntityState.Modified;
-
-                }
-
+                _entities.UpdateRange(updatedEntities);
                 bool isSaved = _dbContext.SaveChanges() > 0 ? true : false;
                 if (!isSaved)
                     return new ErrorDataResult<ICollection<TEntity>>(DatabaseErrorMessage.SaveError);
@@ -182,7 +155,7 @@ namespace CoreLayer.DataAccess.Concrete
                 return new ErrorDataResult<ICollection<TEntity>>(ex);
             }
         }
-        
+
         public IQueryable<TEntity> Queryable()
         {
             HttpContext _context = HttpContextHelper.GetHttpContext();
@@ -196,18 +169,18 @@ namespace CoreLayer.DataAccess.Concrete
             return _dbContext.Set<TEntity>().Where(x => x.CultureInfo == cultureInfo).AsNoTracking().IgnoreAutoIncludes();
         }
 
-        public IDataResult<TGetDto> GetById(Guid id)
+        public IDataResult<TEntity> GetById(Guid id)
         {
             try
             {
-                TEntity entity = Queryable().Where(x => x.Id == id).FirstOrDefault();
-                if (entity is null) return new ErrorDataResult<TGetDto>("Entity Not Found");
+                TEntity? entity = _entities.Find(id);
+                if (entity is null) return new ErrorDataResult<TEntity>("Entity Not Found");
 
-                return new SuccessDataResult<TGetDto>(entity.Adapt<TGetDto>());
+                return new SuccessDataResult<TEntity>(entity);
             }
             catch (Exception ex)
             {
-                return new ErrorDataResult<TGetDto>(ex);
+                return new ErrorDataResult<TEntity>(ex);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using CoreLayer.IoC;
 using DataAccessLayer.Absctract;
 using EntityLayer.Dto.User;
+using EntityLayer.Dto.User.Request;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.ValidationRules.User
 {
-    public class UserAddDtoValidator : AbstractValidator<UserAddDto>
+    public class UserAddDtoValidator : AbstractValidator<UserAddRequestDto>
     {
         public UserAddDtoValidator()
         {

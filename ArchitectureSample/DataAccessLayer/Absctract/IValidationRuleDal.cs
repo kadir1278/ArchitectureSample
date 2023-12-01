@@ -4,7 +4,7 @@ using EntityLayer.Entity;
 
 namespace DataAccessLayer.Absctract
 {
-    public interface IValidationRuleDal : IEntityRepository<ValidationRule, ValidationRuleAddDto, ValidationRuleUpdateDto, ValidationRuleGetDto>
+    public interface IValidationRuleDal : IEntityRepository<ValidationRule>
     {
 
     }

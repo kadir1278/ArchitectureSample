@@ -5,7 +5,10 @@ using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
 using EntityLayer.Dto.Company;
+using EntityLayer.Dto.Company.Request;
+using EntityLayer.Dto.Company.Response;
 using EntityLayer.Entity;
+using Mapster;
 using System.Security;
 
 namespace BusinessLayer.Concrete
@@ -23,40 +26,40 @@ namespace BusinessLayer.Concrete
         }
 
 
-        public IDataResult<Company> AddCompany(CompanyAddDto companyAddDto)
+        public IDataResult<CompanyAddResponseDto> AddCompany(CompanyAddRequestDto companyAddDto)
         {
             try
             {
                 _ct.ThrowIfCancellationRequested();
                 _worker.StartTransaction();
-
-                var addedCompany = _companyDal.Add(companyAddDto, _ct);
+                Company company = companyAddDto.Adapt<Company>();
+                var addedCompany = _companyDal.Add(company, _ct);
                 if (!addedCompany.IsSuccess)
                 {
                     _worker.RollbackTransaction();
-                    return new ErrorDataResult<Company>("Kullanıcı eklenemedi");
+                    return new ErrorDataResult<CompanyAddResponseDto>("Kullanıcı eklenemedi");
                 }
                 _worker.CommitAndSaveChanges();
-                return addedCompany;
+                return new SuccessDataResult<CompanyAddResponseDto>(addedCompany.Adapt<CompanyAddResponseDto>());
             }
             catch (Exception ex)
             {
                 _worker.RollbackTransaction();
-                return new ErrorDataResult<Company>(ex);
+                return new ErrorDataResult<CompanyAddResponseDto>(ex);
             }
         }
 
         [IpCheckOperationAspect]
-        [SecuredOperation(PermissionEnum.Ekle)]
-        public IDataResult<ICollection<Company>> GetCompanyCollection()
+        //  [SecuredOperation(PermissionEnum.Ekle)]
+        public IDataResult<ICollection<CompanyListResponseDto>> GetCompanyCollection()
         {
             try
             {
                 _ct.ThrowIfCancellationRequested();
                 var getCompany = _companyDal.Queryable().ToList();
 
-                if (getCompany is null) return new ErrorDataResult<ICollection<Company>>(String.Join("-", "Kullanıcı bulunamadı"));
-                return new SuccessDataResult<ICollection<Company>>(getCompany);
+                if (getCompany is null) return new ErrorDataResult<ICollection<CompanyListResponseDto>>(String.Join("-", "Kullanıcı bulunamadı"));
+                return new SuccessDataResult<ICollection<CompanyListResponseDto>>(getCompany.Adapt<ICollection<CompanyListResponseDto>>());
             }
             catch (Exception)
             {
@@ -64,16 +67,16 @@ namespace BusinessLayer.Concrete
             }
         }
 
-        public IDataResult<CompanyGetDto> GetCompanyById(Guid id)
+        public IDataResult<CompanyGetByIdResponseDto> GetCompanyById(Guid id)
         {
             try
             {
                 _ct.ThrowIfCancellationRequested();
                 var getCompany = _companyDal.GetById(id);
                 if (!getCompany.IsSuccess || getCompany.Data is null)
-                    return new ErrorDataResult<CompanyGetDto>(getCompany.Messages);
+                    return new ErrorDataResult<CompanyGetByIdResponseDto>(getCompany.Messages);
 
-                return getCompany;
+                return new SuccessDataResult<CompanyGetByIdResponseDto>(getCompany.Data.Adapt<CompanyGetByIdResponseDto>());
             }
             catch (Exception)
             {

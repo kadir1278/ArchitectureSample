@@ -6,7 +6,10 @@ using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
 using EntityLayer.Dto.User;
 using EntityLayer.Dto.ValidationRule;
+using EntityLayer.Dto.ValidationRule.Request;
+using EntityLayer.Dto.ValidationRule.Response;
 using EntityLayer.Entity;
+using Mapster;
 using System.Security;
 
 namespace BusinessLayer.Concrete
@@ -24,41 +27,42 @@ namespace BusinessLayer.Concrete
         }
 
 
-        public IDataResult<ValidationRule> AddValidationRules(ValidationRuleAddDto validationRuleAddDto)
+        public IDataResult<ValidationRuleAddResponseDto> AddValidationRules(ValidationRuleAddRequestDto validationRuleAddDto)
         {
             try
             {
                 _ct.ThrowIfCancellationRequested();
                 _worker.StartTransaction();
 
-                var addedUser = _validationRuleDal.Add(validationRuleAddDto, _ct);
+                ValidationRule validationRule = validationRuleAddDto.Adapt<ValidationRule>();
+                var addedUser = _validationRuleDal.Add(validationRule, _ct);
                 if (!addedUser.IsSuccess)
                 {
                     _worker.RollbackTransaction();
-                    return new ErrorDataResult<ValidationRule>("Kullanıcı eklenemedi");
+                    return new ErrorDataResult<ValidationRuleAddResponseDto>("Kullanıcı eklenemedi");
                 }
                 _worker.CommitAndSaveChanges();
-                return addedUser;
+                return new SuccessDataResult<ValidationRuleAddResponseDto>(addedUser.Data.Adapt<ValidationRuleAddResponseDto>());
             }
             catch (Exception ex)
             {
                 _worker.RollbackTransaction();
-                return new ErrorDataResult<ValidationRule>(ex);
+                return new ErrorDataResult<ValidationRuleAddResponseDto>(ex);
             }
         }
 
-        public IDataResult<ICollection<ValidationRule>> GetValidationRuleByValidatorName(Type validatorType)
+        public IDataResult<ICollection<ValidationRuleListResponseDto>> GetValidationRuleByValidatorName(Type validatorType)
         {
             try
             {
                 _ct.ThrowIfCancellationRequested();
-                
+
                 var getUser = _validationRuleDal.Queryable()
                                                 .Where(x => x.ValidatorName == validatorType.Name && x.IsActive)
                                                 .ToList();
 
-                if (getUser is null) return new ErrorDataResult<ICollection<ValidationRule>>(String.Join("-", "Validasyon kuralı bulunamadı"));
-                return new SuccessDataResult<ICollection<ValidationRule>>(getUser);
+                if (getUser is null) return new ErrorDataResult<ICollection<ValidationRuleListResponseDto>>(String.Join("-", "Validasyon kuralı bulunamadı"));
+                return new SuccessDataResult<ICollection<ValidationRuleListResponseDto>>(getUser.Adapt<ICollection<ValidationRuleListResponseDto>>());
             }
             catch (Exception)
             {
@@ -66,15 +70,15 @@ namespace BusinessLayer.Concrete
             }
         }
 
-        public IDataResult<ICollection<ValidationRule>> GetValidationRuleCollection()
+        public IDataResult<ICollection<ValidationRuleListResponseDto>> GetValidationRuleCollection()
         {
             try
             {
                 _ct.ThrowIfCancellationRequested();
                 var getUser = _validationRuleDal.Queryable().ToList();
 
-                if (getUser is null) return new ErrorDataResult<ICollection<ValidationRule>>(String.Join("-", "Validasyon kuralı bulunamadı"));
-                return new SuccessDataResult<ICollection<ValidationRule>>(getUser);
+                if (getUser is null) return new ErrorDataResult<ICollection<ValidationRuleListResponseDto>>(String.Join("-", "Validasyon kuralı bulunamadı"));
+                return new SuccessDataResult<ICollection<ValidationRuleListResponseDto>>(getUser.Adapt<ICollection<ValidationRuleListResponseDto>>());
             }
             catch (Exception)
             {

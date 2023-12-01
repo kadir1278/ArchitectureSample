@@ -6,7 +6,7 @@ using EntityLayer.Entity;
 
 namespace DataAccessLayer.Concrete
 {
-    public class EfUserDal : EfEntityRepository<User, UserAddDto, UserUpdateDto, UserGetDto, SystemContext>, IUserDal
+    public class EfUserDal : EfEntityRepository<User, SystemContext>, IUserDal
     {
         public EfUserDal(SystemContext context) : base(context)
         {

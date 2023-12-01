@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using EntityLayer.Dto.User;
 using EntityLayer.Dto.ValidationRule;
+using EntityLayer.Dto.ValidationRule.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiLayer.Controllers
@@ -19,6 +20,6 @@ namespace ApiLayer.Controllers
         public object ListUser() => _validationRulesService.GetValidationRuleCollection();
 
         [HttpPost("add")]
-        public object AddUser(ValidationRuleAddDto model) => _validationRulesService.AddValidationRules(model);
+        public object AddUser(ValidationRuleAddRequestDto model) => _validationRulesService.AddValidationRules(model);
     }
 }

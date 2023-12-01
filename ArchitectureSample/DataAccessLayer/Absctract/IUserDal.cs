@@ -4,7 +4,7 @@ using EntityLayer.Entity;
 
 namespace DataAccessLayer.Absctract
 {
-    public interface IUserDal : IEntityRepository<User, UserAddDto, UserUpdateDto, UserGetDto>
+    public interface IUserDal : IEntityRepository<User>
     {
     }
 }

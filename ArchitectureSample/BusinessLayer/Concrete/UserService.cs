@@ -5,7 +5,10 @@ using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
 using EntityLayer.Dto.User;
+using EntityLayer.Dto.User.Request;
+using EntityLayer.Dto.User.Response;
 using EntityLayer.Entity;
+using Mapster;
 using System.Security;
 
 namespace BusinessLayer.Concrete
@@ -24,39 +27,40 @@ namespace BusinessLayer.Concrete
 
 
         [ValidateOperationAspect(typeof(UserAddDtoValidator))]
-        public IDataResult<User> AddUser(UserAddDto userAddDto)
+        public IDataResult<UserAddResponseDto> AddUser(UserAddRequestDto userAddDto)
         {
             try
             {
                 _ct.ThrowIfCancellationRequested();
                 _worker.StartTransaction();
 
-                var addedUser = _userDal.Add(userAddDto, _ct);
+                User user = userAddDto.Adapt<User>();
+                var addedUser = _userDal.Add(user, _ct);
                 if (!addedUser.IsSuccess)
                 {
                     _worker.RollbackTransaction();
-                    return new ErrorDataResult<User>("Kullanıcı eklenemedi");
+                    return new ErrorDataResult<UserAddResponseDto>("Kullanıcı eklenemedi");
                 }
                 _worker.CommitAndSaveChanges();
-                return addedUser;
+                return new SuccessDataResult<UserAddResponseDto>(addedUser.Data.Adapt<UserAddResponseDto>());
             }
             catch (Exception ex)
             {
                 _worker.RollbackTransaction();
-                return new ErrorDataResult<User>(ex);
+                return new ErrorDataResult<UserAddResponseDto>(ex);
             }
         }
 
         [IpCheckOperationAspect]
-        public IDataResult<ICollection<User>> GetUserCollection()
+        public IDataResult<ICollection<UserListResponseDto>> GetUserCollection()
         {
             try
             {
                 _ct.ThrowIfCancellationRequested();
                 var getUser = _userDal.Queryable().ToList();
 
-                if (getUser is null) return new ErrorDataResult<ICollection<User>>(String.Join("-", "Kullanıcı bulunamadı"));
-                return new SuccessDataResult<ICollection<User>>(getUser);
+                if (getUser is null) return new ErrorDataResult<ICollection<UserListResponseDto>>(String.Join("-", "Kullanıcı bulunamadı"));
+                return new SuccessDataResult<ICollection<UserListResponseDto>>(getUser.Adapt<ICollection<UserListResponseDto>>());
             }
             catch (Exception)
             {

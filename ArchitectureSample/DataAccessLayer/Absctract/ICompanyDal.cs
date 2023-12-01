@@ -5,7 +5,7 @@ using EntityLayer.Entity;
 
 namespace DataAccessLayer.Absctract
 {
-    public interface ICompanyDal : IEntityRepository<Company, CompanyAddDto, CompanyUpdateDto, CompanyGetDto>
+    public interface ICompanyDal : IEntityRepository<Company>
     {
     }
 }

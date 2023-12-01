@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Abstract;
 using EntityLayer.Dto.User;
+using EntityLayer.Dto.User.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiLayer.Controllers
@@ -18,6 +19,6 @@ namespace ApiLayer.Controllers
         public object ListUser() => _userService.GetUserCollection();
 
         [HttpPost("add")]
-        public object AddUser(UserAddDto model) => _userService.AddUser(model);
+        public object AddUser(UserAddRequestDto model) => _userService.AddUser(model);
     }
 }

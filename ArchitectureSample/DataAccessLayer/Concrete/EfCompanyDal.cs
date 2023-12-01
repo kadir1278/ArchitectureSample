@@ -7,7 +7,7 @@ using EntityLayer.Entity;
 
 namespace DataAccessLayer.Concrete
 {
-    public class EfCompanyDal : EfEntityRepository<Company, CompanyAddDto, CompanyUpdateDto, CompanyGetDto, SystemContext>, ICompanyDal
+    public class EfCompanyDal : EfEntityRepository<Company, SystemContext>, ICompanyDal
     {
         public EfCompanyDal(SystemContext context) : base(context)
         {

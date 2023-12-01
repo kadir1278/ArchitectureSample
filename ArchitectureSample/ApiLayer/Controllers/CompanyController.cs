@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Abstract;
 using EntityLayer.Dto.Company;
+using EntityLayer.Dto.Company.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiLayer.Controllers
@@ -21,6 +22,6 @@ namespace ApiLayer.Controllers
         public object GetById(Guid id) => _companyService.GetCompanyById(id);
 
         [HttpPost("add")]
-        public object Add(CompanyAddDto model) => _companyService.AddCompany(model);
+        public object Add(CompanyAddRequestDto model) => _companyService.AddCompany(model);
     }
 }
