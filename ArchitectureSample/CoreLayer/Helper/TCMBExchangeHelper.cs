@@ -1,28 +1,30 @@
-﻿using CoreLayer.Business.Abstract;
-using CoreLayer.Entity.Dto.ExhangeServiceViewModel;
-using CoreLayer.Helper;
+﻿using CoreLayer.Entity.Dto.ExhangeServiceViewModel;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 
-namespace CoreLayer.Business.Concrete
+namespace CoreLayer.Helper
 {
-    public class TCMBExchangeService : ITCMBExchangeService
+    public static class TCMBExchangeHelper
     {
-        private readonly string _baseUrl = ConfigurationHelper.GetTcmbExchangeUrl();
-        public IDataResult<List<GetAllExchangeViewModel>> GetAllTcmbExchanges()
+        public static IDataResult<List<GetAllExchangeViewModel>> GetAllTcmbExchanges()
         {
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load(_baseUrl);
+                xmlDoc.Load(ConfigurationHelper.GetTcmbExchangeUrl());
 
                 List<GetAllExchangeViewModel> exchangeResponseDtoList = new();
 
                 exchangeResponseDtoList.Add(new GetAllExchangeViewModel
                 {
                     CurrencyCode = "TRY",
-                    Currency = "TÜRK LİRASI"
+                    Currency = "TURK LIRASI"
                 });
 
                 foreach (XmlNode node in xmlDoc.SelectNodes("Tarih_Date")[0].ChildNodes)
@@ -46,5 +48,6 @@ namespace CoreLayer.Business.Concrete
                 return new ErrorDataResult<List<GetAllExchangeViewModel>>(ex);
             }
         }
+
     }
 }

@@ -1,15 +1,19 @@
-﻿using CoreLayer.Business.Abstract;
-using CoreLayer.Entity.ViewModel.MailSendViewModel;
+﻿using CoreLayer.Entity.ViewModel.MailSendViewModel;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
-using System.Net;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CoreLayer.Business.Concrete
+namespace CoreLayer.Helper
 {
-    public class MailService : IMailService
+    public static class MailHelper
     {
-        public IDataResult<bool> SendMail(MailServiceViewModel mailDto, MailConfigurationViewModel mailConfigurationDto)
+        public static IDataResult<bool> SendMail(MailServiceViewModel mailDto, MailConfigurationViewModel mailConfigurationDto)
         {
 
             ServicePointManager.SecurityProtocol = mailConfigurationDto.securityProtocolType;
@@ -70,5 +74,6 @@ namespace CoreLayer.Business.Concrete
                 return new ErrorDataResult<bool>(ex);
             }
         }
+
     }
 }

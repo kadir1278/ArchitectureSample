@@ -11,8 +11,6 @@ namespace CoreLayer.Entity.ViewModel.MailSendViewModel
         public string password { get; set; }
         public bool sslEnable { get; set; }
         public bool useDefaultCredentials { get; set; }
-        public string loginUrl { get; set; }
-        public string autoLoginUrl { get; set; }
         public SecurityProtocolType securityProtocolType { get; set; }
     }
 }

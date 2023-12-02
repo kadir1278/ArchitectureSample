@@ -1,30 +1,32 @@
-﻿using CoreLayer.Business.Abstract;
-using CoreLayer.Helper;
-using CoreLayer.Utilities.Results.Abstract;
+﻿using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CoreLayer.Business.Concrete
+namespace CoreLayer.Helper
 {
-    public class CookieService : ICookieService
+    public static class CookieHelper
     {
-
-        public IDataResult<string> GetCookie(string key)
+        public static string GetCookie(string key)
         {
             try
             {
                 HttpContext _context = HttpContextHelper.GetHttpContext();
                 string value;
                 _context.Request.Cookies.TryGetValue(key, out value);
-                return new SuccessDataResult<string>(value);
+                return value;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new ErrorDataResult<string>(ex);
+                throw;
             }
         }
 
-        public IDataResult<string> SetCookie(string key, string value, CookieOptions? cookieOptions)
+        public static string SetCookie(string key, string value, CookieOptions? cookieOptions = null)
         {
             try
             {
@@ -33,11 +35,11 @@ namespace CoreLayer.Business.Concrete
                     _context.Response.Cookies.Append(key, value);
                 else
                     _context.Response.Cookies.Append(key, value, cookieOptions);
-                return new SuccessDataResult<string>(value);
+                return value;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new ErrorDataResult<string>(ex);
+                throw;
             }
 
         }

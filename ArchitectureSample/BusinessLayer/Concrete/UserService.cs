@@ -1,6 +1,7 @@
 ﻿using AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInteceptors;
 using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules.User;
+using CoreLayer.Helper;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
@@ -35,6 +36,8 @@ namespace BusinessLayer.Concrete
                 _worker.StartTransaction();
 
                 User user = userAddDto.Adapt<User>();
+
+                CookieHelper.SetCookie("cookie","3");
                 var addedUser = _userDal.Add(user, _ct);
                 if (!addedUser.IsSuccess)
                 {

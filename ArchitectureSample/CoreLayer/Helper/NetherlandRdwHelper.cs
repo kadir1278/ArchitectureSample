@@ -1,14 +1,18 @@
-﻿using CoreLayer.Business.Abstract;
-using CoreLayer.Entity.ViewModel.NetherlandRdwServiceViewModel;
+﻿using CoreLayer.Entity.ViewModel.NetherlandRdwServiceViewModel;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CoreLayer.Business.Concrete
+namespace CoreLayer.Helper
 {
-    public class NetherlandRdwService : INetherlandRdwService
+    public static class NetherlandRdwHelper
     {
-        public IDataResult<GetInfoByPlateViewModel> GetInfoByPlate(string plate)
+        public static IDataResult<GetInfoByPlateViewModel> GetInfoByPlate(string plate)
         {
             try
             {
@@ -32,10 +36,11 @@ namespace CoreLayer.Business.Concrete
 
                 return new SuccessDataResult<GetInfoByPlateViewModel>(returnModel);
             }
-           catch (Exception ex)
+            catch (Exception ex)
             {
                 return new ErrorDataResult<GetInfoByPlateViewModel>(ex);
             }
         }
+
     }
 }

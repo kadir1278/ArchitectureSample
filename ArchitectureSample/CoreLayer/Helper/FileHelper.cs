@@ -1,15 +1,19 @@
-﻿using CoreLayer.Business.Abstract;
-using CoreLayer.Entity.ViewModel.FileViewModel;
+﻿using CoreLayer.Entity.ViewModel.FileViewModel;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
 using System.IO.Compression;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CoreLayer.Business.Concrete
+namespace CoreLayer.Helper
 {
-    public class FileService : IFileService
+    public static class FileHelper
     {
-        public string ConvertBase64ToFile(string fileName, string fileType, string fileBase64, string uploadPath)
+        public static string ConvertBase64ToFile(string fileName, string fileType, string fileBase64, string uploadPath)
         {
             byte[] byteArray = Convert.FromBase64String(fileBase64);
 
@@ -26,7 +30,7 @@ namespace CoreLayer.Business.Concrete
             return bytePath;
         }
 
-        public string CreateToIFormFile(IFormFile formFile, string uploadPath)
+        public static string CreateToIFormFile(IFormFile formFile, string uploadPath)
         {
             try
             {
@@ -50,7 +54,7 @@ namespace CoreLayer.Business.Concrete
 
         }
 
-        public IDataResult<DownloadFileViewModel> DownloadToZipFilePath(string filePath)
+        public static DownloadFileViewModel DownloadToZipFilePath(string filePath)
         {
             MemoryStream memory = new MemoryStream();
             try
@@ -65,18 +69,44 @@ namespace CoreLayer.Business.Concrete
                     stream.CopyTo(memory);
                 }
                 memory.Position = 0;
-                return new SuccessDataResult<DownloadFileViewModel>(new DownloadFileViewModel()
+                return new DownloadFileViewModel()
                 {
                     File = memory,
                     ContentType = "application /octet-stream",
-                    FileName = Guid.NewGuid().ToString().ToUpper().Replace("-", "").Substring(0, 8) + ".zip"
-                });
+                    FileName = "ZIP-" + Guid.NewGuid().ToString().ToUpper().Replace("-", "").Substring(0, 8) + ".zip"
+                };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new ErrorDataResult<DownloadFileViewModel>(ex);
+                throw;
             }
 
+        }
+
+        public static DownloadFileViewModel CreateToPDF(string pdfHtmlTemplate)
+        {
+            try
+            {
+
+                var userpdf = new HtmlToPdf();
+                string pdfTemplate = pdfHtmlTemplate;
+                var pdf = userpdf.ConvertHtmlString(pdfTemplate);
+                byte[] pdfBytes = pdf.Save();
+
+                MemoryStream memory = new MemoryStream();
+                memory.Write(pdfBytes, 0, pdfBytes.Length);
+
+                return new DownloadFileViewModel()
+                {
+                    File = memory,
+                    ContentType = "application/pdf",
+                    FileName = "PDF-" + Guid.NewGuid().ToString().ToUpper().Replace("-", "").Substring(0, 8)
+                };
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
