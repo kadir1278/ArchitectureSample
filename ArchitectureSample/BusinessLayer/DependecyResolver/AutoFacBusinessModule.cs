@@ -6,7 +6,6 @@ using BusinessLayer.Concrete;
 using Castle.DynamicProxy;
 using DataAccessLayer.Absctract;
 using DataAccessLayer.Concrete;
-using EntityLayer.Entity;
 using System.Reflection;
 
 namespace BusinessLayer.DependecyResolver
@@ -15,12 +14,15 @@ namespace BusinessLayer.DependecyResolver
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<TokenHelper>().As<ITokenHelper>();
+
             builder.RegisterType<EfUserDal>().As<IUserDal>();
             builder.RegisterType<EfValidationRuleDal>().As<IValidationRuleDal>();
             builder.RegisterType<EfCompanyDal>().As<ICompanyDal>();
 
 
             builder.RegisterType<ValidationRulesService>().As<IValidationRulesService>();
+            builder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
             builder.RegisterType<UserService>().As<IUserService>();
 
             var assembly = Assembly.GetExecutingAssembly();

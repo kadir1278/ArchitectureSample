@@ -1,5 +1,4 @@
-﻿using CoreLayer.Helper;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using MiddlewareLayer.Middleware;
 

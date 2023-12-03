@@ -1,5 +1,4 @@
 ﻿using BusinessLayer.Abstract;
-using EntityLayer.Dto.User;
 using EntityLayer.Dto.User.Request;
 using Microsoft.AspNetCore.Mvc;
 

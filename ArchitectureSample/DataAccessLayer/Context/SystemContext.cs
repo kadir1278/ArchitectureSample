@@ -1,9 +1,5 @@
-﻿using CoreLayer.DataAccess.Constants;
-using CoreLayer.Extensions;
-using CoreLayer.Helper;
-using DataAccessLayer.Migrations;
+﻿using CoreLayer.Extensions;
 using EntityLayer.Entity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Context

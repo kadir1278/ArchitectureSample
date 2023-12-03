@@ -4,12 +4,10 @@ using CoreLayer.DataAccess.Enums;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
-using EntityLayer.Dto.Company;
 using EntityLayer.Dto.Company.Request;
 using EntityLayer.Dto.Company.Response;
 using EntityLayer.Entity;
 using Mapster;
-using System.Security;
 
 namespace BusinessLayer.Concrete
 {
@@ -50,7 +48,7 @@ namespace BusinessLayer.Concrete
         }
 
         [IpCheckOperationAspect]
-        //  [SecuredOperation(PermissionEnum.Ekle)]
+        [SecuredOperation(PermissionEnum.Ekle)]
         public IDataResult<ICollection<CompanyListResponseDto>> GetCompanyCollection()
         {
             try

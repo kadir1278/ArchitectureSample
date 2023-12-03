@@ -1,16 +1,11 @@
-﻿using AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInteceptors;
-using BusinessLayer.Abstract;
-using BusinessLayer.ValidationRules.User;
+﻿using BusinessLayer.Abstract;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Absctract;
-using EntityLayer.Dto.User;
-using EntityLayer.Dto.ValidationRule;
 using EntityLayer.Dto.ValidationRule.Request;
 using EntityLayer.Dto.ValidationRule.Response;
 using EntityLayer.Entity;
 using Mapster;
-using System.Security;
 
 namespace BusinessLayer.Concrete
 {

@@ -1,15 +1,11 @@
 ﻿using CoreLayer.DataAccess.Abstract;
 using CoreLayer.Utilities.Results.Abstract;
 using Microsoft.EntityFrameworkCore;
-using Mapster;
 using CoreLayer.Utilities.Results.Concrete;
 using CoreLayer.Helper;
 using CoreLayer.DataAccess.Constants;
 using Microsoft.AspNetCore.Http;
-using System.Threading;
-using System.Net.Http;
 using CoreLayer.Extensions;
-using Mapster.Utils;
 using CoreLayer.DataAccess.Enums;
 
 namespace CoreLayer.DataAccess.Concrete

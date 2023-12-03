@@ -1,6 +1,4 @@
 ﻿using BusinessLayer.Abstract;
-using EntityLayer.Dto.User;
-using EntityLayer.Dto.ValidationRule;
 using EntityLayer.Dto.ValidationRule.Request;
 using Microsoft.AspNetCore.Mvc;
 

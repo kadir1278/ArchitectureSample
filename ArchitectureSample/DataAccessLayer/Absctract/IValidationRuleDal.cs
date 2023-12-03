@@ -1,5 +1,4 @@
 ﻿using CoreLayer.DataAccess.Abstract;
-using EntityLayer.Dto.ValidationRule;
 using EntityLayer.Entity;
 
 namespace DataAccessLayer.Absctract

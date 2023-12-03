@@ -1,6 +1,4 @@
-﻿using DataAccessLayer.Absctract;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Http;
 using System.Security;
 
 namespace MiddlewareLayer.Middleware

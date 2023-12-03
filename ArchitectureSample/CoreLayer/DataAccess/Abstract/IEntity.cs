@@ -1,6 +1,4 @@
-﻿using CoreLayer.DataAccess.Constants;
-
-namespace CoreLayer.DataAccess.Abstract
+﻿namespace CoreLayer.DataAccess.Abstract
 {
     public interface IEntity
     {

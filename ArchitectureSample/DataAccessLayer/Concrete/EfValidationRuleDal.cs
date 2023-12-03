@@ -1,7 +1,6 @@
 ﻿using CoreLayer.DataAccess.Concrete;
 using DataAccessLayer.Absctract;
 using DataAccessLayer.Context;
-using EntityLayer.Dto.ValidationRule;
 using EntityLayer.Entity;
 
 namespace DataAccessLayer.Concrete

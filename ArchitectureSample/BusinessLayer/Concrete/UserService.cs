@@ -4,13 +4,12 @@ using BusinessLayer.ValidationRules.User;
 using CoreLayer.Helper;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
+using CoreLayer.Utilities.Security.Hashing;
 using DataAccessLayer.Absctract;
-using EntityLayer.Dto.User;
 using EntityLayer.Dto.User.Request;
 using EntityLayer.Dto.User.Response;
 using EntityLayer.Entity;
 using Mapster;
-using System.Security;
 
 namespace BusinessLayer.Concrete
 {
@@ -37,7 +36,13 @@ namespace BusinessLayer.Concrete
 
                 User user = userAddDto.Adapt<User>();
 
-                CookieHelper.SetCookie("cookie","3");
+                byte[] passwordHash, passwordSalt;
+                HashingHelper.CreatePasswordHash(userAddDto.Password, out passwordHash, out passwordSalt);
+
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+
+                user.CompanyId = Guid.Parse("2a5b5a23-7534-4c01-bd22-fc6f436adfbe");
                 var addedUser = _userDal.Add(user, _ct);
                 if (!addedUser.IsSuccess)
                 {
