@@ -6,6 +6,7 @@ using CoreLayer.Utilities.Security.Hashing;
 using DataAccessLayer.Absctract;
 using EntityLayer.Dto.User.Request;
 using EntityLayer.Dto.User.Response;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLayer.Concrete
 {
@@ -23,19 +24,17 @@ namespace BusinessLayer.Concrete
 
         public IDataResult<UserLoginResponseDto> Login(UserLoginRequestDto userLoginRequestDto)
         {
-            var userToCheck = _userDal.Queryable().Where(x => x.Username == userLoginRequestDto.Username).FirstOrDefault();
+            var userToCheck = _userDal.Queryable()
+                                      .Include(x => x.UserRoles)
+                                      .Where(x => x.Username == userLoginRequestDto.Username)
+                                      .AsSplitQuery()
+                                      .FirstOrDefault();
             if (userToCheck is null)
                 return new ErrorDataResult<UserLoginResponseDto>("Kullanıcı Bulunamadı");
 
             if (!HashingHelper.VerifyPasswordHash(userLoginRequestDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
                 return new ErrorDataResult<UserLoginResponseDto>("Şifre hatalı");
 
-            List<OperationClaimDto> operationClaimDtos = new List<OperationClaimDto>();
-            operationClaimDtos.Add(new OperationClaimDto()
-            {
-                Id = 0,
-                Name = "Admin"
-            });
 
             var accessToken = _tokenHelper.CreateToken(userToCheck, operationClaimDtos);
 

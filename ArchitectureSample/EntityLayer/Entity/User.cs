@@ -6,6 +6,10 @@ namespace EntityLayer.Entity
     [Table("User", Schema = "dbo")]
     public class User : BaseEntity
     {
+        public User()
+        {
+            this.UserRoles = new HashSet<UserRole>();
+        }
         public string Username { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -13,5 +17,7 @@ namespace EntityLayer.Entity
         public byte[] PasswordHash { get; set; }
         public Guid CompanyId { get; set; }
         public Company Company { get; set; }
+
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

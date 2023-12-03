@@ -95,7 +95,7 @@ namespace BusinessLayer.Concrete
             }
             catch (Exception)
             {
-                return false;
+                throw;
             }
 
         }
@@ -104,7 +104,7 @@ namespace BusinessLayer.Concrete
             var handler = new JwtSecurityTokenHandler();
             if (!handler.CanReadToken(token))
             {
-                return new ErrorDataResult<string>( "decode edilemedi");
+                return new ErrorDataResult<string>("decode edilemedi");
 
             }
             var jwtToken = handler.ReadJwtToken(token);
