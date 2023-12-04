@@ -1,7 +1,6 @@
 ﻿using AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInteceptors;
 using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules.User;
-using CoreLayer.Helper;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using CoreLayer.Utilities.Security.Hashing;
@@ -59,11 +58,11 @@ namespace BusinessLayer.Concrete
             }
         }
 
-        [IpCheckOperationAspect]
         public IDataResult<ICollection<UserListResponseDto>> GetUserCollection()
         {
             try
             {
+                
                 _ct.ThrowIfCancellationRequested();
                 var getUser = _userDal.Queryable().ToList();
 

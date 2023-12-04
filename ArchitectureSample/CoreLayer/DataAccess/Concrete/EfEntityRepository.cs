@@ -4,9 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using CoreLayer.Utilities.Results.Concrete;
 using CoreLayer.Helper;
 using CoreLayer.DataAccess.Constants;
-using Microsoft.AspNetCore.Http;
-using CoreLayer.Extensions;
-using CoreLayer.DataAccess.Enums;
 
 namespace CoreLayer.DataAccess.Concrete
 {
@@ -154,15 +151,7 @@ namespace CoreLayer.DataAccess.Concrete
 
         public IQueryable<TEntity> Queryable()
         {
-            HttpContext _context = HttpContextHelper.GetHttpContext();
-            var userRoles = _context.User.ClaimRoles();
-
-            if (userRoles.Contains(nameof(PermissionEnum.Admin)))
                 return _dbContext.Set<TEntity>().AsNoTracking();
-
-            string cultureInfo = String.IsNullOrEmpty(_context.Request.Cookies["CultureInfo"]) ? CultureInfoHelper.Turkish : _context.Request.Cookies["CultureInfo"];
-
-            return _dbContext.Set<TEntity>().AsNoTracking().Where(x => x.CultureInfo == cultureInfo);
         }
 
         public IDataResult<TEntity> GetById(Guid id)

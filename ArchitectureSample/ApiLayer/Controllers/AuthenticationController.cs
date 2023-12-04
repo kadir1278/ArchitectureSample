@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Abstract;
 using EntityLayer.Dto.User.Request;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiLayer.Controllers

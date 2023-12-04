@@ -12,7 +12,6 @@ namespace CoreLayer.Helper
             entity.UpdatedDate = DateTime.UtcNow;
             entity.CreatedDate = DateTime.UtcNow;
             entity.IsDeleted = false;
-            entity.IsActive = true;
             entity.UpdatedBy = _loginUser;
             entity.CreatedBy = _loginUser;
             return entity;

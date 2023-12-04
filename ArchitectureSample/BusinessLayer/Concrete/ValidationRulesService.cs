@@ -53,7 +53,7 @@ namespace BusinessLayer.Concrete
                 _ct.ThrowIfCancellationRequested();
 
                 var getUser = _validationRuleDal.Queryable()
-                                                .Where(x => x.ValidatorName == validatorType.Name && x.IsActive)
+                                                .Where(x => x.ValidatorName == validatorType.Name)
                                                 .ToList();
 
                 if (getUser is null) return new ErrorDataResult<ICollection<ValidationRuleListResponseDto>>(String.Join("-", "Validasyon kuralı bulunamadı"));

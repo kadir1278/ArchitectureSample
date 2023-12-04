@@ -14,6 +14,8 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInt
                 HttpContext _httpContext = HttpContextHelper.GetHttpContext();
             try
             {
+               
+
                 IPAddress ipAddress = _httpContext.Connection.RemoteIpAddress;
                 string[] strArray = new string[1] { "::1" };
                 bool flag = true;

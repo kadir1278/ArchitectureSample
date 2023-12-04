@@ -14,8 +14,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScopedForMiddleware();
-builder.Services.LoadModule();
 builder.Services.AddSwaggerGen();
+builder.Services.LoadModule();
 builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutoFacBusinessModule()));
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 

@@ -9,7 +9,6 @@ namespace MiddlewareLayer.Extensions
         public static IApplicationBuilder GlobalFilter(this IApplicationBuilder applicationBuilder)
         {
             applicationBuilder.UseMiddleware<GlobalExceptionMiddleware>();
-            applicationBuilder.UseMiddleware<HostFilterMiddleware>();
             applicationBuilder.UseMiddleware<CheckProjectStatusMiddleware>();
 
             return applicationBuilder;
@@ -18,7 +17,6 @@ namespace MiddlewareLayer.Extensions
         {
             services.AddScoped<GlobalExceptionMiddleware>();
             services.AddScoped<CheckProjectStatusMiddleware>();
-            services.AddScoped<HostFilterMiddleware>();
             return services;
         }
     }

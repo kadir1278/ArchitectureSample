@@ -16,6 +16,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiLayer", "ApiLayer\ApiLay
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AttributeExtensionLayer", "AttributeExtensionLayer\AttributeExtensionLayer.csproj", "{93374E24-BA04-482D-9280-6B84AA21910A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnologySystemWebUI", "TechnologySystemWebUI\TechnologySystemWebUI.csproj", "{DE16EBF8-8575-4771-8609-9FD1CCD53024}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{93374E24-BA04-482D-9280-6B84AA21910A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93374E24-BA04-482D-9280-6B84AA21910A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93374E24-BA04-482D-9280-6B84AA21910A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE16EBF8-8575-4771-8609-9FD1CCD53024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE16EBF8-8575-4771-8609-9FD1CCD53024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE16EBF8-8575-4771-8609-9FD1CCD53024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE16EBF8-8575-4771-8609-9FD1CCD53024}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

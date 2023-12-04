@@ -1,5 +1,4 @@
 ﻿using CoreLayer.DataAccess.Abstract;
-using CoreLayer.DataAccess.Constants;
 using System.ComponentModel.DataAnnotations;
 
 namespace EntityLayer.Base
@@ -13,8 +12,7 @@ namespace EntityLayer.Base
         public DateTime UpdatedDate { get; set; }
         public Guid UpdatedBy { get; set; }
         public bool IsDeleted { get; set; } = false;
-        public string CultureInfo { get; set; } = CultureInfoHelper.Turkish;
-        public bool IsActive { get; set; }
+      
 
     }
 }

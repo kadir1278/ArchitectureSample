@@ -35,8 +35,10 @@ namespace BusinessLayer.Concrete
             if (!HashingHelper.VerifyPasswordHash(userLoginRequestDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
                 return new ErrorDataResult<UserLoginResponseDto>("Şifre hatalı");
 
+            List<OperationClaimDto> claim = new List<OperationClaimDto>();  
 
-            var accessToken = _tokenHelper.CreateToken(userToCheck, operationClaimDtos);
+
+            var accessToken = _tokenHelper.CreateToken(userToCheck, claim);
 
 
             return new SuccessDataResult<UserLoginResponseDto>(new UserLoginResponseDto()

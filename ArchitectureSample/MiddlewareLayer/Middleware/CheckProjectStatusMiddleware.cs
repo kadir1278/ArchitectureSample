@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System.Reflection;
 
 namespace MiddlewareLayer.Middleware
 {
@@ -9,25 +11,22 @@ namespace MiddlewareLayer.Middleware
         {
             try
             {
-                //bool projectDomainStatus = false;
-                //string requestDomain = context.Request.Host.ToString().ToLower();
-                ////string projectName = Assembly.GetExecutingAssembly().GetName().Name;
-                //using (HttpClient httpClient = new HttpClient())
-                //{
-                //    httpClient.BaseAddress = new Uri($"");
-                //    var result = httpClient.GetAsync(httpClient.BaseAddress).Result;
-                //    projectDomainStatus = JsonConvert.DeserializeObject<bool>(result.Content.ReadAsStringAsync().Result);
-                //}
+                string currentProjectName = Assembly.GetExecutingAssembly().GetName().Name;
+                string currentDomain = context.Request.Host.ToString().ToLower();
+                string currentDateTime = DateTime.Now.ToString("ddMMyyyy");
 
-                //if (projectDomainStatus)
-                //    await next.Invoke(context);
-                //else
-                //{
-                //    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                //    context.Response.Redirect("");
-                //}
+                bool projectDomainStatus = false;
+                using (HttpClient httpClient = new HttpClient())
+                {
+                    httpClient.BaseAddress = new Uri(String.Format("url", currentProjectName, currentDomain));
+                    var result = httpClient.GetAsync(httpClient.BaseAddress).Result;
+                    projectDomainStatus = JsonConvert.DeserializeObject<bool>(result.Content.ReadAsStringAsync().Result);
+                }
 
-                await next.Invoke(context);
+                if (projectDomainStatus)
+                    await next.Invoke(context);
+                else
+                    throw new Exception($"Sistem admini ile görüşünüz - {currentProjectName} - {currentDomain} - {currentDateTime}");
             }
             catch (Exception)
             {
