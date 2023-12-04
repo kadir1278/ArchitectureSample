@@ -12,11 +12,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityLayer", "EntityLayer\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddlewareLayer", "MiddlewareLayer\MiddlewareLayer.csproj", "{5A00017D-DE46-4232-9B84-28D2B34E235C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiLayer", "ApiLayer\ApiLayer.csproj", "{4A0127F8-104A-4466-BE67-C9B2D2CF35B7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AttributeExtensionLayer", "AttributeExtensionLayer\AttributeExtensionLayer.csproj", "{93374E24-BA04-482D-9280-6B84AA21910A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnologySystemWebUI", "TechnologySystemWebUI\TechnologySystemWebUI.csproj", "{DE16EBF8-8575-4771-8609-9FD1CCD53024}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechnologySystemWebUI", "TechnologySystemWebUI\TechnologySystemWebUI.csproj", "{DE16EBF8-8575-4771-8609-9FD1CCD53024}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,10 +42,6 @@ Global
 		{5A00017D-DE46-4232-9B84-28D2B34E235C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A00017D-DE46-4232-9B84-28D2B34E235C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A00017D-DE46-4232-9B84-28D2B34E235C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A0127F8-104A-4466-BE67-C9B2D2CF35B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A0127F8-104A-4466-BE67-C9B2D2CF35B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A0127F8-104A-4466-BE67-C9B2D2CF35B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A0127F8-104A-4466-BE67-C9B2D2CF35B7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{93374E24-BA04-482D-9280-6B84AA21910A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{93374E24-BA04-482D-9280-6B84AA21910A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93374E24-BA04-482D-9280-6B84AA21910A}.Release|Any CPU.ActiveCfg = Release|Any CPU
