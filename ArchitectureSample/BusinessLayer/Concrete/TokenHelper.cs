@@ -20,7 +20,6 @@ namespace BusinessLayer.Concrete
     {
         private IConfiguration Configuration { get; }
         private TokenOptions _tokenOptions;
-        //private DateTime _accessTokenExpiration;
         public TokenHelper(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -76,7 +75,7 @@ namespace BusinessLayer.Concrete
                 var tokenInfo = DecodeJwtToken(jwtToken);
 
                 var deserialzeToken = JsonSerializer.Deserialize<List<ClaimDto>>(tokenInfo.Data);
-                if (deserialzeToken.Count == 0 && deserialzeToken == null)
+                if (deserialzeToken.Count == 0 && deserialzeToken is not null)
                     return false;
 
                 var tokenDateTimeSeconds = Convert.ToInt32(deserialzeToken.Where(x => x.Type == "exp").FirstOrDefault().Value);
@@ -103,10 +102,8 @@ namespace BusinessLayer.Concrete
         {
             var handler = new JwtSecurityTokenHandler();
             if (!handler.CanReadToken(token))
-            {
                 return new ErrorDataResult<string>("decode edilemedi");
 
-            }
             var jwtToken = handler.ReadJwtToken(token);
 
             var claimValues = jwtToken.Claims.Select(c => new ClaimDto { Type = c.Type, Value = c.Value }).ToList();

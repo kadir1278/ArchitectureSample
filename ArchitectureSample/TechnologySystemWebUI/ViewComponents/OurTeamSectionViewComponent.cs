@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TechnologySystemWebUI.ViewComponents.Home
+namespace TechnologySystemWebUI.ViewComponents
 {
     public class OurTeamSectionViewComponent : ViewComponent
     {

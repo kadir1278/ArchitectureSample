@@ -14,31 +14,42 @@ namespace BusinessLayer.Concrete
     {
         private readonly IUserDal _userDal;
         private readonly ITokenHelper _tokenHelper;
+        private readonly IUserRoleDal _userRoleDal;
 
-        public AuthenticationService(IUserDal userDal, ITokenHelper tokenHelper)
+        public AuthenticationService(IUserDal userDal, ITokenHelper tokenHelper, IUserRoleDal userRoleDal)
         {
             _userDal = userDal;
             _tokenHelper = tokenHelper;
+            _userRoleDal = userRoleDal;
         }
 
 
         public IDataResult<UserLoginResponseDto> Login(UserLoginRequestDto userLoginRequestDto)
         {
             var userToCheck = _userDal.Queryable()
-                                      .Include(x => x.UserRoles)
                                       .Where(x => x.Username == userLoginRequestDto.Username)
-                                      .AsSplitQuery()
                                       .FirstOrDefault();
+
             if (userToCheck is null)
                 return new ErrorDataResult<UserLoginResponseDto>("Kullanıcı Bulunamadı");
 
             if (!HashingHelper.VerifyPasswordHash(userLoginRequestDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
                 return new ErrorDataResult<UserLoginResponseDto>("Şifre hatalı");
 
-            List<OperationClaimDto> claim = new List<OperationClaimDto>();  
+            var userRole = _userRoleDal.Queryable()
+                                       .Where(x => x.UserId == userToCheck.Id)
+                                       .Include(x => x.Role)
+                                       .ThenInclude(x => x.RolePermissions)
+                                       .ThenInclude(x => x.Permission)
+                                       .SelectMany(x => x.Role.RolePermissions.Select(y => new OperationClaimDto()
+                                       {
+                                           Id = y.PermissionId,
+                                           Name = y.Permission.Name
+                                       }))
+                                       .ToList();
 
 
-            var accessToken = _tokenHelper.CreateToken(userToCheck, claim);
+            var accessToken = _tokenHelper.CreateToken(userToCheck, userRole);
 
 
             return new SuccessDataResult<UserLoginResponseDto>(new UserLoginResponseDto()

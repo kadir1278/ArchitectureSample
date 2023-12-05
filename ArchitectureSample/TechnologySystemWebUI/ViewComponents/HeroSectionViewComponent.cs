@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TechnologySystemWebUI.ViewComponents.Home
+namespace TechnologySystemWebUI.ViewComponents
 {
-    public class CallToActionSectionViewComponent : ViewComponent
+    public class HeroSectionViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke()
         {

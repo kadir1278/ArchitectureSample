@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TechnologySystemWebUI.ViewComponents.Home
+namespace TechnologySystemWebUI.ViewComponents
 {
-    public class CounterSectionViewComponent : ViewComponent
+    public class TestimonialSectionViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke()
         {

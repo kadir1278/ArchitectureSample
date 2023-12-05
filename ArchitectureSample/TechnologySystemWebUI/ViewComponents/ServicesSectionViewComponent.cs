@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TechnologySystemWebUI.ViewComponents.Home
+namespace TechnologySystemWebUI.ViewComponents
 {
-    public class LatestBlogSectionViewComponent : ViewComponent
+    public class ServicesSectionViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke()
         {
