@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CoreLayer.Helper
 {
-    public class EncryptionHelper 
+    public class EncryptionHelper
     {
         private readonly static string key = ConfigurationHelper.GetSecurityKey().Replace("-", "");
 
@@ -58,6 +58,31 @@ namespace CoreLayer.Helper
                 }
             }
         }
+
+        public static string DecryptPassword(string text, string securityKey)
+        {
+            byte[] iv = new byte[16];
+            byte[] buffer = Convert.FromBase64String(text);
+
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(securityKey);
+                aes.IV = iv;
+                ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+
+                using (MemoryStream ms = new MemoryStream(buffer))
+                {
+                    using (CryptoStream cs = new CryptoStream((Stream)ms, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader sr = new StreamReader(cs))
+                        {
+                            return sr.ReadToEnd();
+                        }
+                    }
+                }
+            }
+        }
+
 
         public static SecurityKey CreateSecurityKey(string securityKey)
         {

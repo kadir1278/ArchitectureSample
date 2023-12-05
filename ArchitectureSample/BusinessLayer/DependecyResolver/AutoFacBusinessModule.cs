@@ -16,9 +16,16 @@ namespace BusinessLayer.DependecyResolver
         {
             builder.RegisterType<TokenHelper>().As<ITokenHelper>();
 
-            builder.RegisterType<EfUserDal>().As<IUserDal>();
-            builder.RegisterType<EfValidationRuleDal>().As<IValidationRuleDal>();
             builder.RegisterType<EfCompanyDal>().As<ICompanyDal>();
+            builder.RegisterType<EfDomainDal>().As<IDomainDal>();
+            builder.RegisterType<EfPermissionDal>().As<IPermissionDal>();
+            builder.RegisterType<EfProjectDal>().As<IProjectDal>();
+            builder.RegisterType<EfProjectDomainActivityStatusHistoryDal>().As<IProjectDomainActivityStatusHistoryDal>();
+            builder.RegisterType<EfRoleDal>().As<IRoleDal>();
+            builder.RegisterType<EfRolePermissionDal>().As<IRolePermissionDal>();
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
+            builder.RegisterType<EfUserRoleDal>().As<IUserRoleDal>();
+            builder.RegisterType<EfValidationRuleDal>().As<IValidationRuleDal>();
 
 
             builder.RegisterType<ValidationRulesService>().As<IValidationRulesService>();
