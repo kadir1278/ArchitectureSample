@@ -26,7 +26,8 @@ namespace TechnologySystemWebUI.Areas.Admin.Controllers
             IDataResult<UserLoginResponseDto> responseDto = _authenticationService.Login(loginModel);
             if (responseDto.IsSuccess)
             {
-                CookieHelper.SetCookie("Authorization", $"Bearer {responseDto.Data.Token}", new CookieOptions()
+                string token = "Bearer " + responseDto.Data.Token;
+                CookieHelper.SetCookie("Authorization", token, new CookieOptions()
                 {
                     Expires = responseDto.Data.Expiration,
                 });
