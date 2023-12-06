@@ -20,4 +20,9 @@
 		<ProjectReference Include="..\MiddlewareLayer\MiddlewareLayer.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Areas\Admin\Data\" />
+	  <Folder Include="Areas\Admin\Models\" />
+	</ItemGroup>
+
 </Project>
