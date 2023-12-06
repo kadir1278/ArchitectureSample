@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+
+@await Component.InvokeAsync("BreadcrumbSection", "Blog")
+<!-- Contact Widget Section Begin -->
+<section class="contact-widget spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-md-6 col-md-3">
+                <div class="contact__widget__item">
+                    <div class="contact__widget__item__icon">
+                        <i class="fa fa-map-marker"></i>
+                    </div>
+                    <div class="contact__widget__item__text">
+                        <h4>Address</h4>
+                        <p>Los Angeles Gournadi, 1230 Bariasl</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-md-6 col-md-3">
+                <div class="contact__widget__item">
+                    <div class="contact__widget__item__icon">
+                        <i class="fa fa-phone"></i>
+                    </div>
+                    <div class="contact__widget__item__text">
+                        <h4>Hotline</h4>
+                        <p>1-677-124-44227 • 1-688-356-66889</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-md-6 col-md-3">
+                <div class="contact__widget__item">
+                    <div class="contact__widget__item__icon">
+                        <i class="fa fa-map-marker"></i>
+                    </div>
+                    <div class="contact__widget__item__text">
+                        <h4>Email</h4>
+                        <p>Support@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Contact Widget Section End -->
+@await Component.InvokeAsync("CallToActionSection")
