@@ -26,16 +26,15 @@ namespace TechnologySystemWebUI.Areas.Admin.Controllers
             IDataResult<UserLoginResponseDto> responseDto = _authenticationService.Login(loginModel);
             if (responseDto.IsSuccess)
             {
-                string token = "Bearer " + responseDto.Data.Token;
-                CookieHelper.SetCookie("Authorization", token, new CookieOptions()
+                CookieHelper.SetCookie("Authorization", responseDto.Data.Token, new CookieOptions()
                 {
                     Expires = responseDto.Data.Expiration,
                 });
 
-                return Ok(responseDto);
+                return Redirect("/admin");
             }
 
-            return BadRequest();
+            return View();
         }
     }
 }

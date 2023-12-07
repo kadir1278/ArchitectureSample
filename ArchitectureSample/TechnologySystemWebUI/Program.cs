@@ -55,6 +55,7 @@ app.UseRouting();
 // middleware start
 app.GlobalFilter();
 // middleware end
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

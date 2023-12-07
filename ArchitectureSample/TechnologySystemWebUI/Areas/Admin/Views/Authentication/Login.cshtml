@@ -23,60 +23,36 @@
 </head>
 <body class="crm_body_bg">
 
-
-    <section class="main_content dashboard_part large_header_bg">
-
-
-        <div class="main_content_iner ">
-            <div class="container-fluid p-0">
-                <div class="row justify-content-center">
-                    <div class="col-12">
-                        <div class="dashboard_header mb_50">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="dashboard_header_title">
-                                        <h3> TFS Yazılım </h3>
-                                    </div>
-                                </div>
-
-                            </div>
+    <div class="container mt-5">
+        <div style="float:left;width:75%;height:100%">
+            <div class="modal-content cs_modal">
+                <div class="modal-header justify-content-center theme_bg_1">
+                    <h5 class="modal-title text_white">TFS Software </h5>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/admin/login">
+                        <div>
+                            <input type="text" name="Username" class="form-control" placeholder="Kullanıcı Adınızı Giriniz">
                         </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="white_box mb_30">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-6">
-
-                                    <div class="modal-content cs_modal">
-                                        <div class="modal-header justify-content-center theme_bg_1">
-                                            <h5 class="modal-title text_white">Log in</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form method="post" action="/admin/login">
-                                                <div>
-                                                    <input type="text" name="Username" class="form-control" placeholder="Kullanıcı Adınızı Giriniz">
-                                                </div>
-                                                <div>
-                                                    <input type="password" name="Password" class="form-control" placeholder="Şifrenizi Giriniz">
-                                                </div>
-                                                <button type="submit" class="btn_1 full_width text-center"> Giriş Yap</button>
-                                                @* <p>Need an account? <a data-toggle="modal" data-target="#sing_up" data-dismiss="modal" href="#"> Sign Up</a></p>
-                                                <div class="text-center">
-                                                <a href="#" data-toggle="modal" data-target="#forgot_password" data-dismiss="modal" class="pass_forget_btn">Forget Password?</a>
-                                                </div> *@
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div>
+                            <input type="password" name="Password" class="form-control" placeholder="Şifrenizi Giriniz">
                         </div>
-                    </div>
+                        <button type="submit" class="btn_1 full_width text-center"> Giriş Yap</button>
+                        <p>Need an account? <a data-toggle="modal" data-target="#sing_up" data-dismiss="modal" href="#"> Sign Up</a></p>
+                        <div class="text-center">
+                            <a href="#" data-toggle="modal" data-target="#forgot_password" data-dismiss="modal" class="pass_forget_btn">Forget Password?</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-
-    </section>
-
+        <div style="float:right;width:25%;height:100%">
+            <div class="center">
+                <img src="https://i.hizliresim.com/f9geptd.png" />
+            </div>
+        </div>
+    </div>
+    
 
 
 

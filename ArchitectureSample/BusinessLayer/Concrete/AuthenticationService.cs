@@ -7,6 +7,7 @@ using DataAccessLayer.Absctract;
 using EntityLayer.Dto.User.Request;
 using EntityLayer.Dto.User.Response;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace BusinessLayer.Concrete
 {
@@ -48,9 +49,12 @@ namespace BusinessLayer.Concrete
                                        }))
                                        .ToList();
 
-
+            userRole.Add(new OperationClaimDto()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Admin"
+            });
             var accessToken = _tokenHelper.CreateToken(userToCheck, userRole);
-
 
             return new SuccessDataResult<UserLoginResponseDto>(new UserLoginResponseDto()
             {
