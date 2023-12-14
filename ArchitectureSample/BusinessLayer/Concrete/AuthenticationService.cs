@@ -7,7 +7,6 @@ using DataAccessLayer.Absctract;
 using EntityLayer.Dto.User.Request;
 using EntityLayer.Dto.User.Response;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
 
 namespace BusinessLayer.Concrete
 {

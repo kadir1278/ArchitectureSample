@@ -19,154 +19,105 @@ namespace CoreLayer.DataAccess.Concrete
             _entities = _dbContext.Set<TEntity>();
         }
 
-        public IDataResult<TEntity> Add(TEntity entity, CancellationToken _cancellationToken)
+        public async Task<IDataResult<TEntity>> Add(TEntity entity, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
 
-            try
-            {
-                entity = DatabaseModelHelper<TEntity>.ModelCreaterComplete(entity);
-                var addedEntity = _entities.Add(entity);
-                addedEntity.State = EntityState.Added;
-                bool isSaved = _dbContext.SaveChanges() > 0 ? true : false;
+            entity = DatabaseModelHelper<TEntity>.ModelCreaterComplete(entity);
+            var addedEntity = await _entities.AddAsync(entity, _cancellationToken);
+            addedEntity.State = EntityState.Added;
+            bool isSaved = await _dbContext.SaveChangesAsync() > 0 ? true : false;
 
-                if (!isSaved)
-                    return new ErrorDataResult<TEntity>(DatabaseErrorMessage.SaveError);
+            if (!isSaved)
+                return new ErrorDataResult<TEntity>(DatabaseErrorMessage.SaveError);
 
-                return new SuccessDataResult<TEntity>(addedEntity.Entity);
-            }
-            catch (Exception ex)
-            {
-                return new ErrorDataResult<TEntity>(ex);
-            }
+            return new SuccessDataResult<TEntity>(addedEntity.Entity);
         }
-        public IDataResult<ICollection<TEntity>> AddRange(ICollection<TEntity> addedEntities, CancellationToken _cancellationToken)
+        public async Task<IDataResult<ICollection<TEntity>>> AddRange(ICollection<TEntity> addedEntities, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
-            try
-            {
-                _entities.AddRange(addedEntities);
-                bool isSaved = _dbContext.SaveChanges() > 0 ? true : false;
-                if (!isSaved)
-                    return new ErrorDataResult<ICollection<TEntity>>(DatabaseErrorMessage.SaveError);
-                return new SuccessDataResult<ICollection<TEntity>>(addedEntities);
-            }
-            catch (Exception ex)
-            {
-                return new ErrorDataResult<ICollection<TEntity>>(ex);
-            }
+            await _entities.AddRangeAsync(addedEntities, _cancellationToken);
+            bool isSaved = await _dbContext.SaveChangesAsync() > 0 ? true : false;
+            if (!isSaved)
+                return new ErrorDataResult<ICollection<TEntity>>(DatabaseErrorMessage.SaveError);
+            return new SuccessDataResult<ICollection<TEntity>>(addedEntities);
         }
 
-        public IDataResult<TEntity> SoftDelete(Guid Id, CancellationToken _cancellationToken)
+        public async Task<IDataResult<TEntity>> SoftDelete(Guid Id, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
-            try
-            {
-                TEntity? entity = _entities.Find(Id);
-                if (entity is null)
-                    return new ErrorDataResult<TEntity>(DatabaseErrorMessage.NotFound);
+            TEntity? entity = await _entities.FindAsync(Id);
+            if (entity is null)
+                return new ErrorDataResult<TEntity>(DatabaseErrorMessage.NotFound);
 
-                entity.IsDeleted = true;
-                var deletedEntity = _entities.Update(entity);
-                deletedEntity.State = EntityState.Modified;
+            entity.IsDeleted = true;
+            var deletedEntity = _entities.Update(entity);
+            deletedEntity.State = EntityState.Modified;
 
-                bool isSaved = _dbContext.SaveChanges() > 0 ? true : false;
-                if (!isSaved)
-                    return new ErrorDataResult<TEntity>(DatabaseErrorMessage.SaveError);
+            bool isSaved = await _dbContext.SaveChangesAsync() > 0 ? true : false;
+            if (!isSaved)
+                return new ErrorDataResult<TEntity>(DatabaseErrorMessage.SaveError);
 
-                return new SuccessDataResult<TEntity>(deletedEntity.Entity);
-            }
-            catch (Exception ex)
-            {
-                return new ErrorDataResult<TEntity>(ex);
-            }
+            return new SuccessDataResult<TEntity>(deletedEntity.Entity);
         }
 
-        public IDataResult<ICollection<TEntity>> SoftDeleteRange(ICollection<TEntity> deletedEntities, CancellationToken _cancellationToken)
+        public async Task<IDataResult<ICollection<TEntity>>> SoftDeleteRange(ICollection<TEntity> deletedEntities, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
-            try
-            {
 
-                foreach (TEntity deletedEntity in deletedEntities)
-                {
-                    TEntity entity = DatabaseModelHelper<TEntity>.ModelSoftDeleterComplete(deletedEntity);
-                    var deletedEntitie = _entities.Update(entity);
-                    deletedEntitie.State = EntityState.Modified;
-                }
-
-                bool isSaved = _dbContext.SaveChanges() > 0 ? true : false;
-                if (!isSaved)
-                    return new ErrorDataResult<ICollection<TEntity>>(DatabaseErrorMessage.SaveError);
-                return new SuccessDataResult<ICollection<TEntity>>(deletedEntities);
-            }
-            catch (Exception ex)
+            foreach (TEntity deletedEntity in deletedEntities)
             {
-                return new ErrorDataResult<ICollection<TEntity>>(ex);
+                TEntity entity = DatabaseModelHelper<TEntity>.ModelSoftDeleterComplete(deletedEntity);
+                var deletedEntitie = _entities.Update(entity);
+                deletedEntitie.State = EntityState.Modified;
             }
+
+            bool isSaved = await _dbContext.SaveChangesAsync() > 0 ? true : false;
+            if (!isSaved)
+                return new ErrorDataResult<ICollection<TEntity>>(DatabaseErrorMessage.SaveError);
+            return new SuccessDataResult<ICollection<TEntity>>(deletedEntities);
         }
 
 
-        public IDataResult<TEntity> Update(TEntity dto, CancellationToken _cancellationToken)
+        public async Task<IDataResult<TEntity>> Update(TEntity dto, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
-            try
-            {
-                var entity = _entities.Find(dto.Id);
-                if (entity is null)
-                    return new ErrorDataResult<TEntity>(DatabaseErrorMessage.NotFound);
+            var entity = await _entities.FindAsync(dto.Id);
+            if (entity is null)
+                return new ErrorDataResult<TEntity>(DatabaseErrorMessage.NotFound);
 
-                TEntity updateEntity = DatabaseModelHelper<TEntity>.ModelUpdaterComplete(entity);
-                var updatedEntity = _entities.Update(updateEntity);
-                updatedEntity.State = EntityState.Modified;
+            TEntity updateEntity = DatabaseModelHelper<TEntity>.ModelUpdaterComplete(entity);
+            var updatedEntity = _entities.Update(updateEntity);
+            updatedEntity.State = EntityState.Modified;
 
-                bool isSaved = _dbContext.SaveChanges() > 0 ? true : false;
-                if (!isSaved)
-                    return new ErrorDataResult<TEntity>(DatabaseErrorMessage.SaveError);
+            bool isSaved = await _dbContext.SaveChangesAsync() > 0 ? true : false;
+            if (!isSaved)
+                return new ErrorDataResult<TEntity>(DatabaseErrorMessage.SaveError);
 
-                return new SuccessDataResult<TEntity>(updatedEntity.Entity);
-            }
-            catch (Exception ex)
-            {
-                return new ErrorDataResult<TEntity>(ex);
-            }
+            return new SuccessDataResult<TEntity>(updatedEntity.Entity);
         }
 
-        public IDataResult<ICollection<TEntity>> UpdateRange(ICollection<TEntity> updatedEntities, CancellationToken _cancellationToken)
+        public async Task<IDataResult<ICollection<TEntity>>> UpdateRange(ICollection<TEntity> updatedEntities, CancellationToken _cancellationToken)
         {
             _cancellationToken.ThrowIfCancellationRequested();
-            try
-            {
-                _entities.UpdateRange(updatedEntities);
-                bool isSaved = _dbContext.SaveChanges() > 0 ? true : false;
-                if (!isSaved)
-                    return new ErrorDataResult<ICollection<TEntity>>(DatabaseErrorMessage.SaveError);
-                return new SuccessDataResult<ICollection<TEntity>>(updatedEntities);
-            }
-            catch (Exception ex)
-            {
-                return new ErrorDataResult<ICollection<TEntity>>(ex);
-            }
+            _entities.UpdateRange(updatedEntities);
+            bool isSaved = await _dbContext.SaveChangesAsync() > 0 ? true : false;
+            if (!isSaved)
+                return new ErrorDataResult<ICollection<TEntity>>(DatabaseErrorMessage.SaveError);
+            return new SuccessDataResult<ICollection<TEntity>>(updatedEntities);
         }
 
         public IQueryable<TEntity> Queryable()
         {
-                return _dbContext.Set<TEntity>().AsNoTracking();
+            return _dbContext.Set<TEntity>().AsNoTracking();
         }
 
-        public IDataResult<TEntity> GetById(Guid id)
+        public async Task<IDataResult<TEntity>> GetById(Guid id)
         {
-            try
-            {
-                TEntity? entity = Queryable().Where(x => x.Id == id).FirstOrDefault();
-                if (entity is null) return new ErrorDataResult<TEntity>("Entity Not Found");
+            TEntity? entity = await Queryable().Where(x => x.Id == id).FirstOrDefaultAsync<TEntity>();
+            if (entity is null) return new ErrorDataResult<TEntity>("Entity Not Found");
 
-                return new SuccessDataResult<TEntity>(entity);
-            }
-            catch (Exception ex)
-            {
-                return new ErrorDataResult<TEntity>(ex);
-            }
+            return new SuccessDataResult<TEntity>(entity);
         }
     }
 }

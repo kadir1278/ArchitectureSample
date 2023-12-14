@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Context
 {
-    public class SystemContext : DbContext
+    public class SystemContext : DbContextExtension
     {
         public SystemContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
@@ -24,7 +24,6 @@ namespace DataAccessLayer.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.ScriptEncryptAndDecrypt();
 
             modelBuilder.Entity<Company>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<Domain>().HasQueryFilter(x => !x.IsDeleted);
@@ -38,6 +37,8 @@ namespace DataAccessLayer.Context
             modelBuilder.Entity<ValidationRule>().HasQueryFilter(x => !x.IsDeleted).HasIndex(x => x.ValidatorName);
 
         }
+
+
 
     }
 }

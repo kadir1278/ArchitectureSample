@@ -26,77 +26,34 @@ namespace MiddlewareLayer.Middleware
                 await next.Invoke(context);
                 IsSuccess = true;
             }
-            catch (FormatException ex)
-            {
-                await CustomException(context,
-                                      ex,
-                                      StatusCodes.Status409Conflict,
-                                      String.Join(context.Request.Path + " Conflict RequestId : {0}", _requestId),
-                                      LogLevel.Information);
-            }
-            catch (SecurityException ex)
-            {
-                await CustomException(context,
-                                      ex,
-                                      StatusCodes.Status403Forbidden,
-                                      String.Join(context.Request.Path + " Forbidden RequestId : {0}", _requestId),
-                                      LogLevel.Warning);
-            }
-            catch (ValidationException ex)
-            {
-                await CustomException(context,
-                                      ex,
-                                      StatusCodes.Status400BadRequest,
-                                      String.Join(context.Request.Path + " Forbidden RequestId : {0}", _requestId),
-                                      LogLevel.Information);
-            }
-            catch (FluentValidation.ValidationException ex)
-            {
-                await CustomException(context,
-                                      ex,
-                                      StatusCodes.Status400BadRequest,
-                                      String.Join(context.Request.Path + " Forbidden RequestId : {0}", _requestId),
-                                      LogLevel.Trace);
-            }
             catch (Exception ex)
             {
-                await CustomException(context,
-                                      ex,
-                                      StatusCodes.Status400BadRequest,
-                                      String.Join(context.Request.Path + " Finished RequestId : {0}", _requestId),
-                                      LogLevel.Error);
+                await CustomException(context, ex);
             }
             finally
             {
                 if (IsSuccess) _logger.LogInformation(context.Request.Path + " Success RequestId : {0}", _requestId);
+                else _logger.LogWarning(context.Request.Path + " Exception RequestId : {0}", _requestId);
             }
 
         }
 
-        private async Task CustomException(HttpContext context, Exception ex, int statusCodes, string logMessage, LogLevel logLevel)
+        private async Task CustomException(HttpContext context, Exception ex)
         {
+
+            Type exceptionType = ex.GetType();
+            int statusCodes = StatusCodes.Status400BadRequest;
+
+            if (exceptionType == typeof(ValidationException)) statusCodes = StatusCodes.Status400BadRequest;
+            if (exceptionType == typeof(FluentValidation.ValidationException)) statusCodes = StatusCodes.Status400BadRequest;
+            if (exceptionType == typeof(FormatException)) statusCodes = StatusCodes.Status409Conflict;
+            if (exceptionType == typeof(SecurityException)) statusCodes = StatusCodes.Status403Forbidden;
+            if (exceptionType == typeof(UnauthorizedAccessException)) statusCodes = StatusCodes.Status401Unauthorized;
+            if (exceptionType == typeof(ApplicationException)) statusCodes = StatusCodes.Status400BadRequest;
+
             context.Response.StatusCode = statusCodes;
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(JsonConvert.SerializeObject(new ErrorDataResult<string>(ex)));
-
-            switch (logLevel)
-            {
-                case LogLevel.Error:
-                    _logger.LogError(logMessage);
-                    break;
-                case LogLevel.Information:
-                    _logger.LogInformation(logMessage);
-                    break;
-                case LogLevel.Trace:
-                    _logger.LogTrace(logMessage);
-                    break;
-                case LogLevel.Warning:
-                    _logger.LogWarning(logMessage);
-                    break;
-                default:
-                    _logger.LogInformation(logMessage);
-                    break;
-            }
         }
     }
 }

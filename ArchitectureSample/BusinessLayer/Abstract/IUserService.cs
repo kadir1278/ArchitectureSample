@@ -6,7 +6,7 @@ namespace BusinessLayer.Abstract
 {
     public interface IUserService
     {
-        public IDataResult<UserAddResponseDto> AddUser(UserAddRequestDto userAddDto);
+        public Task<IDataResult<UserAddResponseDto>> AddUser(UserAddRequestDto userAddDto);
         public IDataResult<ICollection<UserListResponseDto>> GetUserCollection();
     }
 }

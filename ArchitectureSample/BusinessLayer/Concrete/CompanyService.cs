@@ -26,25 +26,18 @@ namespace BusinessLayer.Concrete
 
         public IDataResult<CompanyAddResponseDto> AddCompany(CompanyAddRequestDto companyAddDto)
         {
-            try
-            {
-                _ct.ThrowIfCancellationRequested();
-                _worker.StartTransaction();
-                Company company = companyAddDto.Adapt<Company>();
-                var addedCompany = _companyDal.Add(company, _ct);
-                if (!addedCompany.IsSuccess)
-                {
-                    _worker.RollbackTransaction();
-                    return new ErrorDataResult<CompanyAddResponseDto>("Firma eklenemedi");
-                }
-                _worker.CommitAndSaveChanges();
-                return new SuccessDataResult<CompanyAddResponseDto>(addedCompany.Data.Adapt<CompanyAddResponseDto>(), "Firma Eklendi");
-            }
-            catch (Exception ex)
+            _ct.ThrowIfCancellationRequested();
+            _worker.StartTransaction();
+
+            Company company = companyAddDto.Adapt<Company>();
+            var addedCompany = _companyDal.Add(company, _ct).Result;
+            if (!addedCompany.IsSuccess)
             {
                 _worker.RollbackTransaction();
-                return new ErrorDataResult<CompanyAddResponseDto>(ex);
+                return new ErrorDataResult<CompanyAddResponseDto>("Firma eklenemedi");
             }
+            _worker.CommitAndSaveChangesAsync();
+            return new SuccessDataResult<CompanyAddResponseDto>(addedCompany.Data.Adapt<CompanyAddResponseDto>(), "Firma Eklendi");
         }
 
         [IpCheckOperationAspect]
@@ -70,7 +63,7 @@ namespace BusinessLayer.Concrete
             try
             {
                 _ct.ThrowIfCancellationRequested();
-                var getCompany = _companyDal.GetById(id);
+                var getCompany = _companyDal.GetById(id).Result;
                 if (!getCompany.IsSuccess || getCompany.Data is null)
                     return new ErrorDataResult<CompanyGetByIdResponseDto>(getCompany.Messages);
 

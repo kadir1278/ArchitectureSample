@@ -11,44 +11,28 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac.MethodInt
 
         protected override void OnBefore(IInvocation ınvocation)
         {
-                HttpContext _httpContext = HttpContextHelper.GetHttpContext();
-            try
-            {
-               
+            HttpContext _httpContext = HttpContextHelper.GetHttpContext();
 
-                IPAddress ipAddress = _httpContext.Connection.RemoteIpAddress;
-                string[] strArray = new string[1] { "::1" };
-                bool flag = true;
-                if (ipAddress.IsIPv4MappedToIPv6)
-                    ipAddress = ipAddress.MapToIPv4();
+            IPAddress ipAddress = _httpContext.Connection.RemoteIpAddress;
+            string[] strArray = new string[1] { "::1" };
+            bool flag = true;
+            if (ipAddress.IsIPv4MappedToIPv6)
+                ipAddress = ipAddress.MapToIPv4();
 
-                foreach (string ipString in strArray)
+            foreach (string ipString in strArray)
+            {
+                if (IPAddress.Parse(ipString).Equals(ipAddress))
                 {
-                    if (IPAddress.Parse(ipString).Equals(ipAddress))
-                    {
-                        flag = false;
-                        break;
-                    }
+                    flag = false;
+                    break;
                 }
-                if (flag)
-                {
-                    throw new SecurityException("Forbidden error");
-                }
-                else
-                    return;
             }
-            catch (FormatException)
+            if (flag)
             {
-                throw;
+                throw new SecurityException("Forbidden error");
             }
-            catch (SecurityException)
-            {
-                throw;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            else
+                return;
 
         }
     }

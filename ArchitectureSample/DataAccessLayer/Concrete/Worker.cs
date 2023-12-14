@@ -36,20 +36,20 @@ namespace DataAccessLayer.Concrete
 
         public void Dispose() => _context.Dispose();
 
-        public void CommitAndSaveChanges()
+        public void CommitAndSaveChangesAsync()
         {
             _transaction.Commit();
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
             if (_transaction is not null) _transaction.Dispose();
             _transaction = null;
         }
-        public void SaveChanges()
+        public void SaveChangesAsync()
         {
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
             if (_transaction is not null) _transaction.Dispose();
             _transaction = null;
         }
-       
+
 
     }
 }

@@ -26,7 +26,7 @@ namespace BusinessLayer.Concrete
 
 
         [ValidateOperationAspect(typeof(UserAddDtoValidator))]
-        public IDataResult<UserAddResponseDto> AddUser(UserAddRequestDto userAddDto)
+        public async Task<IDataResult<UserAddResponseDto>> AddUser(UserAddRequestDto userAddDto)
         {
             try
             {
@@ -42,13 +42,13 @@ namespace BusinessLayer.Concrete
                 user.PasswordSalt = passwordSalt;
 
                 user.CompanyId = Guid.Parse("2a5b5a23-7534-4c01-bd22-fc6f436adfbe");
-                var addedUser = _userDal.Add(user, _ct);
+                var addedUser = await _userDal.Add(user, _ct);
                 if (!addedUser.IsSuccess)
                 {
                     _worker.RollbackTransaction();
                     return new ErrorDataResult<UserAddResponseDto>("Kullanıcı eklenemedi");
                 }
-                _worker.CommitAndSaveChanges();
+                _worker.CommitAndSaveChangesAsync();
                 return new SuccessDataResult<UserAddResponseDto>(addedUser.Data.Adapt<UserAddResponseDto>());
             }
             catch (Exception ex)
@@ -62,7 +62,7 @@ namespace BusinessLayer.Concrete
         {
             try
             {
-                
+
                 _ct.ThrowIfCancellationRequested();
                 var getUser = _userDal.Queryable().ToList();
 

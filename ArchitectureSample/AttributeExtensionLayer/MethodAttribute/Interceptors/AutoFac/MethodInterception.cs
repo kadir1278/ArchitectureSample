@@ -1,6 +1,4 @@
 ﻿using Castle.DynamicProxy;
-using System.ComponentModel.DataAnnotations;
-using System.Security;
 
 namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac
 {
@@ -20,26 +18,6 @@ namespace AttributeExtensionLayer.MethodAttribute.Interceptors.AutoFac
                 OnBefore(invocation);
                 invocation.Proceed();
                 isSuccess = true;
-            }
-            catch (FormatException ex)
-            {
-                OnException(invocation);
-                throw;
-            }
-            catch (SecurityException)
-            {
-                OnException(invocation);
-                throw;
-            }
-            catch (ValidationException)
-            {
-                OnException(invocation);
-                throw;
-            }
-            catch (FluentValidation.ValidationException)
-            {
-                OnException(invocation);
-                throw;
             }
             catch (Exception)
             {

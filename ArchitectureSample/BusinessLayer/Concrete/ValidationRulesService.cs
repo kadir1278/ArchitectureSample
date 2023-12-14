@@ -30,13 +30,13 @@ namespace BusinessLayer.Concrete
                 _worker.StartTransaction();
 
                 ValidationRule validationRule = validationRuleAddDto.Adapt<ValidationRule>();
-                var addedUser = _validationRuleDal.Add(validationRule, _ct);
+                var addedUser = _validationRuleDal.Add(validationRule, _ct).Result;
                 if (!addedUser.IsSuccess)
                 {
                     _worker.RollbackTransaction();
                     return new ErrorDataResult<ValidationRuleAddResponseDto>("Validasyon kuralı eklenemedi");
                 }
-                _worker.CommitAndSaveChanges();
+                _worker.CommitAndSaveChangesAsync();
                 return new SuccessDataResult<ValidationRuleAddResponseDto>(addedUser.Data.Adapt<ValidationRuleAddResponseDto>());
             }
             catch (Exception ex)

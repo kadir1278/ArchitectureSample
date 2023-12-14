@@ -1,7 +1,7 @@
 ﻿using CoreLayer.DataAccess.Abstract;
 using System.ComponentModel.DataAnnotations;
 
-namespace EntityLayer.Base
+namespace CoreLayer.Entity.Base
 {
     public class BaseEntity : IEntity
     {
@@ -12,7 +12,7 @@ namespace EntityLayer.Base
         public DateTime UpdatedDate { get; set; }
         public Guid UpdatedBy { get; set; }
         public bool IsDeleted { get; set; } = false;
-      
+
 
     }
 }
