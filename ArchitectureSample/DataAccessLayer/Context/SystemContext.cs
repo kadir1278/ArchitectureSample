@@ -1,16 +1,18 @@
-﻿using CoreLayer.Extensions;
+﻿using CoreLayer.Entity;
+using CoreLayer.Extensions;
 using EntityLayer.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Context
 {
-    public class SystemContext : DbContextExtension
+    public class SystemContext : DbContext
     {
         public SystemContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
 
         }
 
+        public DbSet<Audit> Audits { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Domain> Domains { get; set; }
         public DbSet<Permission> Permissions { get; set; }
@@ -23,8 +25,9 @@ namespace DataAccessLayer.Context
         public DbSet<ValidationRule> ValidationRules { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ScriptEncryptAndDecrypt();
 
-
+            modelBuilder.Entity<Audit>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<Company>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<Domain>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<ProjectDomainActivityStatusHistory>().HasQueryFilter(x => !x.IsDeleted);

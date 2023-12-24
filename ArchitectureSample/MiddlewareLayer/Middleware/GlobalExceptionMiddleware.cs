@@ -47,7 +47,10 @@ namespace MiddlewareLayer.Middleware
             if (exceptionType == typeof(ValidationException)) statusCodes = StatusCodes.Status400BadRequest;
             if (exceptionType == typeof(FluentValidation.ValidationException)) statusCodes = StatusCodes.Status400BadRequest;
             if (exceptionType == typeof(FormatException)) statusCodes = StatusCodes.Status409Conflict;
-            if (exceptionType == typeof(SecurityException)) statusCodes = StatusCodes.Status403Forbidden;
+            if (exceptionType == typeof(SecurityException))
+            {
+                statusCodes = StatusCodes.Status403Forbidden;
+            }
             if (exceptionType == typeof(UnauthorizedAccessException)) statusCodes = StatusCodes.Status401Unauthorized;
             if (exceptionType == typeof(ApplicationException)) statusCodes = StatusCodes.Status400BadRequest;
 

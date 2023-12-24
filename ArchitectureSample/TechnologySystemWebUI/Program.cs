@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using BusinessLayer.DependecyResolver;
 using CoreLayer.Helper;
 using EntityLayer.Dto.Jwt;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MiddlewareLayer.Extensions;
@@ -17,8 +18,21 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterMod
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 var tokens = builder.Configuration.GetSection(key: "TokenOptions").Get<TokenOptions>();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
-    AddJwtBearer(options =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+    .AddCookie(opts =>
+    {
+        opts.Cookie.Name = $"Authorization";
+        opts.AccessDeniedPath = "/admin/login";
+        opts.LoginPath = "/admin/login";
+        opts.SlidingExpiration = true;
+    })
+
+    .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {

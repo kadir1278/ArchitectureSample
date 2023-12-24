@@ -1,17 +1,20 @@
-﻿using BusinessLayer.Abstract;
-using CoreLayer.Helper;
-using CoreLayer.Utilities.Results.Abstract;
+﻿using CoreLayer.Utilities.Results.Abstract;
 using EntityLayer.Dto.User.Request;
 using EntityLayer.Dto.User.Response;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using CoreLayer.Helper;
 
 namespace TechnologySystemWebUI.Areas.Admin.Controllers
 {
     [Area("Admin"), Route("admin/")]
     public class AuthenticationController : Controller
     {
-        private readonly IAuthenticationService _authenticationService;
-        public AuthenticationController(IAuthenticationService authenticationService)
+        private readonly BusinessLayer.Abstract.IAuthenticationService _authenticationService;
+        public AuthenticationController(BusinessLayer.Abstract.IAuthenticationService authenticationService)
         {
             _authenticationService = authenticationService;
         }
@@ -26,14 +29,17 @@ namespace TechnologySystemWebUI.Areas.Admin.Controllers
             IDataResult<UserLoginResponseDto> responseDto = _authenticationService.Login(loginModel);
             if (responseDto.IsSuccess)
             {
-                CookieHelper.SetCookie("Authorization", responseDto.Data.Token, new CookieOptions()
-                {
-                    Expires = responseDto.Data.Expiration,
-                });
+                var identity = new ClaimsIdentity(responseDto.Data.OperationClaimDtos.Select(x => new Claim(ClaimTypes.Role, x.Name)),
+                                                  CookieAuthenticationDefaults.AuthenticationScheme);
 
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+
+                //CookieHelper.SetCookie("Authorization", $"{responseDto.Data.Token}", new CookieOptions()
+                //{
+                //    Expires = responseDto.Data.Expiration,
+                //});
                 return Redirect("/admin");
             }
-
             return View();
         }
     }

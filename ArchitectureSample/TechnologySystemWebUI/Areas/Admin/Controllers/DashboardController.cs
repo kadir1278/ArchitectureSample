@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TechnologySystemWebUI.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
         private readonly ICompanyService _companyService;
 
@@ -19,6 +17,7 @@ namespace TechnologySystemWebUI.Areas.Admin.Controllers
         {
             _companyService.GetCompanyCollection();
             return View();
+
         }
     }
 }

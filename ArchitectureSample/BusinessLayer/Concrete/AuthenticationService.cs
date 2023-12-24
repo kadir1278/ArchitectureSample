@@ -60,6 +60,7 @@ namespace BusinessLayer.Concrete
                 Expiration = accessToken.Expiration,
                 Token = accessToken.Token,
                 Username = userToCheck.Username,
+                OperationClaimDtos = userRole
             });
         }
     }
