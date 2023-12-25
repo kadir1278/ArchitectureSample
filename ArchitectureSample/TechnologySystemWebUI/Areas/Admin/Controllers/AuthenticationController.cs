@@ -32,15 +32,18 @@ namespace TechnologySystemWebUI.Areas.Admin.Controllers
                 var identity = new ClaimsIdentity(responseDto.Data.OperationClaimDtos.Select(x => new Claim(ClaimTypes.Role, x.Name)),
                                                   CookieAuthenticationDefaults.AuthenticationScheme);
 
-                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+                identity.AddClaim(new Claim(ClaimTypes.Name, responseDto.Data.Username));
 
-                //CookieHelper.SetCookie("Authorization", $"{responseDto.Data.Token}", new CookieOptions()
-                //{
-                //    Expires = responseDto.Data.Expiration,
-                //});
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
                 return Redirect("/admin");
             }
             return View();
+        }
+        [Route("logout"), HttpGet]
+        public IActionResult LogOut()
+        {
+            HttpContext.SignOutAsync();
+            return RedirectToAction("Login", "Authentication");
         }
     }
 }

@@ -30,8 +30,8 @@ builder.Services.AddAuthentication(options =>
         opts.AccessDeniedPath = "/admin/login";
         opts.LoginPath = "/admin/login";
         opts.SlidingExpiration = true;
+        opts.ExpireTimeSpan = TimeSpan.FromMinutes(tokens.AccessTokenExpiration);
     })
-
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters

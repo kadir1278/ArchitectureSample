@@ -4,6 +4,7 @@ namespace CoreLayer.Helper
 {
     public class ConfigurationHelper
     {
+        private readonly static string _privateProjectKey = "f27c9b94069f47fbabbeee9e8caa5b0f";
         #region Constructor
         private static IConfigurationRoot _configurationRoot;
         private static IConfigurationRoot configurationRoot
@@ -24,15 +25,8 @@ namespace CoreLayer.Helper
         #region GetSqlConnectionString
         public static String GetSqlConnectionString()
         {
-            string connectionString;
-
-            var SQL_CONNECTION_STRING = Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING");
-            if (!String.IsNullOrEmpty(SQL_CONNECTION_STRING))
-                connectionString = SQL_CONNECTION_STRING;
-            else
-                connectionString = configurationRoot.GetConnectionString("SqlServerConnectionString");
-
-            return connectionString;
+            return EncryptionHelper.DecryptPassword(configurationRoot.GetConnectionString("SqlServerConnectionString"),
+                                                    _privateProjectKey);
         }
 
         public static String GetSqlConnectionType()
@@ -69,7 +63,7 @@ namespace CoreLayer.Helper
         }
         #endregion
 
-        
+
 
     }
 }
