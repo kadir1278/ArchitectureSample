@@ -1,5 +1,6 @@
 ﻿using CoreLayer.Entity.ViewModel.FileViewModel;
 using Microsoft.AspNetCore.Http;
+using SelectPdf;
 using System.IO.Compression;
 
 namespace CoreLayer.Helper
@@ -46,60 +47,5 @@ namespace CoreLayer.Helper
             }
 
         }
-
-        public static DownloadFileViewModel DownloadToZipFilePath(string filePath)
-        {
-            MemoryStream memory = new MemoryStream();
-            try
-            {
-                string downloadFilePath = filePath + ".zip";
-
-                if (!File.Exists(downloadFilePath))
-                    ZipFile.CreateFromDirectory(filePath, downloadFilePath);
-
-                using (var stream = new FileStream(downloadFilePath, FileMode.Open))
-                {
-                    stream.CopyTo(memory);
-                }
-                memory.Position = 0;
-                return new DownloadFileViewModel()
-                {
-                    File = memory,
-                    ContentType = "application /octet-stream",
-                    FileName = "ZIP-" + Guid.NewGuid().ToString().ToUpper().Replace("-", "").Substring(0, 8) + ".zip"
-                };
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-        }
-
-        //public static DownloadFileViewModel CreateToPDF(string pdfHtmlTemplate)
-        //{
-        //    try
-        //    {
-
-        //        var userpdf = new HtmlToPdf();
-        //        string pdfTemplate = pdfHtmlTemplate;
-        //        var pdf = userpdf.ConvertHtmlString(pdfTemplate);
-        //        byte[] pdfBytes = pdf.Save();
-
-        //        MemoryStream memory = new MemoryStream();
-        //        memory.Write(pdfBytes, 0, pdfBytes.Length);
-
-        //        return new DownloadFileViewModel()
-        //        {
-        //            File = memory,
-        //            ContentType = "application/pdf",
-        //            FileName = "PDF-" + Guid.NewGuid().ToString().ToUpper().Replace("-", "").Substring(0, 8)
-        //        };
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
     }
 }
