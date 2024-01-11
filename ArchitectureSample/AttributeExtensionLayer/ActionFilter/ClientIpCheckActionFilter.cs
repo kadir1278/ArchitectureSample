@@ -12,7 +12,7 @@ namespace AttributeExtensionLayer.ActionFilter
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             IPAddress ipAddress = context.HttpContext.Connection.RemoteIpAddress;
-            string[] strArray = new string[1] { "192.168.1.1" };
+            string[] strArray = new string[1] { "::1" };
             bool flag = true;
             if (ipAddress.IsIPv4MappedToIPv6)
                 ipAddress = ipAddress.MapToIPv4();

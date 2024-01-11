@@ -19,6 +19,7 @@ namespace MiddlewareLayer.Middleware
                 using (HttpClient httpClient = new HttpClient())
                 {
                     httpClient.BaseAddress = new Uri(String.Format("url", currentProjectName, currentDomain));
+                    
                     var result = httpClient.GetAsync(httpClient.BaseAddress).Result;
                     projectDomainStatus = JsonConvert.DeserializeObject<bool>(result.Content.ReadAsStringAsync().Result);
                 }

@@ -1,6 +1,5 @@
 ﻿using CoreLayer.Entity.ViewModel.FileViewModel;
 using Microsoft.AspNetCore.Http;
-using SelectPdf;
 using System.IO.Compression;
 
 namespace CoreLayer.Helper
