@@ -1,6 +1,4 @@
-﻿using CoreLayer.Entity.ViewModel.FileViewModel;
-using Microsoft.AspNetCore.Http;
-using System.IO.Compression;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace CoreLayer.Helper
 {

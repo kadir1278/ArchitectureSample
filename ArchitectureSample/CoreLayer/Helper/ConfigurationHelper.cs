@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CoreLayer.Entity.ViewModel.FtpHelper;
+using Microsoft.Extensions.Configuration;
 
 namespace CoreLayer.Helper
 {
@@ -63,7 +64,12 @@ namespace CoreLayer.Helper
         }
         #endregion
 
-
+        #region GetFtpSettings
+        public static FtpSettingViewModel GetFtpSettings()
+        {
+            return configurationRoot.GetSection("FtpSettings").Get<FtpSettingViewModel>();
+        }
+        #endregion
 
     }
 }

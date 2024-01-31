@@ -6,6 +6,7 @@ using CoreLayer.Utilities.Security.Hashing;
 using DataAccessLayer.Absctract;
 using EntityLayer.Dto.User.Request;
 using EntityLayer.Dto.User.Response;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLayer.Concrete
@@ -23,7 +24,7 @@ namespace BusinessLayer.Concrete
             _userRoleDal = userRoleDal;
         }
 
-
+        [EnableRateLimiting("AuthLimit")]
         public IDataResult<UserLoginResponseDto> Login(UserLoginRequestDto userLoginRequestDto)
         {
             var userToCheck = _userDal.Queryable()

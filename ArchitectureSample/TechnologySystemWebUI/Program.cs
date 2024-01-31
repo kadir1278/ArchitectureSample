@@ -4,9 +4,9 @@ using BusinessLayer.DependecyResolver;
 using CoreLayer.Helper;
 using EntityLayer.Dto.Jwt;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MiddlewareLayer.Extensions;
+using CoreLayer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +49,8 @@ builder.Services.AddAuthentication(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.RateLimitByPolicyName("AuthLimit", TimeSpan.FromMinutes(1), 5);
 
 var app = builder.Build();
 
